@@ -11,6 +11,7 @@
       ./packages.nix
       ../../modules/steam.nix
       ../../modules/storage.nix
+      ../../modules/kde-plasma.nix
     ];
 
   # flake
@@ -55,12 +56,7 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  # X11 and desktop environment are configured in kde-plasma.nix module
 
   # Configure keymap in X11
   services.xserver.xkb = {

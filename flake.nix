@@ -23,6 +23,19 @@
       };
       modules = [
         ./hosts/jboedesk/configuration.nix
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.jboe = import ./home/home.nix;
+          home-manager.extraSpecialArgs = { 
+            inherit inputs;
+            pkgs-unstable = import nixpkgs-unstable {
+              system = "x86_64-linux";
+              config.allowUnfree = true;
+            };
+          };
+        }
       ];
     };
   };
