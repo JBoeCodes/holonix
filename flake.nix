@@ -11,15 +11,18 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs: 
+  let
+    pkgs-unstable = import nixpkgs-unstable {
+      system = "x86_64-linux";
+      config.allowUnfree = true;
+    };
+  in
+  {
     nixosConfigurations.jboedesk = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { 
-        inherit inputs;
-        pkgs-unstable = import nixpkgs-unstable {
-          system = "x86_64-linux";
-          config.allowUnfree = true;
-        };
+        inherit inputs pkgs-unstable;
       };
       modules = [
         ./hosts/jboedesk/configuration.nix
@@ -27,13 +30,10 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+          home-manager.backupFileExtension = "backup";
           home-manager.users.jboe = import ./home/home.nix;
           home-manager.extraSpecialArgs = { 
-            inherit inputs;
-            pkgs-unstable = import nixpkgs-unstable {
-              system = "x86_64-linux";
-              config.allowUnfree = true;
-            };
+            inherit inputs pkgs-unstable;
           };
         }
       ];

@@ -8,12 +8,4 @@
     localNetworkGameTransfers.openFirewall = true;
   };
 
-  hardware.graphics = {
-    enable32Bit = true;
-  };
-
-  environment.systemPackages = with pkgs; [
-    steam
-    steam-run
-  ];
 }

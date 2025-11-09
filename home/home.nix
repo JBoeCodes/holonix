@@ -1,6 +1,9 @@
 { config, pkgs, pkgs-unstable, ... }:
 
 {
+  imports = [
+    ./packages.nix
+  ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "jboe";
@@ -15,14 +18,9 @@
   # release notes.
   home.stateVersion = "25.05";
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
+  # Additional home packages beyond those in packages.nix
   home.packages = with pkgs; [
-    # Add your home-specific packages here
-    # Example:
-    # firefox
-    # git
-    # vscode
+    # Add additional user packages here if needed
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
