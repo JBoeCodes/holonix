@@ -4,14 +4,11 @@
 
 { config, pkgs, ... }:
 
-let
-  zen-browser = pkgs.callPackage ../../modules/zen-browser.nix { };
-in
-
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./packages.nix
     ];
 
   # flake
@@ -91,41 +88,17 @@ in
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account. Don't forget to set a password with 'passwd'.
   users.users.jboe = {
     isNormalUser = true;
     description = "jboe";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      alacritty
-      git
-      neovim
-      claude-code
-      zen-browser
-    ];
-  };
-
-  # Default web browser
-  environment.sessionVariables.DEFAULT_BROWSER = "${zen-browser}/bin/zen-browser";
-  
-  # Set Zen Browser as default browser for xdg-open
-  xdg.mime.defaultApplications = {
-    "text/html" = "zen-browser.desktop";
-    "x-scheme-handler/http" = "zen-browser.desktop";
-    "x-scheme-handler/https" = "zen-browser.desktop";
-    "x-scheme-handler/about" = "zen-browser.desktop";
-    "x-scheme-handler/unknown" = "zen-browser.desktop";
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
-  ];
+  # Packages are defined in packages.nix
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
