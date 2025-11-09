@@ -30,3 +30,7 @@ The system is configured for:
 - Flakes and nix-command experimental features enabled
 
 The configuration uses both stable (25.05) and unstable nixpkgs channels, with unstable packages available via `pkgs-unstable` specialArg.
+
+## Version-Specific Guidelines
+
+**IMPORTANT**: This system uses NixOS 25.05. Only provide recommendations, code, and configuration suggestions that are compatible with NixOS 25.05. Always verify that suggested options, syntax, and module paths are current for this version before recommending them.
