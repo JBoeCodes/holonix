@@ -6,6 +6,7 @@
 
     # Display
     ./display/kde-plasma.nix
+    #./display/gnome.nix
 
     # Hardware
     ./hardware/audio.nix
