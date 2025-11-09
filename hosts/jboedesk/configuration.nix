@@ -4,6 +4,10 @@
 
 { config, pkgs, ... }:
 
+let
+  zen-browser = pkgs.callPackage ../../modules/zen-browser.nix { };
+in
+
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -93,17 +97,25 @@
     description = "jboe";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-    alacritty
-    git
-    neovim
-    claude-code
-
-    
+      alacritty
+      git
+      neovim
+      claude-code
+      zen-browser
     ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
+  # Default web browser
+  environment.sessionVariables.DEFAULT_BROWSER = "${zen-browser}/bin/zen-browser";
+  
+  # Set Zen Browser as default browser for xdg-open
+  xdg.mime.defaultApplications = {
+    "text/html" = "zen-browser.desktop";
+    "x-scheme-handler/http" = "zen-browser.desktop";
+    "x-scheme-handler/https" = "zen-browser.desktop";
+    "x-scheme-handler/about" = "zen-browser.desktop";
+    "x-scheme-handler/unknown" = "zen-browser.desktop";
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
