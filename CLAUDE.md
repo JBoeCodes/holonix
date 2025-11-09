@@ -30,7 +30,7 @@ The system is configured for:
 - Gaming-focused setup with stable NixOS 25.05
 - Flakes and nix-command experimental features enabled
 
-The configuration uses both stable (25.05) and unstable nixpkgs channels, with unstable packages available via `pkgs-unstable` specialArg.
+The configuration uses both stable (25.05) and unstable nixpkgs channels, with unstable packages available via `pkgs-unstable` specialArg. Home-manager is integrated as a NixOS module for user-specific configurations.
 
 ## Configuration Philosophy
 
@@ -39,6 +39,7 @@ The configuration uses both stable (25.05) and unstable nixpkgs channels, with u
 - Import these modules in `hosts/jboedesk/configuration.nix` using relative paths
 - Keep the main configuration.nix focused on core system settings
 - Group related packages and services together in logical modules
+- Use home-manager for user-specific configurations, dotfiles, and program settings
 
 ## Common Issues and Solutions
 

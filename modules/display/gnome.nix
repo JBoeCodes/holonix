@@ -96,6 +96,6 @@
   # Enable location services (optional)
   services.geoclue2.enable = true;
   
-  # Enable automatic timezone
-  services.automatic-timezoned.enable = true;
+  # Automatic timezone disabled - manually set in configuration.nix
+  # services.automatic-timezoned.enable = true;
 }

@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  zen-browser = pkgs.callPackage ../../modules/zen-browser.nix { };
+  zen-browser = pkgs.callPackage ../../modules/tools/zen-browser.nix { };
 in
 
 {
