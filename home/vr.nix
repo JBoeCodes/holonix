@@ -3,32 +3,7 @@
 {
   # OpenVR runtime configuration for using Monado instead of SteamVR
   # This ensures OpenVR games use Monado as the OpenXR runtime
-  xdg.configFile."openvr/openvrpaths.vrpath" = {
-    text = builtins.toJSON {
-      runtime = [
-        "${pkgs.opencomposite}/lib/opencomposite"
-      ];
-      # Optionally specify config and log paths
-      config = [
-        "${config.home.homeDirectory}/.local/share/openvr"
-      ];
-      log = [
-        "${config.home.homeDirectory}/.local/share/openvr"
-      ];
-    };
-    # Make it read-only to prevent SteamVR from overwriting it
-    source = pkgs.writeText "openvrpaths.vrpath" (builtins.toJSON {
-      runtime = [
-        "${pkgs.opencomposite}/lib/opencomposite"
-      ];
-      config = [
-        "${config.home.homeDirectory}/.local/share/openvr"
-      ];
-      log = [
-        "${config.home.homeDirectory}/.local/share/openvr"
-      ];
-    });
-  };
+  # NOTE: Removed read-only constraint to allow SteamVR to write to this file
 
   # Session variables for VR gaming
   home.sessionVariables = {

@@ -15,6 +15,7 @@ in
     spotify
     syncthing
     syncthingtray
+    code-cursor
   ];
 
   # Set Zen Browser as default browser

@@ -7,6 +7,8 @@
 
     # Hardware
     ./hardware/audio.nix
+    ./hardware/nvidia.nix
+    ./hardware/vr.nix
 
     # Network
     ./network/networking.nix
