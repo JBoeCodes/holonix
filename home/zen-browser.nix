@@ -1,5 +1,12 @@
 { lib, stdenv, fetchurl, appimageTools, makeWrapper, glib, gtk3, gsettings-desktop-schemas }:
 
+let
+  icon = fetchurl {
+    url = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/zen-browser-dark.png";
+    sha256 = "sha256-Xx6EYPWdiIucu30VrTUSZoFgulmMZ1ZLch0tBJjbgLY=";
+  };
+in
+
 appimageTools.wrapType2 {
   pname = "zen-browser";
   version = "1.17.6b";
@@ -11,6 +18,11 @@ appimageTools.wrapType2 {
 
   extraInstallCommands = ''
     mkdir -p $out/share/applications
+    mkdir -p $out/share/icons/hicolor/256x256/apps
+    
+    # Install the icon
+    cp ${icon} $out/share/icons/hicolor/256x256/apps/zen-browser.png
+    
     cat > $out/share/applications/zen-browser.desktop << EOF
 [Desktop Entry]
 Version=1.0

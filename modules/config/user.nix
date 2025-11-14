@@ -5,5 +5,6 @@
     isNormalUser = true;
     description = "jboe";
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.zsh;
   };
 }

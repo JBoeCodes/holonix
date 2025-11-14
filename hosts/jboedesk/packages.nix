@@ -5,5 +5,9 @@
   environment.systemPackages = with pkgs; [
     # System administration tools
     git
+    zsh
   ];
+
+  # Enable zsh system-wide
+  programs.zsh.enable = true;
 }

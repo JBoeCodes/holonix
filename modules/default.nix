@@ -14,11 +14,14 @@
 
     # Network
     ./network/networking.nix
+    ./network/smb.nix
 
     # System
     ./system/boot.nix
     ./system/nix.nix
     ./system/steam.nix
     ./system/storage.nix
+
+    # Tools
   ];
 }

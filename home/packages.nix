@@ -13,6 +13,8 @@ in
     claude-code
     zen-browser
     spotify
+    syncthing
+    syncthingtray
   ];
 
   # Set Zen Browser as default browser

@@ -33,6 +33,7 @@ This is a single-host NixOS flake configuration for a gaming/desktop system name
     - `nvidia.nix` - NVIDIA graphics drivers and settings
   - `network/` - Networking modules
     - `networking.nix` - Hostname and NetworkManager configuration
+    - `smb.nix` - SMB/CIFS support and utilities
   - `system/` - Core system modules
     - `boot.nix` - Systemd-boot bootloader configuration
     - `nix.nix` - Nix settings and unfree package allowance
@@ -42,6 +43,7 @@ This is a single-host NixOS flake configuration for a gaming/desktop system name
     - `zen-browser.nix` - Zen browser integration
 - `home/` - Directory for home-manager configurations
   - `home.nix` - Main home-manager configuration for user "jboe"
+  - `zsh.nix` - Zsh shell configuration with Oh My Zsh
 
 The system is configured for:
 - NVIDIA graphics with proprietary drivers
@@ -53,20 +55,22 @@ The configuration uses both stable (25.05) and unstable nixpkgs channels, with u
 
 ## Configuration Philosophy
 
-**Modularity Focus**: This configuration emphasizes modularity and separation of concerns. The system is organized into logical categories for maximum maintainability. When adding new functionality:
+**STRICT MODULARITY REQUIREMENT**: This configuration REQUIRES extreme modularity and separation of concerns. The user has repeatedly emphasized the importance of breaking functionality into separate, organized modules. When adding ANY new functionality:
 
-- **Always use the modular structure**: Create separate module files in the appropriate `modules/` subdirectory
-- **Follow the category organization**:
+- **NEVER add functionality to existing files unless it's directly related**: Always create new module files
+- **ALWAYS create separate modules**: Even for simple configurations, create dedicated module files in the appropriate `modules/` subdirectory
+- **MANDATORY category organization**:
   - `config/` - System-wide configuration (users, locales, etc.)
   - `display/` - Desktop environments and display managers
   - `hardware/` - Hardware-specific configurations (graphics, audio, etc.)
-  - `network/` - Networking and connectivity
-  - `system/` - Core system services (boot, nix settings, etc.)
+  - `network/` - Networking and connectivity (including SMB, VPN, etc.)
+  - `system/` - Core system services (boot, nix settings, storage, etc.)
   - `tools/` - Application-specific configurations
-- **Import through modules/default.nix**: Add new modules to the central index rather than directly in configuration.nix
-- **Keep configuration.nix minimal**: The main configuration file should only handle imports and host-specific overrides
-- **Group related functionality**: Combine related packages and services in logical modules (e.g., audio.nix includes both PipeWire and printing)
+- **ALWAYS import through modules/default.nix**: Add new modules to the central index, never directly in configuration.nix
+- **Keep ALL configuration files minimal**: Every file should focus on one specific area of functionality
+- **Break down large configurations**: If a module grows beyond 50-100 lines, consider splitting it further
 - **Use home-manager for user-specific configurations**: Dotfiles, user programs, and personal settings belong in home/
+- **The user prefers over-modularization to under-modularization**: When in doubt, create a separate module
 
 ## Common Issues and Solutions
 
@@ -83,3 +87,4 @@ Workflow for new modules:
 ## Version-Specific Guidelines
 
 **IMPORTANT**: This system uses NixOS 25.05. Only provide recommendations, code, and configuration suggestions that are compatible with NixOS 25.05. Always verify that suggested options, syntax, and module paths are current for this version before recommending them.
+- never attempt to rebuild, instead prompt me to rebuild
