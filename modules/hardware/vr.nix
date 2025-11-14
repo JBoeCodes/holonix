@@ -26,18 +26,17 @@
     enable32Bit = true;  # Required for Steam games
   };
 
-  # Udev rules for VR devices (Index, Vive, etc.)
-  services.udev.packages = with pkgs; [
-    steamvr  # Includes udev rules for VR devices
-  ];
-
-  # Enable USB device access for VR controllers
+  # Enable USB device access for VR controllers and headsets
   services.udev.extraRules = ''
-    # HTC Vive and Index controllers
+    # HTC Vive and Index controllers/headsets
     SUBSYSTEM=="usb", ATTRS{idVendor}=="0bb4", MODE="0664", GROUP="users"
     SUBSYSTEM=="usb", ATTRS{idVendor}=="28de", MODE="0664", GROUP="users"
     # Oculus devices
     SUBSYSTEM=="usb", ATTRS{idVendor}=="2833", MODE="0664", GROUP="users"
+    # Additional VR device support
+    SUBSYSTEM=="hidraw", ATTRS{idVendor}=="0bb4", MODE="0664", GROUP="users"
+    SUBSYSTEM=="hidraw", ATTRS{idVendor}=="28de", MODE="0664", GROUP="users"
+    SUBSYSTEM=="hidraw", ATTRS{idVendor}=="2833", MODE="0664", GROUP="users"
   '';
 
   # Additional VR-specific system configuration
