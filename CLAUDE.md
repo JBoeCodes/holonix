@@ -5,8 +5,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Critical: Host Detection
 
 **ALWAYS CHECK WHICH HOST IS BEING USED**: This repository contains configurations for multiple hosts:
-- `jboedesk` - Gaming/desktop system with NVIDIA graphics
-- `jboebook` - Laptop system (check specific hardware configuration)
+- `jboedesk` - Gaming/desktop system with NVIDIA graphics and KDE Plasma
+- `jboebook` - Laptop system with GNOME desktop environment
 
 Before making ANY changes or recommendations:
 1. Check the current hostname with `hostname` command
@@ -52,7 +52,8 @@ This is a multi-host NixOS flake configuration managing both "jboedesk" (gaming/
     - `locale.nix` - Timezone, locales, and keyboard layout
     - `user.nix` - User account definitions
   - `display/` - Desktop environment modules
-    - `kde-plasma.nix` - KDE Plasma desktop configuration
+    - `kde-plasma.nix` - KDE Plasma desktop configuration (jboedesk)
+    - `gnome.nix` - GNOME desktop configuration (jboebook)
   - `hardware/` - Hardware-specific modules
     - `audio.nix` - PipeWire audio system and printing
     - `nvidia.nix` - NVIDIA graphics drivers and settings
@@ -71,8 +72,8 @@ This is a multi-host NixOS flake configuration managing both "jboedesk" (gaming/
   - `zsh.nix` - Zsh shell configuration with Oh My Zsh
 
 The system is configured for:
-- NVIDIA graphics with proprietary drivers
-- KDE Plasma desktop environment
+- NVIDIA graphics with proprietary drivers (jboedesk)
+- KDE Plasma desktop environment (jboedesk) / GNOME desktop environment (jboebook)
 - Gaming-focused setup with stable NixOS 25.05
 - Flakes and nix-command experimental features enabled
 

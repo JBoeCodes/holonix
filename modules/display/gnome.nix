@@ -12,7 +12,7 @@
   services.xserver.displayManager.gdm.wayland = true;
   
   # GNOME services and integrations
-  services.gnome.core-utilities.enable = true;
+  services.gnome.core-apps.enable = true;
   services.gnome.evolution-data-server.enable = true;
   services.gnome.gnome-keyring.enable = true;
   
@@ -41,7 +41,7 @@
     
     # GNOME extensions and customization
     gnome-tweaks             # Advanced settings
-    gnome-extensions-app     # Extensions manager
+    gnome-shell-extensions   # Extensions manager
     
     # Network and connectivity
     networkmanagerapplet     # NetworkManager GUI

@@ -5,16 +5,11 @@
     ./config/locale.nix
     ./config/user.nix
 
-    # Display
-    ./display/kde-plasma.nix
-    #./display/gnome.nix
-
     # Hardware
     ./hardware/audio.nix
 
     # Network
     ./network/networking.nix
-    ./network/smb.nix
 
     # System
     ./system/boot.nix
