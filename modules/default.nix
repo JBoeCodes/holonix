@@ -1,6 +1,7 @@
 {
   imports = [
     # Config
+    ./config/fonts.nix
     ./config/locale.nix
     ./config/user.nix
 
@@ -10,7 +11,6 @@
 
     # Hardware
     ./hardware/audio.nix
-    ./hardware/nvidia.nix
 
     # Network
     ./network/networking.nix
@@ -23,5 +23,6 @@
     ./system/storage.nix
 
     # Tools
+    ./tools/git-repos.nix
   ];
 }

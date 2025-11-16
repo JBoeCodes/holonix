@@ -9,8 +9,10 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./packages.nix
-      ../../modules
+      ../../modules/desktop.nix
     ];
+
+  networking.hostName = "jboedesk";
 
   # All system configuration is now modularized in modules/
 

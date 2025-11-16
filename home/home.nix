@@ -2,6 +2,8 @@
 
 {
   imports = [
+    ./alacritty.nix
+    ./kde.nix
     ./packages.nix
     ./zsh.nix
   ];

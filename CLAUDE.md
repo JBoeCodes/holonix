@@ -2,25 +2,50 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Critical: Host Detection
+
+**ALWAYS CHECK WHICH HOST IS BEING USED**: This repository contains configurations for multiple hosts:
+- `jboedesk` - Gaming/desktop system with NVIDIA graphics
+- `jboebook` - Laptop system (check specific hardware configuration)
+
+Before making ANY changes or recommendations:
+1. Check the current hostname with `hostname` command
+2. Verify which host configuration to modify in `hosts/` directory
+3. Use the correct host name in rebuild commands: `.#jboedesk` or `.#jboebook`
+4. Be aware that hardware configurations differ between hosts (e.g., graphics drivers, power management)
+
 ## System Management Commands
 
 This is a NixOS configuration managed with flakes. Key commands for system management:
 
+**For jboedesk (desktop):**
 - `sudo nixos-rebuild switch --flake .#jboedesk` - Apply configuration changes and switch to the new generation
 - `sudo nixos-rebuild test --flake .#jboedesk` - Test configuration without making it the default boot option
 - `sudo nixos-rebuild boot --flake .#jboedesk` - Apply changes but only activate on next boot
+
+**For jboebook (laptop):**
+- `sudo nixos-rebuild switch --flake .#jboebook` - Apply configuration changes and switch to the new generation
+- `sudo nixos-rebuild test --flake .#jboebook` - Test configuration without making it the default boot option
+- `sudo nixos-rebuild boot --flake .#jboebook` - Apply changes but only activate on next boot
+
+**Common commands (all hosts):**
 - `nix flake update` - Update flake inputs (nixpkgs, home-manager, etc.)
 - `nix flake check` - Validate flake configuration
 
 ## Architecture
 
-This is a single-host NixOS flake configuration for a gaming/desktop system named "jboedesk". The architecture follows NixOS flake conventions with a highly modular structure:
+This is a multi-host NixOS flake configuration managing both "jboedesk" (gaming/desktop) and "jboebook" (laptop) systems. The architecture follows NixOS flake conventions with a highly modular structure:
 
 - `flake.nix` - Main flake definition with inputs (nixpkgs stable/unstable, home-manager) and outputs
-- `hosts/jboedesk/` - Host-specific configuration
-  - `configuration.nix` - Minimal main configuration file that imports hardware scan, packages, and modules
-  - `packages.nix` - System packages definition
-  - `hardware-configuration.nix` - Hardware-specific settings (currently deleted in working tree)
+- `hosts/` - Host-specific configurations
+  - `jboedesk/` - Desktop/gaming system configuration
+    - `configuration.nix` - Main configuration file that imports hardware scan, packages, and modules
+    - `packages.nix` - System packages definition
+    - `hardware-configuration.nix` - Hardware-specific settings
+  - `jboebook/` - Laptop system configuration
+    - `configuration.nix` - Main configuration file that imports hardware scan, packages, and modules
+    - `packages.nix` - System packages definition
+    - `hardware-configuration.nix` - Hardware-specific settings
 - `modules/` - Highly modular configuration directory organized by category:
   - `default.nix` - Central module index that imports all component modules
   - `config/` - System configuration modules
@@ -78,11 +103,12 @@ The configuration uses both stable (25.05) and unstable nixpkgs channels, with u
 **CRITICAL**: Always run `git add` for new files before running `nix flake check`. Flakes only include tracked files in their evaluation, so untracked files will cause "path does not exist" errors.
 
 Workflow for new modules:
-1. Create the module file in the appropriate category (e.g., `modules/hardware/new-device.nix`)
-2. Import it in `modules/default.nix` under the correct category section
-3. **IMMEDIATELY** run `git add modules/category/new-module.nix`
-4. Then run `nix flake check` to validate
-5. Apply with `sudo nixos-rebuild switch --flake .#jboedesk`
+1. **FIRST** check which host you're working with using `hostname`
+2. Create the module file in the appropriate category (e.g., `modules/hardware/new-device.nix`)
+3. Import it in `modules/default.nix` under the correct category section
+4. **IMMEDIATELY** run `git add modules/category/new-module.nix`
+5. Then run `nix flake check` to validate
+6. Apply with the correct host: `sudo nixos-rebuild switch --flake .#jboedesk` OR `sudo nixos-rebuild switch --flake .#jboebook`
 
 ## Version-Specific Guidelines
 

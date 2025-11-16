@@ -13,7 +13,7 @@ appimageTools.wrapType2 {
 
   src = fetchurl {
     url = "https://github.com/zen-browser/desktop/releases/download/1.17.6b/zen-x86_64.AppImage";
-    sha256 = "909e6c3c5c8e92eeea9281873e5e3fd7c96c43ff1153a74b7814b29230c9b05e";
+    sha256 = "sha256-lZrqWgTgBoafh2fPZqXkQZilBvjN81JCpQEskDh6H7Q=";
   };
 
   extraInstallCommands = ''

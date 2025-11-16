@@ -7,12 +7,6 @@
     options = [ "defaults" "nofail" "user" "rw" "exec" ];
   };
 
-  fileSystems."/home/jboe/Projects" = {
-    device = "/dev/disk/by-uuid/093bb592-ebb5-4a34-9bf2-bcff57cd7056";
-    fsType = "ext4";
-    options = [ "defaults" "nofail" "user" "rw" "exec" ];
-  };
-
   # SMB network shares
   fileSystems."/home/jboe/Media" = {
     device = "//192.168.0.6/media-share";
@@ -72,13 +66,11 @@
 
   systemd.tmpfiles.rules = [
     "d /home/jboe/Games 0755 jboe users -"
-    "d /home/jboe/Projects 0755 jboe users -"
     "d /home/jboe/Media 0755 jboe users -"
     "d /home/jboe/Files 0755 jboe users -"
     "d /home/jboe/Movies 0755 jboe users -"
     "d /home/jboe/Shows 0755 jboe users -"
     "L+ /mnt/games - - - - /home/jboe/Games"
-    "L+ /mnt/projects - - - - /home/jboe/Projects"
     "L+ /mnt/media - - - - /home/jboe/Media"
     "L+ /mnt/files - - - - /home/jboe/Files"
     "L+ /mnt/movies - - - - /home/jboe/Movies"
