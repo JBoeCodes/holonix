@@ -6,6 +6,7 @@
     ./config/user.nix
 
     # Hardware
+    ./hardware/alvr.nix
     ./hardware/audio.nix
     ./hardware/nvidia.nix
     ./hardware/vr.nix

@@ -15,7 +15,7 @@
 
   # Install VR-related packages
   environment.systemPackages = with pkgs; [
-    opencomposite     # OpenVR compatibility layer
+    # opencomposite     # OpenVR compatibility layer - DISABLED: causes SteamVR conflicts on Linux
     wlx-overlay-s     # Desktop overlay for VR
     polkit            # Required for SteamVR compositor permissions
     libcap            # Required for setcap operations

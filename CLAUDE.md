@@ -57,6 +57,7 @@ This is a multi-host NixOS flake configuration managing both "jboedesk" (gaming/
   - `hardware/` - Hardware-specific modules
     - `audio.nix` - PipeWire audio system and printing
     - `nvidia.nix` - NVIDIA graphics drivers and settings
+    - `vr.nix` - VR configuration with Monado runtime and SteamVR compatibility
   - `network/` - Networking modules
     - `networking.nix` - Hostname and NetworkManager configuration
     - `smb.nix` - SMB/CIFS support and utilities
@@ -69,12 +70,15 @@ This is a multi-host NixOS flake configuration managing both "jboedesk" (gaming/
     - `zen-browser.nix` - Zen browser integration
 - `home/` - Directory for home-manager configurations
   - `home.nix` - Main home-manager configuration for user "jboe"
+  - `packages.nix` - User-specific packages including development tools
+  - `vr.nix` - User-level VR configuration for OpenVR runtime settings
   - `zsh.nix` - Zsh shell configuration with Oh My Zsh
 
 The system is configured for:
 - NVIDIA graphics with proprietary drivers (jboedesk)
 - KDE Plasma desktop environment (jboedesk) / GNOME desktop environment (jboebook)
 - Gaming-focused setup with stable NixOS 25.05
+- VR gaming with Monado OpenXR runtime and SteamVR compatibility
 - Flakes and nix-command experimental features enabled
 
 The configuration uses both stable (25.05) and unstable nixpkgs channels, with unstable packages available via `pkgs-unstable` specialArg. Home-manager is integrated as a NixOS module for user-specific configurations.
@@ -110,6 +114,55 @@ Workflow for new modules:
 4. **IMMEDIATELY** run `git add modules/category/new-module.nix`
 5. Then run `nix flake check` to validate
 6. Apply with the correct host: `sudo nixos-rebuild switch --flake .#jboedesk` OR `sudo nixos-rebuild switch --flake .#jboebook`
+
+### SteamVR Configuration
+The VR setup includes both system-level (`modules/hardware/vr.nix`) and user-level (`home/vr.nix`) configurations:
+- **System**: Monado OpenXR runtime, udev rules for VR devices, polkit rules for setcap operations, realtime scheduling
+- **User**: OpenVR runtime configuration, VR session variables
+- **Key Fix**: Polkit rules allow SteamVR vrcompositor setcap operations to resolve "pkexec must be setuid root" errors
+
+#### Common SteamVR Issues and Solutions
+
+**Issue 1: OpenComposite "not-yet-ported-to-Linux" Error**
+- **Symptoms**: SteamVR fails with error about stubbed functions in OCOVR/openvr_api.cpp
+- **Root Cause**: `VR_OVERRIDE` environment variable forces OpenComposite usage, but OpenComposite has incomplete Linux support
+- **Solution**: Remove/disable OpenComposite from configuration:
+  - Remove `opencomposite` package from `modules/hardware/vr.nix`
+  - Comment out `VR_OVERRIDE` in `home/vr.nix`
+  - Use clean launch script: `/home/jboe/launch-steamvr-clean.sh`
+  - **Critical**: Log out/restart after rebuild to clear old environment variables
+
+**Issue 2: "SteamVR requires superuser access" Permission Errors**  
+- **Symptoms**: SteamVR asks for sudo access, setup incomplete errors
+- **Root Cause**: vrcompositor needs CAP_SYS_NICE capability for real-time scheduling
+- **Solution**: Set capabilities manually: `sudo /home/jboe/fix-vr-permissions.sh`
+- **Verification**: `getcap ~/.steam/steam/steamapps/common/SteamVR/bin/linux64/vrcompositor` should show `cap_sys_nice=ep`
+
+**Issue 3: Wrong OpenVR Runtime Path**
+- **Symptoms**: SteamVR can't find runtime, path errors
+- **Root Cause**: OpenVR configuration points to wrong Steam path
+- **Solution**: Ensure `~/.config/openvr/openvrpaths.vrpath` contains:
+  ```json
+  "runtime": ["/home/jboe/.steam/steam/steamapps/common/SteamVR"]
+  ```
+
+**Issue 4: Environment Variable Persistence**
+- **Symptoms**: Old VR_OVERRIDE values persist even after NixOS rebuild
+- **Root Cause**: Current session retains old environment variables
+- **Solution**: Use clean launch script or log out/restart session
+
+**Troubleshooting Scripts Available:**
+- `/home/jboe/test-vr-permissions.sh` - Diagnose permission issues
+- `/home/jboe/fix-vr-permissions.sh` - Fix VR compositor capabilities  
+- `/home/jboe/fix-steamvr-complete.sh` - Complete SteamVR diagnostic and fix
+- `/home/jboe/launch-steamvr-clean.sh` - Launch Steam with clean VR environment
+
+**Working Configuration:**
+- Monado as OpenXR runtime (`services.monado.enable = true`)
+- SteamVR as OpenVR runtime (no OpenComposite override)
+- Proper udev rules for VR device access
+- CAP_SYS_NICE on vrcompositor for real-time scheduling
+- Polkit rules for automated privilege escalation
 
 ## Version-Specific Guidelines
 
