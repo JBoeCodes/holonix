@@ -12,10 +12,15 @@ in
     neovim
     claude-code
     zen-browser
+    qutebrowser
+    nyxt
+    librewolf
+    floorp
     spotify
     syncthing
     syncthingtray
     code-cursor
+    ventoy
   ];
 
   # Set Zen Browser as default browser

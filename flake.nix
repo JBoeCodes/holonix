@@ -1,5 +1,5 @@
 {
-  description = "NixOS Configuration for jboedesk and jboebook";
+  description = "NixOS Configuration for jboedesk, jboebook, and jboeimac";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
@@ -46,6 +46,26 @@
       };
       modules = [
         ./hosts/jboebook/configuration.nix
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.backupFileExtension = "backup";
+          home-manager.users.jboe = import ./home/home.nix;
+          home-manager.extraSpecialArgs = { 
+            inherit inputs pkgs-unstable;
+          };
+        }
+      ];
+    };
+    
+    nixosConfigurations.jboeimac = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { 
+        inherit inputs pkgs-unstable;
+      };
+      modules = [
+        ./hosts/jboeimac/configuration.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

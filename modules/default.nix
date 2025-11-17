@@ -16,6 +16,7 @@
 
     # System
     ./system/boot.nix
+    ./system/insecure-packages.nix
     ./system/nix.nix
     ./system/steam.nix
     ./system/storage.nix
