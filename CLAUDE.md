@@ -6,12 +6,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **ALWAYS CHECK WHICH HOST IS BEING USED**: This repository contains configurations for multiple hosts:
 - `jboedesk` - Gaming/desktop system with NVIDIA graphics and KDE Plasma
-- `jboebook` - Laptop system with GNOME desktop environment
+- `jboebook` - Laptop system with GNOME desktop environment  
+- `nixpad` - Laptop system with Intel graphics and GNOME desktop environment
+- `jboeimac` - 2015 iMac 27" system with AMD graphics and KDE Plasma
 
 Before making ANY changes or recommendations:
 1. Check the current hostname with `hostname` command
 2. Verify which host configuration to modify in `hosts/` directory
-3. Use the correct host name in rebuild commands: `.#jboedesk` or `.#jboebook`
+3. Use the correct host name in rebuild commands: `.#jboedesk`, `.#jboebook`, `.#nixpad`, or `.#jboeimac`
 4. Be aware that hardware configurations differ between hosts (e.g., graphics drivers, power management)
 
 ## System Management Commands
@@ -28,13 +30,23 @@ This is a NixOS configuration managed with flakes. Key commands for system manag
 - `sudo nixos-rebuild test --flake .#jboebook` - Test configuration without making it the default boot option
 - `sudo nixos-rebuild boot --flake .#jboebook` - Apply changes but only activate on next boot
 
+**For nixpad (laptop):**
+- `sudo nixos-rebuild switch --flake .#nixpad` - Apply configuration changes and switch to the new generation
+- `sudo nixos-rebuild test --flake .#nixpad` - Test configuration without making it the default boot option
+- `sudo nixos-rebuild boot --flake .#nixpad` - Apply changes but only activate on next boot
+
+**For jboeimac (iMac):**
+- `sudo nixos-rebuild switch --flake .#jboeimac` - Apply configuration changes and switch to the new generation
+- `sudo nixos-rebuild test --flake .#jboeimac` - Test configuration without making it the default boot option
+- `sudo nixos-rebuild boot --flake .#jboeimac` - Apply changes but only activate on next boot
+
 **Common commands (all hosts):**
 - `nix flake update` - Update flake inputs (nixpkgs, home-manager, etc.)
 - `nix flake check` - Validate flake configuration
 
 ## Architecture
 
-This is a multi-host NixOS flake configuration managing both "jboedesk" (gaming/desktop) and "jboebook" (laptop) systems. The architecture follows NixOS flake conventions with a highly modular structure:
+This is a multi-host NixOS flake configuration managing "jboedesk" (gaming/desktop), "jboebook" (laptop), "nixpad" (laptop), and "jboeimac" (iMac) systems. The architecture follows NixOS flake conventions with a highly modular structure:
 
 - `flake.nix` - Main flake definition with inputs (nixpkgs stable/unstable, home-manager) and outputs
 - `hosts/` - Host-specific configurations
@@ -46,18 +58,31 @@ This is a multi-host NixOS flake configuration managing both "jboedesk" (gaming/
     - `configuration.nix` - Main configuration file that imports hardware scan, packages, and modules
     - `packages.nix` - System packages definition
     - `hardware-configuration.nix` - Hardware-specific settings
+  - `nixpad/` - Laptop system configuration
+    - `configuration.nix` - Main configuration file that imports hardware scan, packages, and modules
+    - `packages.nix` - System packages definition
+    - `hardware-configuration.nix` - Hardware-specific settings
+  - `jboeimac/` - iMac system configuration
+    - `configuration.nix` - Main configuration file that imports hardware scan, packages, and modules
+    - `packages.nix` - System packages definition
+    - `hardware-configuration.nix` - Hardware-specific settings
 - `modules/` - Highly modular configuration directory organized by category:
   - `default.nix` - Central module index that imports all component modules
   - `config/` - System configuration modules
     - `locale.nix` - Timezone, locales, and keyboard layout
     - `user.nix` - User account definitions
   - `display/` - Desktop environment modules
-    - `kde-plasma.nix` - KDE Plasma desktop configuration (jboedesk)
-    - `gnome.nix` - GNOME desktop configuration (jboebook)
+    - `kde-plasma.nix` - KDE Plasma desktop configuration (jboedesk, jboeimac)
+    - `gnome.nix` - GNOME desktop configuration (jboebook, nixpad)
   - `hardware/` - Hardware-specific modules
     - `audio.nix` - PipeWire audio system and printing
-    - `nvidia.nix` - NVIDIA graphics drivers and settings
-    - `vr.nix` - VR configuration with Monado runtime and SteamVR compatibility
+    - `nvidia.nix` - NVIDIA graphics drivers and settings (jboedesk)
+    - `intel-graphics.nix` - Intel graphics configuration (nixpad)
+    - `amd-graphics.nix` - AMD graphics configuration (jboeimac)
+    - `laptop-power.nix` - Power management for laptops
+    - `imac-2015.nix` - 2015 iMac specific hardware configuration
+    - `alvr.nix` - ALVR VR streaming configuration
+    - `vr.nix` - VR hardware and software configuration
   - `network/` - Networking modules
     - `networking.nix` - Hostname and NetworkManager configuration
     - `smb.nix` - SMB/CIFS support and utilities
@@ -76,9 +101,13 @@ This is a multi-host NixOS flake configuration managing both "jboedesk" (gaming/
 
 The system is configured for:
 - NVIDIA graphics with proprietary drivers (jboedesk)
-- KDE Plasma desktop environment (jboedesk) / GNOME desktop environment (jboebook)
+- Intel graphics with hardware acceleration (nixpad)
+- AMD graphics with AMDGPU drivers (jboeimac)
+- KDE Plasma desktop environment (jboedesk, jboeimac) / GNOME desktop environment (jboebook, nixpad)
 - Gaming-focused setup with stable NixOS 25.05
-- VR gaming with Monado OpenXR runtime and SteamVR compatibility
+- VR support with ALVR and SteamVR (jboedesk)
+- Laptop power management and optimization (jboebook, nixpad)
+- iMac-specific hardware support (jboeimac)
 - Flakes and nix-command experimental features enabled
 
 The configuration uses both stable (25.05) and unstable nixpkgs channels, with unstable packages available via `pkgs-unstable` specialArg. Home-manager is integrated as a NixOS module for user-specific configurations.
@@ -113,7 +142,7 @@ Workflow for new modules:
 3. Import it in `modules/default.nix` under the correct category section
 4. **IMMEDIATELY** run `git add modules/category/new-module.nix`
 5. Then run `nix flake check` to validate
-6. Apply with the correct host: `sudo nixos-rebuild switch --flake .#jboedesk` OR `sudo nixos-rebuild switch --flake .#jboebook`
+6. Apply with the correct host: `sudo nixos-rebuild switch --flake .#jboedesk`, `.#jboebook`, `.#nixpad`, or `.#jboeimac`
 
 ### SteamVR Configuration
 The VR setup includes both system-level (`modules/hardware/vr.nix`) and user-level (`home/vr.nix`) configurations:
