@@ -73,6 +73,14 @@
   # GTK theming
   programs.dconf.enable = true;
   
+  # GNOME interface settings
+  services.gnome.gnome-settings-daemon.enable = true;
+  
+  # Set default cursor theme to Adwaita
+  environment.sessionVariables = {
+    XCURSOR_THEME = "Adwaita";
+  };
+  
   # Exclude some default GNOME applications to keep system clean
   # (uncomment packages you want to exclude)
   environment.gnome.excludePackages = (with pkgs; [
