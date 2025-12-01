@@ -1,8 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  services.printing.enable = true;
-
+  # PipeWire audio system
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {

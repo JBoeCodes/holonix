@@ -21,8 +21,6 @@
     # Browser
     firefox
     
-    # Productivity
-    libreoffice
     
     # System monitoring
     powertop

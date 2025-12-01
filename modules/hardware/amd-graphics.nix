@@ -1,6 +1,9 @@
 { config, lib, pkgs, ... }:
 
+with lib;
+
 {
+  config = mkIf (config.networking.hostName == "jboeimac") {
   # AMD graphics configuration for 2015 iMac
   # 2015 iMacs typically have AMD Radeon R9 M380/M390/M395/M395X
   
@@ -26,4 +29,5 @@
   
   # Enable GPU scheduling for better performance
   boot.kernelParams = [ "amdgpu.gpu_recovery=1" ];
+  };
 }

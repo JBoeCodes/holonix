@@ -9,10 +9,14 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./packages.nix
-      ../../modules/desktop.nix
+      ../../modules/default.nix
     ];
 
   networking.hostName = "jboedesk";
+
+  # Enable VR support for desktop system
+  hardware.vr.enable = true;
+  hardware.alvr.enable = true;
 
   # All system configuration is now modularized in modules/
 

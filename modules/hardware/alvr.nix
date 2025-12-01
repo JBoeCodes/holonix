@@ -1,6 +1,13 @@
 { config, lib, pkgs, ... }:
 
+with lib;
+
 {
+  options = {
+    hardware.alvr.enable = mkEnableOption "ALVR wireless VR streaming support";
+  };
+
+  config = mkIf config.hardware.alvr.enable {
   # ALVR - Air Light VR for Quest wireless streaming to SteamVR
   
   # Install ALVR package
@@ -35,5 +42,6 @@
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;  # Also helps with Quest connectivity
+  };
   };
 }

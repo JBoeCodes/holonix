@@ -4,7 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ./packages.nix
-    ../../modules/laptop.nix
+    ../../modules/default.nix
   ];
 
   networking.hostName = "nixpad";

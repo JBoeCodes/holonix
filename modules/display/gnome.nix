@@ -1,6 +1,9 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
+
+with lib;
 
 {
+  config = mkIf (elem config.networking.hostName ["jboebook" "nixpad"]) {
   # Enable the X11 windowing system
   services.xserver.enable = true;
   
@@ -58,6 +61,10 @@
     # Additional GNOME Circle apps
     fragments                # BitTorrent client
     newsflash                # RSS reader
+    
+    # Additional icon themes for better application support
+    adwaita-icon-theme       # Ensure complete Adwaita icon theme
+    hicolor-icon-theme       # Fallback icon theme
   ];
   
   # Enable GNOME extensions
@@ -76,10 +83,21 @@
   # GNOME interface settings
   services.gnome.gnome-settings-daemon.enable = true;
   
-  # Set default cursor theme to Adwaita
+  # Set default cursor and icon themes to Adwaita
   environment.sessionVariables = {
     XCURSOR_THEME = "Adwaita";
   };
+  
+  # Set default GNOME icon theme
+  services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
+    [org.gnome.desktop.interface]
+    icon-theme='Adwaita'
+  '';
+  
+  # QT application theming to match GNOME
+  qt.enable = true;
+  qt.platformTheme = "gnome";
+  qt.style = "adwaita";
   
   # Exclude some default GNOME applications to keep system clean
   # (uncomment packages you want to exclude)
@@ -106,4 +124,5 @@
   
   # Automatic timezone disabled - manually set in configuration.nix
   # services.automatic-timezoned.enable = true;
+  };
 }

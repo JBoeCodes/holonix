@@ -1,6 +1,9 @@
 { config, lib, pkgs, ... }:
 
+with lib;
+
 {
+  config = mkIf (elem config.networking.hostName ["jboebook" "nixpad"]) {
   # Power management for laptops
   powerManagement = {
     enable = true;
@@ -54,5 +57,6 @@
       ExecStart = "${pkgs.powertop}/bin/powertop --auto-tune";
       RemainAfterExit = "yes";
     };
+  };
   };
 }

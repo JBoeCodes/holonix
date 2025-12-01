@@ -1,6 +1,9 @@
 { config, lib, pkgs, ... }:
 
+with lib;
+
 {
+  config = mkIf (config.networking.hostName == "jboeimac") {
   # Hardware-specific configuration for 2015 iMac 27"
   
   # Enable firmware updates
@@ -42,4 +45,5 @@
     lm_sensors
     hddtemp
   ];
+  };
 }

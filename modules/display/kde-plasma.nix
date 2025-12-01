@@ -1,6 +1,9 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
+
+with lib;
 
 {
+  config = mkIf (elem config.networking.hostName ["jboedesk" "jboeimac"]) {
   # Enable the X11 windowing system
   services.xserver.enable = true;
   
@@ -54,5 +57,6 @@
   environment.variables = {
     # Ensure Qt applications use the KDE platform theme
     QT_QPA_PLATFORMTHEME = "kde";
+  };
   };
 }

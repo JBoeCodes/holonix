@@ -1,6 +1,9 @@
 { config, lib, pkgs, ... }:
 
+with lib;
+
 {
+  config = mkIf (config.networking.hostName == "jboedesk") {
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
@@ -12,5 +15,6 @@
     open = false;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
   };
 }

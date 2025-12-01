@@ -1,6 +1,9 @@
 { config, lib, pkgs, ... }:
 
+with lib;
+
 {
+  config = mkIf (config.networking.hostName == "nixpad") {
   # Intel integrated graphics configuration
   hardware.graphics = {
     enable = true;
@@ -17,4 +20,5 @@
     vaapiVdpau
     libvdpau-va-gl
   ];
+  };
 }

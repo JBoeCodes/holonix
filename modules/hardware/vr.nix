@@ -1,6 +1,13 @@
 { config, lib, pkgs, ... }:
 
+with lib;
+
 {
+  options = {
+    hardware.vr.enable = mkEnableOption "VR hardware and software support";
+  };
+
+  config = mkIf config.hardware.vr.enable {
   # Monado - Open Source OpenXR Runtime (recommended for NixOS)
   services.monado = {
     enable = true;
@@ -83,4 +90,5 @@
   ];
 
   # Additional VR-specific system configuration
+  };
 }

@@ -19,11 +19,25 @@
     syntaxHighlighting.enable = true;
     
     shellAliases = {
-      ll = "ls -l";
-      la = "ls -la";
-      l = "ls -CF";
+      # Modern CLI tool aliases
+      ls = "eza --icons";
+      ll = "eza -l --icons";
+      la = "eza -la --icons";
+      l = "eza -CF --icons";
+      tree = "eza --tree --icons";
+      cat = "bat";
+      find = "fd";
+      cd = "z";
+      
+      # Navigation
       ".." = "cd ..";
       "..." = "cd ../..";
+      
+      # System monitoring
+      htop = "btop";
+      neofetch = "fastfetch";
+      
+      # Utilities
       grep = "grep --color=auto";
       nixos-rebuild = "sudo nixos-rebuild";
       nix-search = "nix search nixpkgs";
@@ -39,10 +53,13 @@
       # Better history search
       bindkey '^R' history-incremental-search-backward
       
-      # NixOS specific aliases
-      alias nrs="sudo nixos-rebuild switch --flake .#jboedesk"
-      alias nrt="sudo nixos-rebuild test --flake .#jboedesk"
-      alias nrb="sudo nixos-rebuild boot --flake .#jboedesk"
+      # Initialize zoxide
+      eval "$(zoxide init zsh)"
+      
+      # NixOS specific aliases for nixpad (update hostname)
+      alias nrs="sudo nixos-rebuild switch --flake .#nixpad"
+      alias nrt="sudo nixos-rebuild test --flake .#nixpad"
+      alias nrb="sudo nixos-rebuild boot --flake .#nixpad"
       alias nfu="nix flake update"
       alias nfc="nix flake check"
     '';
