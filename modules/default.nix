@@ -28,8 +28,7 @@
 
     # System
     ./system/boot.nix
-    ./system/boot-optimization.nix
-    ./system/ultra-fast-boot.nix
+    ./system/safe-boot-optimization.nix
     ./system/insecure-packages.nix
     ./system/nix.nix
     ./system/printing.nix

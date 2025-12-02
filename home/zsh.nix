@@ -41,6 +41,9 @@
       grep = "grep --color=auto";
       nixos-rebuild = "sudo nixos-rebuild";
       nix-search = "nix search nixpkgs";
+      
+      # AI-assisted NixOS config editing
+      nixai = "cd ~/nixos && claude";
     };
     
     initContent = ''

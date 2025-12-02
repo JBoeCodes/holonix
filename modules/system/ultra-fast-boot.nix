@@ -4,17 +4,20 @@
   # Ultra-aggressive boot speed optimizations
   # WARNING: Some of these may reduce functionality for maximum speed
   
-  # Skip initrd completely where possible
-  boot.initrd.enable = lib.mkDefault false;
-  
-  # Minimal kernel modules for fastest boot
+  # Ultra-minimal initrd for fastest boot
   boot.initrd.includeDefaultModules = false;
   boot.initrd.availableKernelModules = lib.mkForce [
-    # Only essential storage drivers
+    # Only essential storage drivers for nixpad
     "nvme" "ahci" "xhci_pci" "usb_storage" "sd_mod" "sr_mod"
     # Essential filesystem support
     "ext4" "vfat"
+    # Intel graphics for nixpad
+    "i915"
   ];
+  
+  # Minimal initrd services
+  boot.initrd.systemd.enable = lib.mkDefault false;
+  boot.initrd.supportedFilesystems = lib.mkForce [ "ext4" "vfat" ];
   
   # Skip hardware detection delays
   hardware.enableRedistributableFirmware = lib.mkForce false;
