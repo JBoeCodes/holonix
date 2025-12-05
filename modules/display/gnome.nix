@@ -6,13 +6,13 @@ with lib;
   config = mkIf (elem config.networking.hostName ["jboebook" "nixpad"]) {
   # Enable the X11 windowing system
   services.xserver.enable = true;
-  
+
   # Enable GNOME Desktop Environment
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
+
   # Enable Wayland for GNOME (default but explicitly set)
-  services.xserver.displayManager.gdm.wayland = true;
+  services.displayManager.gdm.wayland = true;
   
   # GNOME services and integrations
   services.gnome.core-apps.enable = true;
@@ -89,7 +89,7 @@ with lib;
   };
   
   # Set default GNOME icon theme
-  services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
+  services.desktopManager.gnome.extraGSettingsOverrides = ''
     [org.gnome.desktop.interface]
     icon-theme='Adwaita'
   '';

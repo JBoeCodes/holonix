@@ -11,16 +11,11 @@ with lib;
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
-    
+
     extraPackages = with pkgs; [
-      # RADV Vulkan driver
-      amdvlk
-      # Mesa RADV and RadeonSI
+      # Mesa provides RADV (Vulkan) and RadeonSI (OpenGL) drivers
+      # RADV is enabled by default and replaced amdvlk
       mesa
-    ];
-    
-    extraPackages32 = with pkgs; [
-      driversi686Linux.amdvlk
     ];
   };
 

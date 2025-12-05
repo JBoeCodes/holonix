@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  # Safe boot optimization for NixOS 25.05
+  # Safe boot optimization for NixOS 25.11
   # Focuses on proven optimizations that don't break functionality
   
   # Safe kernel parameters for faster boot
@@ -14,12 +14,12 @@
   ];
   
   # Safe systemd optimizations
-  systemd.extraConfig = ''
+  systemd.settings.Manager = {
     # Reasonable timeout reductions (not aggressive)
-    DefaultTimeoutStartSec=30s
-    DefaultTimeoutStopSec=15s
-    DefaultRestartSec=2s
-  '';
+    DefaultTimeoutStartSec = "30s";
+    DefaultTimeoutStopSec = "15s";
+    DefaultRestartSec = "2s";
+  };
   
   # Optimize journald for speed while keeping functionality
   services.journald.extraConfig = ''
