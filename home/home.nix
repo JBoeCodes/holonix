@@ -3,9 +3,7 @@
 {
   imports = [
     ./alacritty.nix
-    ./kde.nix
     ./packages.nix
-    ./vr.nix
     ./zsh.nix
   ];
 

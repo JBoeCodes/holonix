@@ -14,10 +14,6 @@
 
   networking.hostName = "jboedesk";
 
-  # Enable VR support for desktop system
-  hardware.vr.enable = true;
-  hardware.alvr.enable = true;
-
   # All system configuration is now modularized in modules/
 
   # Enable touchpad support (enabled default in most desktopManager).

@@ -11,13 +11,11 @@
 
     # Hardware
     ./hardware/amd-graphics.nix
-    ./hardware/alvr.nix
     ./hardware/audio.nix
     ./hardware/imac-2015.nix
     ./hardware/intel-graphics.nix
     ./hardware/laptop-power.nix
     ./hardware/nvidia.nix
-    ./hardware/vr.nix
 
     # Network
     ./network/networking.nix

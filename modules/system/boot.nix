@@ -3,7 +3,7 @@
 {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  
+
   # Hide ACPI errors and reduce boot verbosity
   boot.kernelParams = [
     "quiet"

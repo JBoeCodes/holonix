@@ -60,9 +60,9 @@
   
   # Safe boot loader timeout reduction
   boot.loader.timeout = lib.mkDefault 2;
-  
-  # Keep only last 10 generations (reasonable cleanup)
-  boot.loader.systemd-boot.configurationLimit = 10;
+
+  # Keep only last 3 generations (small 96MB boot partition)
+  boot.loader.systemd-boot.configurationLimit = 3;
   
   # Safe power management for faster startup
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
@@ -75,7 +75,8 @@
   '';
   
   # Enable systemd in initrd for parallel initialization (safe)
-  boot.initrd.systemd.enable = true;
+  # DISABLED: Causes initrd to be too large for 96MB boot partition
+  # boot.initrd.systemd.enable = true;
   
   # Safe kernel optimizations
   boot.kernel.sysctl = {

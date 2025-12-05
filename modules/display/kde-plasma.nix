@@ -3,7 +3,7 @@
 with lib;
 
 {
-  config = mkIf (elem config.networking.hostName ["jboedesk" "jboeimac"]) {
+  config = mkIf (elem config.networking.hostName []) {
   # Enable the X11 windowing system
   services.xserver.enable = true;
   
