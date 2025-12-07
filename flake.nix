@@ -9,9 +9,11 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    matugen.url = "github:InioX/matugen";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs: 
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, matugen, ... }@inputs: 
   let
     pkgs-unstable = import nixpkgs-unstable {
       system = "x86_64-linux";

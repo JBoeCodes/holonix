@@ -2,9 +2,16 @@
 
 {
   imports = [
-    ./alacritty.nix
-    ./packages.nix
-    ./zsh.nix
+    ./modules/kitty.nix
+    ./modules/packages.nix
+    ./modules/zsh.nix
+    ./modules/fastfetch.nix
+    ./modules/matugen.nix
+    ./modules/hypr/hyprland.nix
+    ./modules/hypr/rofi.nix
+    ./modules/hypr/waybar.nix
+    ./modules/hypr/theme-picker.nix
+    ./modules/hypr/keybind-cheatsheet.nix
   ];
 
   home.username = "jboe";
@@ -15,34 +22,8 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
   };
 
-  # Home Manager can also manage your environment variables through
-  # 'home.sessionVariables'. These will be explicitly sourced when using a
-  # shell provided by Home Manager. If you don't want to manage your shell
-  # through Home Manager then you have to manually source
-  # 'hm-session-vars.sh' located at either
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/jboe/etc/profile.d/hm-session-vars.sh
-  #
   home.sessionVariables = {
     # EDITOR = "emacs";
   };
@@ -52,14 +33,8 @@
 
   # Configure programs managed by Home Manager
   programs = {
-    # Enable git if not already configured system-wide
-    # git = {
-    #   enable = true;
-    #   userName = "Your Name";
-    #   userEmail = "your.email@example.com";
-    # };
 
-    # Enable bash with home-manager
+  # Enable bash with home-manager
     bash = {
       enable = true;
       bashrcExtra = ''

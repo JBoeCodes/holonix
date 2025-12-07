@@ -42,18 +42,11 @@ with lib;
     gnome-music              # Music player
     totem                    # Video player (Videos app)
     
-    # GNOME extensions and customization
-    gnome-tweaks             # Advanced settings
-    gnome-shell-extensions   # Extensions manager
-    
     # Network and connectivity
     networkmanagerapplet     # NetworkManager GUI
-    
+
     # Development and productivity
     gnome-builder            # IDE
-    
-    # Communication
-    polari                   # IRC client
     
     # Graphics and multimedia
     gimp                     # Image editor
