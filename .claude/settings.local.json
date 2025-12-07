@@ -33,7 +33,9 @@
       "Bash(nix flake lock:*)",
       "Bash(hyprctl reload:*)",
       "Bash(fastfetch:*)",
-      "Bash(rofi:*)"
+      "Bash(rofi:*)",
+      "Bash(git push:*)",
+      "Bash(powerprofilesctl:*)"
     ],
     "deny": [],
     "ask": []

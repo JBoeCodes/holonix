@@ -13,7 +13,7 @@
 
         modules-left = [ "hyprland/workspaces" "hyprland/submap" ];
         modules-center = [ "hyprland/window" ];
-        modules-right = [ "pulseaudio" "network" "cpu" "memory" "battery" "clock" "tray" ];
+        modules-right = [ "pulseaudio" "network" "cpu" "memory" "custom/power-profile" "battery" "clock" "tray" ];
 
         "hyprland/workspaces" = {
           disable-scroll = true;
@@ -58,6 +58,14 @@
           format = "󰍛 {percentage}%";
           tooltip = true;
           tooltip-format = "RAM: {used:0.1f}G / {total:0.1f}G";
+        };
+
+        "custom/power-profile" = {
+          exec = "~/.local/bin/power-profile-get";
+          return-type = "json";
+          interval = 5;
+          on-click = "~/.local/bin/power-profile-cycle";
+          format = "{}";
         };
 
         battery = {
@@ -217,6 +225,55 @@
         color: #f38ba8;
         background: linear-gradient(135deg, rgba(243, 139, 168, 0.2), rgba(235, 160, 172, 0.2));
         box-shadow: 0 4px 16px rgba(243, 139, 168, 0.6);
+      }
+
+      /* Power Profile Indicator */
+      #custom-power-profile {
+        min-width: 18px;
+        min-height: 42px;
+        padding: 0 14px 0 10px;
+        margin: 0 2px;
+        border-radius: 12px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+      }
+
+      #custom-power-profile label {
+        padding: 0;
+        margin: 0;
+      }
+
+      #custom-power-profile.performance {
+        color: #f38ba8;
+        background: linear-gradient(135deg, rgba(243, 139, 168, 0.2), rgba(235, 160, 172, 0.2));
+        border: 1px solid rgba(243, 139, 168, 0.3);
+      }
+
+      #custom-power-profile.performance:hover {
+        background: linear-gradient(135deg, rgba(243, 139, 168, 0.3), rgba(235, 160, 172, 0.3));
+        box-shadow: 0 0 10px rgba(243, 139, 168, 0.4);
+      }
+
+      #custom-power-profile.balanced {
+        color: #89b4fa;
+        background: linear-gradient(135deg, rgba(137, 180, 250, 0.2), rgba(116, 199, 236, 0.2));
+        border: 1px solid rgba(137, 180, 250, 0.3);
+      }
+
+      #custom-power-profile.balanced:hover {
+        background: linear-gradient(135deg, rgba(137, 180, 250, 0.3), rgba(116, 199, 236, 0.3));
+        box-shadow: 0 0 10px rgba(137, 180, 250, 0.4);
+      }
+
+      #custom-power-profile.power-saver {
+        color: #a6e3a1;
+        background: linear-gradient(135deg, rgba(166, 227, 161, 0.2), rgba(148, 226, 213, 0.2));
+        border: 1px solid rgba(166, 227, 161, 0.3);
+      }
+
+      #custom-power-profile.power-saver:hover {
+        background: linear-gradient(135deg, rgba(166, 227, 161, 0.3), rgba(148, 226, 213, 0.3));
+        box-shadow: 0 0 10px rgba(166, 227, 161, 0.4);
       }
 
       #cpu {

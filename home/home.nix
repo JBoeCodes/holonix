@@ -12,6 +12,7 @@
     ./modules/hypr/waybar.nix
     ./modules/hypr/theme-picker.nix
     ./modules/hypr/keybind-cheatsheet.nix
+    ./modules/hypr/power-profile.nix
   ];
 
   home.username = "jboe";
