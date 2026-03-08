@@ -11,8 +11,17 @@
         system = "x86_64-linux";
         modules = [
           ./configuration.nix
-          ./modules/keyboard.nix
+          ./modules/audio.nix
+          ./modules/boot.nix
+          ./modules/desktop.nix
           ./modules/ghostty.nix
+          ./modules/keyboard.nix
+          ./modules/locale.nix
+          ./modules/networking.nix
+          ./modules/nvidia.nix
+          ./modules/packages.nix
+          ./modules/user.nix
+          ./modules/zsh.nix
         ];
       };
     };
