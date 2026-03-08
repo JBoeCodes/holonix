@@ -11,6 +11,7 @@
     unzip
     btop
     fastfetch
+    gh
     vlc
   ];
 
