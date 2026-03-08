@@ -40,6 +40,12 @@ modules/
 - `configuration.nix` should stay minimal (only base nix/nixpkgs settings and hardware import)
 - `nixpkgs.config.allowUnfree = true` is enabled
 
+## Important
+
+- All recommendations and config changes must target **NixOS 25.11** with **flakes**
+- Use options, syntax, and packages current as of **March 2026**
+- Do not suggest deprecated options or pre-flake patterns
+
 ## Git Workflow
 
 - **Remote**: `origin` → `git@github.com:JBoeCodes/holonix.git`
