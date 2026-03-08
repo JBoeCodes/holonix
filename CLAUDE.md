@@ -40,6 +40,12 @@ modules/
 - `configuration.nix` should stay minimal (only base nix/nixpkgs settings and hardware import)
 - `nixpkgs.config.allowUnfree = true` is enabled
 
+## Git Workflow
+
+- **Remote**: `origin` → `git@github.com:JBoeCodes/holonix.git`
+- **Branch**: `main`
+- After every config change, add, commit, and push to `origin main`
+
 ## Rebuild
 
 ```
