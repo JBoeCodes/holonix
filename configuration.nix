@@ -126,8 +126,7 @@
     _1password-cli
     git
     wget
-    ghostty
-    kitty
+kitty
     curl
     unzip
     btop

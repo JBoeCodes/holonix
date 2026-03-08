@@ -12,6 +12,7 @@
         modules = [
           ./configuration.nix
           ./modules/keyboard.nix
+          ./modules/ghostty.nix
         ];
       };
     };
