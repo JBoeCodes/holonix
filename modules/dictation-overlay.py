@@ -87,8 +87,7 @@ class DictationOverlay(Gtk.Application):
         self.window.set_decorated(False)
         self.window.add_css_class("dictation-overlay")
         self.window.set_can_focus(False)
-        self.window.fullscreened = True
-        self.window.set_fullscreened(True)
+        self.window.fullscreen()
 
         self.drawing_area = Gtk.DrawingArea()
         self.drawing_area.set_hexpand(True)
@@ -115,7 +114,7 @@ class DictationOverlay(Gtk.Application):
         self.stream.start()
 
         self.window.present()
-        self.window.set_fullscreened(True)
+        self.window.fullscreen()
         self.tick_id = GLib.timeout_add(1000 // FPS, self._tick)
 
     def _audio_callback(self, indata, frames, time_info, status):
