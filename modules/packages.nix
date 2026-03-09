@@ -23,7 +23,6 @@
     onlyoffice-desktopeditors
     obsidian
     obs-studio
-    flameshot
     ani-cli
     fzf
     ripgrep
