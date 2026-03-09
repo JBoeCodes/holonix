@@ -17,6 +17,7 @@
           ./modules/desktop.nix
           ./modules/ghostty.nix
           ./modules/keyboard.nix
+          ./modules/linux-whispr.nix
           ./modules/locale.nix
           ./modules/networking.nix
           ./modules/nvidia.nix
