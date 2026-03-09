@@ -19,8 +19,8 @@
         ];
       };
       settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-        name = "Flameshot Screenshot";
-        command = "sh -c 'QT_QPA_PLATFORM=wayland flameshot gui'";
+        name = "Screenshot";
+        command = "gnome-screenshot -a";
         binding = "<Super><Shift>s";
       };
     }];
