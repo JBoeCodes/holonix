@@ -3,6 +3,8 @@
 {
   users.users.jboe.packages = with pkgs; [
     claude-code
+    codex
+    gemini-cli
     git
     wget
     kitty
