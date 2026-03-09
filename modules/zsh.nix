@@ -23,7 +23,6 @@
     };
     interactiveShellInit = ''
       eval "$(zoxide init zsh)"
-      export GEMINI_API_KEY="$(op read 'op://Personal/Gemini JboeDesk/credential' 2>/dev/null)"
     '';
   };
 
