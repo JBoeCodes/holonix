@@ -30,10 +30,12 @@ let
       rich
       pygobject3
       pystray
+      dbus-python
     ];
 
     buildInputs = [
       pkgs.gtk4
+      pkgs.gtk4-layer-shell
       pkgs.libadwaita
       pkgs.portaudio
     ];
@@ -44,6 +46,7 @@ let
         pkgs.xdotool
         pkgs.xclip
       ])
+      "--set" "LD_PRELOAD" "${pkgs.gtk4-layer-shell}/lib/libgtk4-layer-shell.so"
     ];
 
     dontWrapGApps = true;
