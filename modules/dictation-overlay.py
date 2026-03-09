@@ -4,11 +4,8 @@
 States: idle (hidden) → recording (waveform) → transcribing (pulsing) → idle
 Controlled via D-Bus action: com.jboe.Dictation / toggle action
 
-Uses GTK4 Application's built-in D-Bus action support.
-Trigger with:
-  dbus-send --session --dest=com.jboe.Dictation
-    /com/jboe/Dictation org.freedesktop.Application.ActivateAction
-    string:toggle array:variant: dict:string:variant:
+The window is fullscreen + transparent. The pill bar is drawn at the
+bottom center via cairo, so GNOME's window placement doesn't matter.
 """
 
 import json
@@ -36,23 +33,14 @@ BAR_COUNT = 12
 BAR_WIDTH = 6
 BAR_GAP = 4
 BAR_MAX_HEIGHT = 28
-OVERLAY_WIDTH = 280
-OVERLAY_HEIGHT = 44
+BAR_AREA_WIDTH = 280
+BAR_AREA_HEIGHT = 44
+BOTTOM_MARGIN = 32
 FPS = 30
 
 CSS = """
-window.dictation-overlay, window.dictation-overlay headerbar {
+window.dictation-overlay {
     background-color: transparent;
-    box-shadow: none;
-    border: none;
-    padding: 0;
-    margin: 0;
-    min-height: 0;
-}
-label.transcribing {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 13px;
-    font-weight: 500;
 }
 """
 
@@ -66,15 +54,12 @@ class DictationOverlay(Gtk.Application):
         self.state = "idle"
         self.window = None
         self.drawing_area = None
-        self.label = None
-        self.stack = None
         self.rms_levels = [0.0] * BAR_COUNT
         self.recording_frames = []
         self.stream = None
         self.tick_id = None
         self.pulse_start = 0.0
 
-        # Register "toggle" action (available via D-Bus)
         action = Gio.SimpleAction.new("toggle", None)
         action.connect("activate", self._on_toggle_action)
         self.add_action(action)
@@ -99,28 +84,17 @@ class DictationOverlay(Gtk.Application):
 
     def _build_window(self):
         self.window = Gtk.Window(application=self)
-        self.window.set_default_size(OVERLAY_WIDTH, OVERLAY_HEIGHT)
-        self.window.set_resizable(False)
         self.window.set_decorated(False)
         self.window.add_css_class("dictation-overlay")
+        self.window.set_can_focus(False)
+        self.window.fullscreened = True
+        self.window.set_fullscreened(True)
 
-        self.stack = Gtk.Stack()
-        self.stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
-        self.stack.set_transition_duration(200)
-
-        # Waveform page
         self.drawing_area = Gtk.DrawingArea()
-        self.drawing_area.set_content_width(OVERLAY_WIDTH)
-        self.drawing_area.set_content_height(OVERLAY_HEIGHT)
-        self.drawing_area.set_draw_func(self._draw_waveform)
-        self.stack.add_named(self.drawing_area, "waveform")
-
-        # Transcribing page
-        self.label = Gtk.Label(label="Transcribing\u2026")
-        self.label.add_css_class("transcribing")
-        self.stack.add_named(self.label, "transcribing")
-
-        self.window.set_child(self.stack)
+        self.drawing_area.set_hexpand(True)
+        self.drawing_area.set_vexpand(True)
+        self.drawing_area.set_draw_func(self._draw)
+        self.window.set_child(self.drawing_area)
 
     def _toggle(self):
         if self.state == "idle":
@@ -140,8 +114,8 @@ class DictationOverlay(Gtk.Application):
         )
         self.stream.start()
 
-        self.stack.set_visible_child_name("waveform")
         self.window.present()
+        self.window.set_fullscreened(True)
         self.tick_id = GLib.timeout_add(1000 // FPS, self._tick)
 
     def _audio_callback(self, indata, frames, time_info, status):
@@ -151,40 +125,67 @@ class DictationOverlay(Gtk.Application):
         self.rms_levels.append(min(rms * 8.0, 1.0))
 
     def _tick(self):
-        if self.state == "recording":
+        if self.state in ("recording", "transcribing"):
             self.drawing_area.queue_draw()
-            return True
-        if self.state == "transcribing":
-            self.label.set_opacity(
-                0.5 + 0.5 * math.sin(time.monotonic() - self.pulse_start)
-            )
             return True
         return False
 
-    def _draw_waveform(self, area, cr, width, height):
-        # Draw rounded background
-        self._rounded_rect(cr, 0, 0, width, height, 22)
+    def _draw(self, area, cr, width, height):
+        # Entire window is transparent
+        cr.set_operator(0)  # CAIRO_OPERATOR_CLEAR
+        cr.paint()
+        cr.set_operator(2)  # CAIRO_OPERATOR_OVER
+
+        # Calculate pill position at bottom center
+        pill_x = (width - BAR_AREA_WIDTH) / 2.0
+        pill_y = height - BAR_AREA_HEIGHT - BOTTOM_MARGIN
+
+        if self.state == "recording":
+            self._draw_recording(cr, pill_x, pill_y)
+        elif self.state == "transcribing":
+            self._draw_transcribing(cr, pill_x, pill_y, width)
+
+    def _draw_recording(self, cr, pill_x, pill_y):
+        # Pill background
+        self._rounded_rect(cr, pill_x, pill_y, BAR_AREA_WIDTH, BAR_AREA_HEIGHT, 22)
         cr.set_source_rgba(0.118, 0.118, 0.118, 0.85)
         cr.fill()
 
         total_bars_width = BAR_COUNT * BAR_WIDTH + (BAR_COUNT - 1) * BAR_GAP
-        x_start = (width - total_bars_width) / 2.0
+        bars_x = pill_x + (BAR_AREA_WIDTH - total_bars_width) / 2.0
+        center_y = pill_y + BAR_AREA_HEIGHT / 2.0
 
         # Red recording dot
         cr.set_source_rgba(1.0, 0.3, 0.3, 0.95)
-        dot_x = x_start - 14
-        dot_y = height / 2.0
-        cr.arc(dot_x, dot_y, 4, 0, 2 * math.pi)
+        cr.arc(bars_x - 14, center_y, 4, 0, 2 * math.pi)
         cr.fill()
 
         # Waveform bars
         cr.set_source_rgba(1.0, 1.0, 1.0, 0.9)
         for i, level in enumerate(self.rms_levels):
             bar_h = max(4, level * BAR_MAX_HEIGHT)
-            x = x_start + i * (BAR_WIDTH + BAR_GAP)
-            y = (height - bar_h) / 2.0
+            x = bars_x + i * (BAR_WIDTH + BAR_GAP)
+            y = center_y - bar_h / 2.0
             self._rounded_rect(cr, x, y, BAR_WIDTH, bar_h, BAR_WIDTH / 2.0)
             cr.fill()
+
+    def _draw_transcribing(self, cr, pill_x, pill_y, win_width):
+        # Pill background
+        self._rounded_rect(cr, pill_x, pill_y, BAR_AREA_WIDTH, BAR_AREA_HEIGHT, 22)
+        cr.set_source_rgba(0.118, 0.118, 0.118, 0.85)
+        cr.fill()
+
+        # Pulsing "Transcribing..." text
+        alpha = 0.5 + 0.4 * math.sin((time.monotonic() - self.pulse_start) * 3)
+        cr.set_source_rgba(1.0, 1.0, 1.0, alpha)
+        cr.select_font_face("Sans", 0, 0)
+        cr.set_font_size(13)
+        text = "Transcribing\u2026"
+        extents = cr.text_extents(text)
+        tx = pill_x + (BAR_AREA_WIDTH - extents.width) / 2.0
+        ty = pill_y + (BAR_AREA_HEIGHT + extents.height) / 2.0
+        cr.move_to(tx, ty)
+        cr.show_text(text)
 
     @staticmethod
     def _rounded_rect(cr, x, y, w, h, r):
@@ -199,7 +200,6 @@ class DictationOverlay(Gtk.Application):
     def _stop_recording(self):
         self.state = "transcribing"
         self.pulse_start = time.monotonic()
-        self.stack.set_visible_child_name("transcribing")
 
         if self.stream:
             self.stream.stop()
@@ -263,7 +263,6 @@ class DictationOverlay(Gtk.Application):
         self.state = "idle"
 
         if text:
-            # Delay to let focus return to the previous window
             GLib.timeout_add(200, self._type_text, text)
 
     def _type_text(self, text):

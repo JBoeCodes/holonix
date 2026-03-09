@@ -12,7 +12,7 @@
 
   programs.dconf.profiles.user.databases = [{
     settings."org/gnome/shell" = {
-      enabled-extensions = [ "dash-to-dock@micxgx.gmail.com" "dictation-overlay@jboe" ];
+      enabled-extensions = [ "dash-to-dock@micxgx.gmail.com" ];
     };
   }];
 }
