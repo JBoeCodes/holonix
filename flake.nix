@@ -11,6 +11,7 @@
         system = "x86_64-linux";
         modules = [
           ./configuration.nix
+          ./modules/1password.nix
           ./modules/audio.nix
           ./modules/boot.nix
           ./modules/desktop.nix
