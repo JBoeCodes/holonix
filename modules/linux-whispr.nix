@@ -15,6 +15,15 @@ let
 
     build-system = [ pkgs.python3Packages.hatchling ];
 
+    postPatch = ''
+      # GNOME doesn't support the GlobalShortcuts portal — skip Wayland backend
+      # so it falls through to pynput
+      substituteInPlace src/linux_whispr/input/hotkey.py \
+        --replace-fail \
+          'if platform.display_server == DisplayServer.WAYLAND:' \
+          'if platform.display_server == DisplayServer.WAYLAND and "gnome" not in __import__("os").environ.get("XDG_CURRENT_DESKTOP", "").lower():'
+    '';
+
     nativeBuildInputs = [
       pkgs.wrapGAppsHook4
       pkgs.gobject-introspection
