@@ -71,6 +71,9 @@ let
     # Reload config
     keybind = ctrl+shift+comma=reload_config
 
+    # Working Directory
+    working-directory = /home/jboe/nixos
+
     # Performance
     scrollback-limit = 25000000
   '';
