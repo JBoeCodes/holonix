@@ -36,6 +36,8 @@
     cmatrix
     pipes-rs
     cbonsai
+    amberol
+    lollypop
   ];
 
   programs.firefox.enable = true;
