@@ -15,6 +15,7 @@
     heroic
     slack
     vlc
+    waveterm
   ];
 
   programs.firefox.enable = true;
