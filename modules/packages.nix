@@ -22,6 +22,16 @@
     obs-studio
     flameshot
     ani-cli
+    fzf
+    ripgrep
+    eza
+    bat
+    zoxide
+    duf
+    lazygit
+    cmatrix
+    pipes-rs
+    cbonsai
   ];
 
   programs.firefox.enable = true;
