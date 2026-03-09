@@ -27,6 +27,7 @@
     eza
     bat
     zoxide
+    fd
     duf
     lazygit
     cmatrix
