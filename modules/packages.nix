@@ -21,6 +21,7 @@
     cider-2
     zoom-us
     onlyoffice-desktopeditors
+    microsoft-edge
     obsidian
     obs-studio
     ani-cli
