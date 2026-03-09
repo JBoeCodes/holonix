@@ -50,6 +50,43 @@ let
     '';
   };
 
+  whisp-away-launcher = pkgs.writeShellScriptBin "whisp-away-launcher" ''
+    # Detect available VRAM (NVIDIA) or fall back to system RAM
+    VRAM_MB=0
+    if command -v nvidia-smi &>/dev/null; then
+      VRAM_MB=$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits 2>/dev/null | head -1 | tr -d ' ')
+    fi
+    if [ "$VRAM_MB" -eq 0 ] 2>/dev/null; then
+      # Fall back to system RAM
+      VRAM_MB=$(${pkgs.gawk}/bin/awk '/MemAvailable/ {printf "%d", $2/1024}' /proc/meminfo)
+    fi
+
+    # Select best model that fits comfortably in available memory
+    # Model VRAM requirements (approximate, including whisper.cpp overhead):
+    #   large-v3:  ~3000 MB    medium.en: ~1500 MB
+    #   small.en:  ~600 MB     base.en:   ~300 MB
+    #   tiny.en:   ~200 MB
+    if [ "$VRAM_MB" -ge 4000 ]; then
+      MODEL="large-v3"
+    elif [ "$VRAM_MB" -ge 2000 ]; then
+      MODEL="medium.en"
+    elif [ "$VRAM_MB" -ge 800 ]; then
+      MODEL="small.en"
+    elif [ "$VRAM_MB" -ge 400 ]; then
+      MODEL="base.en"
+    else
+      MODEL="tiny.en"
+    fi
+
+    echo "Detected ''${VRAM_MB}MB available, selecting model: $MODEL"
+
+    # Download model if not cached
+    ${whispAwayPkg}/bin/download-whisper-model "$MODEL"
+
+    # Start daemon with selected model
+    exec ${whispAwayPkg}/bin/whisp-away daemon --backend whisper-cpp --model "$MODEL"
+  '';
+
   dictate = pkgs.writeShellScriptBin "dictate" ''
     ${pkgs.glib}/bin/gdbus call --session \
       --dest=com.jboe.Dictation \
@@ -81,8 +118,7 @@ in
     wantedBy = [ "graphical-session.target" ];
     partOf = [ "graphical-session.target" ];
     serviceConfig = {
-      ExecStartPre = "${whispAwayPkg}/bin/download-whisper-model base.en";
-      ExecStart = "${whispAwayPkg}/bin/whisp-away daemon --backend whisper-cpp --model base.en";
+      ExecStart = "${whisp-away-launcher}/bin/whisp-away-launcher";
       Restart = "on-failure";
       RestartSec = 3;
     };
