@@ -1,0 +1,7 @@
+{
+  "uuid": "dictation-overlay@jboe",
+  "name": "Dictation Overlay Positioner",
+  "description": "Pins the dictation overlay to bottom-center, always-on-top",
+  "shell-version": ["49"],
+  "version": 1
+}

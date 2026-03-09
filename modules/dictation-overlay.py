@@ -142,54 +142,7 @@ class DictationOverlay(Gtk.Application):
 
         self.stack.set_visible_child_name("waveform")
         self.window.present()
-        # Position at bottom-center and set always-on-top via GNOME Shell
-        GLib.timeout_add(50, self._position_and_pin)
         self.tick_id = GLib.timeout_add(1000 // FPS, self._tick)
-
-    def _position_and_pin(self):
-        """Use GNOME Shell eval to move window to bottom-center and make always-on-top."""
-        js = """
-        (function() {
-            let start = Date.now();
-            while (Date.now() - start < 500) {
-                let start_inner = Date.now();
-                let found = false;
-                for (let actor of global.get_window_actors()) {
-                    let win = actor.get_meta_window();
-                    if (win && win.get_title() === '' && win.get_wm_class_instance() === 'com.jboe.Dictation') {
-                        let monitor = win.get_monitor();
-                        let work = global.display.get_monitor_geometry(monitor);
-                        let frame = win.get_frame_rect();
-                        let x = work.x + Math.round((work.width - frame.width) / 2);
-                        let y = work.y + work.height - frame.height - 32;
-                        win.move_frame(true, x, y);
-                        win.make_above();
-                        win.stick();
-                        return 'ok';
-                    }
-                }
-                // spin-wait briefly for window to appear
-                while (Date.now() - start_inner < 50) {}
-            }
-            return 'not_found';
-        })()
-        """
-        try:
-            bus = Gio.bus_get_sync(Gio.BusType.SESSION)
-            bus.call_sync(
-                "org.gnome.Shell",
-                "/org/gnome/Shell",
-                "org.gnome.Shell",
-                "Eval",
-                GLib.Variant("(s)", (js,)),
-                GLib.VariantType("(bs)"),
-                Gio.DBusCallFlags.NONE,
-                2000,
-                None,
-            )
-        except Exception as e:
-            print(f"GNOME Shell eval failed: {e}")
-        return False  # don't repeat
 
     def _audio_callback(self, indata, frames, time_info, status):
         self.recording_frames.append(indata.copy())

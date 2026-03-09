@@ -50,6 +50,17 @@ let
     '';
   };
 
+  dictation-gnome-ext = pkgs.stdenv.mkDerivation {
+    pname = "gnome-shell-extension-dictation-overlay";
+    version = "1";
+    src = ./dictation-gnome-ext;
+    dontBuild = true;
+    installPhase = ''
+      mkdir -p $out/share/gnome-shell/extensions/dictation-overlay@jboe
+      cp metadata.json extension.js $out/share/gnome-shell/extensions/dictation-overlay@jboe/
+    '';
+  };
+
   dictate = pkgs.writeShellScriptBin "dictate" ''
     ${pkgs.glib}/bin/gdbus call --session \
       --dest=com.jboe.Dictation \
@@ -62,6 +73,7 @@ in
   users.users.jboe.packages = [
     dictate
     whispAwayPkg
+    dictation-gnome-ext
   ];
 
   # ydotool daemon for simulating keypresses on GNOME Wayland
