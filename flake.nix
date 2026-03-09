@@ -15,6 +15,7 @@
           ./modules/audio.nix
           ./modules/boot.nix
           ./modules/desktop.nix
+          ./modules/firefox.nix
           ./modules/ghostty.nix
           ./modules/dictation.nix
           ./modules/keyboard.nix
