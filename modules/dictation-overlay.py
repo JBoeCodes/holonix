@@ -2,11 +2,13 @@
 """Dictation overlay — Wispr Flow-style animated waveform bar.
 
 States: idle (hidden) → recording (waveform) → transcribing (pulsing) → idle
-Controlled via D-Bus: com.jboe.Dictation / Toggle method
+Controlled via D-Bus action: com.jboe.Dictation / toggle action
 
-Uses a plain GTK4 window (GNOME doesn't support wlr-layer-shell).
-The window is undecorated, transparent, always-on-top, and positioned
-at the bottom center of the screen.
+Uses GTK4 Application's built-in D-Bus action support.
+Trigger with:
+  dbus-send --session --dest=com.jboe.Dictation
+    /com/jboe/Dictation org.freedesktop.Application.ActivateAction
+    string:toggle array:variant: dict:string:variant:
 """
 
 import json
@@ -19,15 +21,10 @@ import threading
 import time
 import wave
 
-import dbus
-import dbus.service
-from dbus.mainloop.glib import DBusGMainLoop
-DBusGMainLoop(set_as_default=True)
-
 import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Gdk", "4.0")
-from gi.repository import Gdk, GLib, Gtk
+from gi.repository import Gdk, Gio, GLib, Gtk
 
 import numpy as np
 import sounddevice as sd
@@ -62,7 +59,10 @@ label.transcribing {
 
 class DictationOverlay(Gtk.Application):
     def __init__(self):
-        super().__init__(application_id="com.jboe.Dictation")
+        super().__init__(
+            application_id="com.jboe.Dictation",
+            flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
+        )
         self.state = "idle"
         self.window = None
         self.drawing_area = None
@@ -74,10 +74,19 @@ class DictationOverlay(Gtk.Application):
         self.tick_id = None
         self.pulse_start = 0.0
 
+        # Register "toggle" action (available via D-Bus)
+        action = Gio.SimpleAction.new("toggle", None)
+        action.connect("activate", self._on_toggle_action)
+        self.add_action(action)
+
+    def _on_toggle_action(self, action, param):
+        self._toggle()
+
     def do_activate(self):
+        if self.window is not None:
+            return
         self._setup_css()
         self._build_window()
-        self._register_dbus()
         self.window.set_visible(False)
 
     def _setup_css(self):
@@ -112,39 +121,6 @@ class DictationOverlay(Gtk.Application):
         self.stack.add_named(self.label, "transcribing")
 
         self.window.set_child(self.stack)
-
-    def _position_window(self):
-        """Position window at bottom center after it's mapped."""
-        surface = self.window.get_surface()
-        if surface is None:
-            return
-        display = Gdk.Display.get_default()
-        monitor = display.get_monitor_at_surface(surface)
-        if monitor is None:
-            return
-        geom = monitor.get_geometry()
-        x = geom.x + (geom.width - OVERLAY_WIDTH) // 2
-        y = geom.y + geom.height - OVERLAY_HEIGHT - 32
-
-        # Use GDK Toplevel to position (best-effort on Wayland)
-        toplevel = surface
-        if hasattr(toplevel, "inhibit_system_shortcuts"):
-            toplevel.inhibit_system_shortcuts(None)
-
-    def _register_dbus(self):
-        bus = dbus.SessionBus()
-
-        class DictationService(dbus.service.Object):
-            def __init__(svc, overlay, bus_name):
-                svc.overlay = overlay
-                super().__init__(bus_name, "/com/jboe/Dictation")
-
-            @dbus.service.method("com.jboe.Dictation", in_signature="", out_signature="")
-            def Toggle(svc):
-                GLib.idle_add(svc.overlay._toggle)
-
-        bus_name = dbus.service.BusName("com.jboe.Dictation", bus)
-        self._dbus_service = DictationService(self, bus_name)
 
     def _toggle(self):
         if self.state == "idle":

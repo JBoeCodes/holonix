@@ -7,7 +7,6 @@ let
     ps.pygobject3
     ps.numpy
     ps.sounddevice
-    ps.dbus-python
   ]);
 
   dictation-overlay = pkgs.stdenv.mkDerivation {
@@ -54,7 +53,8 @@ let
   dictate = pkgs.writeShellScriptBin "dictate" ''
     ${pkgs.dbus}/bin/dbus-send --session --type=method_call \
       --dest=com.jboe.Dictation /com/jboe/Dictation \
-      com.jboe.Dictation.Toggle
+      org.freedesktop.Application.ActivateAction \
+      string:toggle 'array:variant:' 'dict:string:variant:'
   '';
 in
 {
