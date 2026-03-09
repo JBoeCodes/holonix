@@ -263,7 +263,8 @@ class DictationOverlay(Gtk.Application):
         self.state = "idle"
 
         if text:
-            self._type_text(text)
+            # Delay to let focus return to the previous window
+            GLib.timeout_add(200, self._type_text, text)
 
     def _type_text(self, text):
         ydotool = os.environ.get("YDOTOOL_PATH", "ydotool")
