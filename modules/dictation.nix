@@ -46,7 +46,7 @@ let
     preFixup = ''
       gappsWrapperArgs+=(
         --prefix GI_TYPELIB_PATH : "${pkgs.gtk4}/lib/girepository-1.0:${pkgs.gtk4-layer-shell}/lib/girepository-1.0"
-        --prefix LD_LIBRARY_PATH : "${pkgs.gtk4-layer-shell}/lib"
+        --set LD_PRELOAD "${pkgs.gtk4-layer-shell}/lib/libgtk4-layer-shell.so"
         --set YDOTOOL_PATH "${pkgs.ydotool}/bin/ydotool"
         --set WL_COPY_PATH "${pkgs.wl-clipboard}/bin/wl-copy"
       )
@@ -82,6 +82,7 @@ in
     wantedBy = [ "graphical-session.target" ];
     partOf = [ "graphical-session.target" ];
     serviceConfig = {
+      ExecStartPre = "${whispAwayPkg}/bin/download-whisper-model base.en";
       ExecStart = "${whispAwayPkg}/bin/whisp-away daemon --backend whisper-cpp --model base.en";
       Restart = "on-failure";
       RestartSec = 3;
