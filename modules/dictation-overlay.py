@@ -19,6 +19,11 @@ import threading
 import time
 import wave
 
+import dbus
+import dbus.service
+from dbus.mainloop.glib import DBusGMainLoop
+DBusGMainLoop(set_as_default=True)
+
 import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Gdk", "4.0")
@@ -127,11 +132,6 @@ class DictationOverlay(Gtk.Application):
             toplevel.inhibit_system_shortcuts(None)
 
     def _register_dbus(self):
-        import dbus
-        import dbus.service
-        from dbus.mainloop.glib import DBusGMainLoop
-
-        DBusGMainLoop(set_as_default=True)
         bus = dbus.SessionBus()
 
         class DictationService(dbus.service.Object):
