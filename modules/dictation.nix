@@ -47,7 +47,7 @@ let
       echo "Copying to clipboard and typing text..."
       echo -n "$TEXT" | $WL_COPY
       sleep 0.1
-      $YDOTOOL type -- "$TEXT" || echo "ydotool type failed: $?"
+      $YDOTOOL type -d 0 -H 0 -- "$TEXT" || echo "ydotool type failed: $?"
 
       $NOTIFY -t 3000 "Dictation" "$TEXT"
       echo "Done."
