@@ -44,11 +44,10 @@ let
         exit 0
       fi
 
-      echo "Copying to clipboard..."
+      echo "Copying to clipboard and typing text..."
       echo -n "$TEXT" | $WL_COPY
-      sleep 0.2
-      echo "Simulating Ctrl+V..."
-      $YDOTOOL key 29:1 47:1 47:0 29:0 || echo "ydotool failed: $?"
+      sleep 0.1
+      $YDOTOOL type -- "$TEXT" || echo "ydotool type failed: $?"
 
       $NOTIFY -t 3000 "Dictation" "$TEXT"
       echo "Done."
