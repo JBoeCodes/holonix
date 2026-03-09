@@ -13,6 +13,9 @@
       settings."org/gnome/desktop/input-sources" = {
         xkb-options = [ "altwin:swap_alt_win" ];
       };
+      settings."org/gnome/mutter" = {
+        overlay-key = "";
+      };
       settings."org/gnome/shell/keybindings" = {
         show-screenshot-ui = [ "<Super><Shift>s" ];
       };
