@@ -17,6 +17,7 @@
     vlc
     waveterm
     cider-2
+    zoom-us
   ];
 
   programs.firefox.enable = true;
