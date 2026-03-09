@@ -6,7 +6,7 @@
     shellAliases = {
       cx = "claude --dangerously-skip-permissions";
       cc = "claude";
-      nrs = "sudo nixos-rebuild switch --flake .#jboedesk";
+      nrs = "sudo nixos-rebuild switch --flake ~/nixos#jboedesk";
     };
   };
 
