@@ -4,6 +4,7 @@
   users.users.jboe.packages = with pkgs; [
     claude-code
     _1password-cli
+    _1password-gui
     git
     wget
     kitty
