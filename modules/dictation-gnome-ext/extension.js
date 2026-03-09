@@ -1,5 +1,3 @@
-import Meta from 'gi://Meta';
-
 const APP_ID = 'com.jboe.Dictation';
 const BOTTOM_MARGIN = 32;
 
@@ -25,14 +23,29 @@ export default class DictationPositioner {
         }
     }
 
+    _isDictationWindow(win) {
+        if (!win)
+            return false;
+
+        const gtkId = win.get_gtk_application_id?.() || '';
+        if (gtkId === APP_ID)
+            return true;
+
+        const sandboxId = win.get_sandboxed_app_id?.() || '';
+        if (sandboxId === APP_ID)
+            return true;
+
+        const wmClass = (win.get_wm_class() || '').toLowerCase();
+        const wmInstance = (win.get_wm_class_instance() || '').toLowerCase();
+        if (wmClass.includes('dictation') || wmInstance.includes('dictation'))
+            return true;
+
+        return false;
+    }
+
     _onWindowCreated(win) {
-        if (!win || win.get_sandboxed_app_id() !== APP_ID) {
-            // Also try WM class as fallback
-            const wmClass = (win?.get_wm_class() || '').toLowerCase();
-            const wmInstance = (win?.get_wm_class_instance() || '').toLowerCase();
-            if (!wmClass.includes('dictation') && !wmInstance.includes('dictation'))
-                return;
-        }
+        if (!this._isDictationWindow(win))
+            return;
 
         // Wait for the window to have a frame before positioning
         const id = win.connect('position-changed', () => {
