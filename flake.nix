@@ -15,6 +15,7 @@
           ./modules/boot.nix
           ./modules/desktop.nix
           ./modules/ghostty.nix
+          ./modules/heroic.nix
           ./modules/keyboard.nix
           ./modules/locale.nix
           ./modules/networking.nix
