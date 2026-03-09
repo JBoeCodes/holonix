@@ -6,6 +6,7 @@
     codex
     gemini-cli
     git
+    opencode
     wget
     kitty
     curl
