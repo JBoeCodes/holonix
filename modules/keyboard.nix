@@ -10,6 +10,15 @@
   programs.dconf = {
     enable = true;
     profiles.user.databases = [{
+      locks = [
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/name"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/binding"
+      ];
       settings."org/gnome/desktop/input-sources" = {
         xkb-options = [ "altwin:swap_alt_win" ];
       };

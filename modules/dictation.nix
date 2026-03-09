@@ -12,7 +12,7 @@ let
 
     NOTIFY="${pkgs.libnotify}/bin/notify-send"
     SOX="${pkgs.sox}/bin/rec"
-    WHISPER="${pkgs.whisper-cpp}/bin/whisper-cpp"
+    WHISPER="${pkgs.whisper-cpp}/bin/whisper-cli"
     WL_COPY="${pkgs.wl-clipboard}/bin/wl-copy"
     WTYPE="${pkgs.wtype}/bin/wtype"
 
