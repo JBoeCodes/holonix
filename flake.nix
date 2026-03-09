@@ -3,12 +3,14 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    whisp-away.url = "github:madjinn/whisp-away";
   };
 
-  outputs = { self, nixpkgs, ... }@inputs: {
+  outputs = { self, nixpkgs, whisp-away, ... }@inputs: {
     nixosConfigurations = {
       jboedesk = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs = { inherit whisp-away; };
         modules = [
           ./configuration.nix
           ./modules/1password.nix
