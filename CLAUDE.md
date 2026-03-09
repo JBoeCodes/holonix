@@ -11,18 +11,19 @@ flake.nix                  # Flake entry point, imports all modules
 configuration.nix          # Minimal base config (flakes, unfree, stateVersion, hardware import)
 hardware-configuration.nix # Auto-generated hardware config (do not edit)
 modules/
+  1password.nix            # 1Password CLI + GUI (polkit for jboe)
   audio.nix                # PipeWire audio (with PulseAudio/ALSA compat)
   boot.nix                 # systemd-boot, EFI, kernel packages
   desktop.nix              # GNOME desktop, GDM, printing
   ghostty.nix              # Ghostty terminal (config via activation script)
-  keyboard.nix             # Keyboard layout (US, Alt/Win swap via XKB + dconf)
+  keyboard.nix             # Keyboard/shortcuts (XKB, dconf keybindings, custom shortcuts)
   locale.nix               # Timezone (America/New_York) and locale (en_US.UTF-8)
   networking.nix           # Hostname (jboedesk), NetworkManager
   nvidia.nix               # NVIDIA GPU (open kernel module, modesetting)
   packages.nix             # User packages and programs (firefox, heroic, cli tools, etc.)
   steam.nix                # Steam, Gamescope, GameMode
   user.nix                 # User account definition (jboe)
-  zsh.nix                  # Zsh shell config with aliases (cx, cc)
+  zsh.nix                  # Zsh shell config with aliases (cx, cc, nrs, oc, lg, etc.)
 ```
 
 ## Key Details
@@ -32,6 +33,18 @@ modules/
 - **Shell**: Zsh
 - **Terminal**: Ghostty (Catppuccin theme, JetBrains Mono Nerd Font)
 - **User**: `jboe` (groups: networkmanager, wheel)
+
+## Custom Keybindings (keyboard.nix)
+
+- **Alt/Win swap**: `altwin:swap_alt_win` (XKB + dconf)
+- **Super+Shift+S**: Screenshot UI
+- **Super+W**: Close window
+- **Ctrl+Shift+Space**: 1Password Quick Access (custom keybinding)
+- GNOME overlay key disabled (to avoid Super key conflicts)
+
+## External Config (not in this repo)
+
+- `~/.config/environment.d/gemini.conf` — Gemini API key (kept out of git)
 
 ## Conventions
 
