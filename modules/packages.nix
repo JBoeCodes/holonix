@@ -18,6 +18,7 @@
     waveterm
     cider-2
     zoom-us
+    onlyoffice-desktopeditors
   ];
 
   programs.firefox.enable = true;
