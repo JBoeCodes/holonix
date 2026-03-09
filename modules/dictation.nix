@@ -108,11 +108,11 @@ in
     description = "Dictation overlay (GTK4 waveform bar)";
     wantedBy = [ "graphical-session.target" ];
     partOf = [ "graphical-session.target" ];
-    after = [ "whisp-away-daemon.service" "ydotoold.service" ];
+    after = [ "whisp-away-daemon.service" "ydotoold.service" "gnome-session-initialized.target" ];
     serviceConfig = {
       ExecStart = "${dictation-overlay}/bin/dictation-overlay";
-      Restart = "on-failure";
-      RestartSec = 2;
+      Restart = "always";
+      RestartSec = 3;
     };
   };
 }
