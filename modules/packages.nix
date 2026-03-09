@@ -16,6 +16,7 @@
     slack
     vlc
     waveterm
+    cider-2
   ];
 
   programs.firefox.enable = true;
