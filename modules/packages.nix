@@ -13,6 +13,7 @@
     fastfetch
     gh
     heroic
+    slack
     vlc
   ];
 
