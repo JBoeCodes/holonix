@@ -19,6 +19,9 @@
       settings."org/gnome/shell/keybindings" = {
         show-screenshot-ui = [ "<Super><Shift>s" ];
       };
+      settings."org/gnome/desktop/wm/keybindings" = {
+        close = [ "<Super>w" ];
+      };
       settings."org/gnome/settings-daemon/plugins/media-keys" = {
         custom-keybindings = [
           "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
