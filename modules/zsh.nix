@@ -3,6 +3,9 @@
 {
   programs.zsh = {
     enable = true;
+    enableCompletion = true;
+    autosuggestions.enable = true;
+    syntaxHighlighting.enable = true;
     shellAliases = {
       cx = "claude --dangerously-skip-permissions";
       cc = "claude";
