@@ -3,14 +3,13 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    whisp-away.url = "github:madjinn/whisp-away";
+    whisp-overlay.url = "github:JBoeCodes/whisp-overlay";
   };
 
-  outputs = { self, nixpkgs, whisp-away, ... }@inputs: {
+  outputs = { self, nixpkgs, whisp-overlay, ... }@inputs: {
     nixosConfigurations = {
       jboedesk = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit whisp-away; };
         modules = [
           ./configuration.nix
           ./modules/1password.nix
@@ -19,7 +18,7 @@
           ./modules/desktop.nix
           ./modules/firefox.nix
           ./modules/ghostty.nix
-          ./modules/dictation.nix
+          whisp-overlay.nixosModules.default
           ./modules/keyboard.nix
           ./modules/locale.nix
           ./modules/networking.nix
