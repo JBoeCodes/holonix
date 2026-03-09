@@ -19,7 +19,8 @@ modules/
   locale.nix               # Timezone (America/New_York) and locale (en_US.UTF-8)
   networking.nix           # Hostname (jboedesk), NetworkManager
   nvidia.nix               # NVIDIA GPU (open kernel module, modesetting)
-  packages.nix             # User packages and programs (firefox, cli tools, etc.)
+  packages.nix             # User packages and programs (firefox, heroic, cli tools, etc.)
+  steam.nix                # Steam, Gamescope, GameMode
   user.nix                 # User account definition (jboe)
   zsh.nix                  # Zsh shell config with aliases (cx, cc)
 ```
@@ -36,7 +37,8 @@ modules/
 
 - Each concern gets its own module in `modules/` and is imported in `flake.nix`
 - Modules use the standard NixOS module pattern: `{ pkgs, ... }: { ... }`
-- User packages go in `modules/packages.nix`
+- User packages go in `modules/packages.nix` — only create a separate module if the package needs its own config options
+- Drives: `/mnt/other`, `/mnt/projects`, `/mnt/steam` (defined in hardware-configuration.nix)
 - `configuration.nix` should stay minimal (only base nix/nixpkgs settings and hardware import)
 - `nixpkgs.config.allowUnfree = true` is enabled
 
