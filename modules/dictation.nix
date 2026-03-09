@@ -51,10 +51,11 @@ let
   };
 
   dictate = pkgs.writeShellScriptBin "dictate" ''
-    ${pkgs.dbus}/bin/dbus-send --session --type=method_call \
-      --dest=com.jboe.Dictation /com/jboe/Dictation \
-      org.freedesktop.Application.ActivateAction \
-      string:toggle 'array:variant:' 'dict:string:variant:'
+    ${pkgs.glib}/bin/gdbus call --session \
+      --dest=com.jboe.Dictation \
+      --object-path /com/jboe/Dictation \
+      --method org.freedesktop.Application.ActivateAction \
+      toggle '[]' '{}'
   '';
 in
 {
