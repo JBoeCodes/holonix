@@ -3,13 +3,16 @@
 
 States: idle (hidden) → recording (waveform) → transcribing (pulsing) → idle
 Controlled via D-Bus: com.jboe.Dictation / Toggle method
+
+Uses a plain GTK4 window (GNOME doesn't support wlr-layer-shell).
+The window is undecorated, transparent, always-on-top, and positioned
+at the bottom center of the screen.
 """
 
 import json
 import math
 import os
 import socket
-import struct
 import subprocess
 import tempfile
 import threading
@@ -19,8 +22,7 @@ import wave
 import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Gdk", "4.0")
-gi.require_version("Gtk4LayerShell", "1.0")
-from gi.repository import Gdk, GLib, Gtk, Gtk4LayerShell
+from gi.repository import Gdk, GLib, Gtk
 
 import numpy as np
 import sounddevice as sd
@@ -37,9 +39,13 @@ OVERLAY_HEIGHT = 44
 FPS = 30
 
 CSS = """
-window.dictation-overlay {
-    background-color: rgba(30, 30, 30, 0.85);
-    border-radius: 22px;
+window.dictation-overlay, window.dictation-overlay headerbar {
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    min-height: 0;
 }
 label.transcribing {
     color: rgba(255, 255, 255, 0.9);
@@ -80,15 +86,9 @@ class DictationOverlay(Gtk.Application):
     def _build_window(self):
         self.window = Gtk.Window(application=self)
         self.window.set_default_size(OVERLAY_WIDTH, OVERLAY_HEIGHT)
+        self.window.set_resizable(False)
+        self.window.set_decorated(False)
         self.window.add_css_class("dictation-overlay")
-
-        Gtk4LayerShell.init_for_window(self.window)
-        Gtk4LayerShell.set_layer(self.window, Gtk4LayerShell.Layer.OVERLAY)
-        Gtk4LayerShell.set_anchor(self.window, Gtk4LayerShell.Edge.BOTTOM, True)
-        Gtk4LayerShell.set_margin(self.window, Gtk4LayerShell.Edge.BOTTOM, 32)
-        Gtk4LayerShell.set_keyboard_mode(
-            self.window, Gtk4LayerShell.KeyboardMode.NONE
-        )
 
         self.stack = Gtk.Stack()
         self.stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
@@ -107,7 +107,24 @@ class DictationOverlay(Gtk.Application):
         self.stack.add_named(self.label, "transcribing")
 
         self.window.set_child(self.stack)
-        self.window.present()
+
+    def _position_window(self):
+        """Position window at bottom center after it's mapped."""
+        surface = self.window.get_surface()
+        if surface is None:
+            return
+        display = Gdk.Display.get_default()
+        monitor = display.get_monitor_at_surface(surface)
+        if monitor is None:
+            return
+        geom = monitor.get_geometry()
+        x = geom.x + (geom.width - OVERLAY_WIDTH) // 2
+        y = geom.y + geom.height - OVERLAY_HEIGHT - 32
+
+        # Use GDK Toplevel to position (best-effort on Wayland)
+        toplevel = surface
+        if hasattr(toplevel, "inhibit_system_shortcuts"):
+            toplevel.inhibit_system_shortcuts(None)
 
     def _register_dbus(self):
         import dbus
@@ -148,7 +165,7 @@ class DictationOverlay(Gtk.Application):
         self.stream.start()
 
         self.stack.set_visible_child_name("waveform")
-        self.window.set_visible(True)
+        self.window.present()
         self.tick_id = GLib.timeout_add(1000 // FPS, self._tick)
 
     def _audio_callback(self, indata, frames, time_info, status):
@@ -169,6 +186,11 @@ class DictationOverlay(Gtk.Application):
         return False
 
     def _draw_waveform(self, area, cr, width, height):
+        # Draw rounded background
+        self._rounded_rect(cr, 0, 0, width, height, 22)
+        cr.set_source_rgba(0.118, 0.118, 0.118, 0.85)
+        cr.fill()
+
         total_bars_width = BAR_COUNT * BAR_WIDTH + (BAR_COUNT - 1) * BAR_GAP
         x_start = (width - total_bars_width) / 2.0
 

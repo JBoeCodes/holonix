@@ -23,7 +23,6 @@ let
 
     buildInputs = [
       pkgs.gtk4
-      pkgs.gtk4-layer-shell
       pkgs.portaudio
       pkgs.glib
     ];
@@ -45,8 +44,7 @@ let
 
     preFixup = ''
       gappsWrapperArgs+=(
-        --prefix GI_TYPELIB_PATH : "${pkgs.gtk4}/lib/girepository-1.0:${pkgs.gtk4-layer-shell}/lib/girepository-1.0"
-        --set LD_PRELOAD "${pkgs.gtk4-layer-shell}/lib/libgtk4-layer-shell.so"
+        --prefix GI_TYPELIB_PATH : "${pkgs.gtk4}/lib/girepository-1.0"
         --set YDOTOOL_PATH "${pkgs.ydotool}/bin/ydotool"
         --set WL_COPY_PATH "${pkgs.wl-clipboard}/bin/wl-copy"
       )
@@ -92,7 +90,7 @@ in
     };
   };
 
-  # Dictation overlay (GTK4 Layer Shell waveform bar)
+  # Dictation overlay (GTK4 waveform bar)
   systemd.user.services.dictation-overlay = {
     description = "Dictation overlay (GTK4 waveform bar)";
     wantedBy = [ "graphical-session.target" ];
