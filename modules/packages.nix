@@ -12,6 +12,7 @@
     btop
     fastfetch
     gh
+    heroic
     vlc
   ];
 
