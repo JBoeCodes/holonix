@@ -51,10 +51,10 @@ let
     # Splits
     keybind = ctrl+d=new_split:right
     keybind = ctrl+shift+d=new_split:down
-    keybind = ctrl+alt+left=goto_split:left
-    keybind = ctrl+alt+right=goto_split:right
-    keybind = ctrl+alt+up=goto_split:top
-    keybind = ctrl+alt+down=goto_split:bottom
+    keybind = ctrl+left=goto_split:left
+    keybind = ctrl+right=goto_split:right
+    keybind = ctrl+up=goto_split:top
+    keybind = ctrl+down=goto_split:bottom
 
     # Font size
     keybind = ctrl+plus=increase_font_size:1
