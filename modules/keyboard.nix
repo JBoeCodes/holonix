@@ -25,12 +25,18 @@
       settings."org/gnome/settings-daemon/plugins/media-keys" = {
         custom-keybindings = [
           "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
         ];
       };
       settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
         name = "1Password Quick Access";
         command = "1password --quick-access";
         binding = "<Control><Shift>space";
+      };
+      settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
+        name = "Dictation";
+        command = "dictate";
+        binding = "<Super>d";
       };
     }];
   };
