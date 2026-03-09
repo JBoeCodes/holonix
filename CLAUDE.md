@@ -69,6 +69,9 @@ modules/
 
 ## Rebuild
 
+**Do NOT run `sudo nixos-rebuild` or any `nixos-*` commands.** The user will rebuild manually. Your job ends at commit and push.
+
+Rebuild command (for the user):
 ```
 sudo nixos-rebuild switch --flake .
 ```
