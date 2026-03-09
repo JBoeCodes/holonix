@@ -18,7 +18,7 @@
       grep = "rg";
       find = "fd";
       df = "duf";
-      code = "opencode";
+      oc = "opencode";
       lg = "lazygit";
     };
     interactiveShellInit = ''
