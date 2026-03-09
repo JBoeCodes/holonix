@@ -14,6 +14,7 @@
           ./modules/audio.nix
           ./modules/boot.nix
           ./modules/desktop.nix
+          ./modules/flatpak.nix
           ./modules/ghostty.nix
           ./modules/keyboard.nix
           ./modules/locale.nix
