@@ -14,7 +14,7 @@ let
     SOX="${pkgs.sox}/bin/rec"
     WHISPER="${pkgs.whisper-cpp}/bin/whisper-cli"
     WL_COPY="${pkgs.wl-clipboard}/bin/wl-copy"
-    WTYPE="${pkgs.wtype}/bin/wtype"
+    YDOTOOL="${pkgs.ydotool}/bin/ydotool"
 
     PID_FILE="${pidFile}"
     WAV_FILE="${wavFile}"
@@ -39,7 +39,7 @@ let
       # Copy to clipboard and paste
       echo -n "$TEXT" | $WL_COPY
       sleep 0.1
-      $WTYPE -M ctrl v -m ctrl
+      $YDOTOOL key 29:1 47:1 47:0 29:0
 
       $NOTIFY -t 3000 "Dictation" "$TEXT"
     else
@@ -58,6 +58,17 @@ let
 in
 {
   users.users.jboe.packages = [ dictate ];
+
+  # ydotool daemon needed for simulating keypresses on GNOME Wayland
+  systemd.user.services.ydotoold = {
+    description = "ydotoold - ydotool daemon";
+    wantedBy = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.ydotool}/bin/ydotoold";
+      Restart = "on-failure";
+    };
+  };
 
   system.activationScripts.downloadWhisperModel = ''
     MODEL_DIR="${modelDir}"
