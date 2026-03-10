@@ -11,6 +11,7 @@
     enable = true;
     profiles.user.databases = [{
       locks = [
+        "/org/gnome/mutter/overlay-key"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
