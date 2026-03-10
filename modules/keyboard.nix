@@ -3,7 +3,7 @@
   services.xserver.xkb = {
     layout = "us";
     variant = "";
-    options = "altwin:swap_alt_win";
+    options = "";
   };
 
   # GNOME on Wayland manages XKB options via dconf
@@ -21,7 +21,7 @@
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/binding"
       ];
       settings."org/gnome/desktop/input-sources" = {
-        xkb-options = [ "altwin:swap_alt_win" ];
+        xkb-options = [ "" ];
       };
       settings."org/gnome/mutter" = {
         overlay-key = "Super_L";
