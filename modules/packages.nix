@@ -24,6 +24,7 @@
     onlyoffice-desktopeditors
     microsoft-edge
     obsidian
+    qbittorrent
     obs-studio
     ani-cli
     fzf
