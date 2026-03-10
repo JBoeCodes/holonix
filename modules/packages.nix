@@ -15,6 +15,7 @@
     fastfetch
     gh
     heroic
+    prismlauncher
     slack
     vlc
     waveterm
