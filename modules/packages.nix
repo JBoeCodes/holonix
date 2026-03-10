@@ -25,6 +25,7 @@
     microsoft-edge
     obsidian
     qbittorrent
+    railway
     obs-studio
     ani-cli
     fzf
