@@ -57,12 +57,6 @@ modules/
 - Use options, syntax, and packages current as of **March 2026**
 - Do not suggest deprecated options or pre-flake patterns
 
-## Known Issues
-
-- **`whisper-rs` evaluation warning**: During `nixos-rebuild`, you may see:
-  `evaluation warning: No output hash provided for git+https://codeberg.org/madjinn/whisper-rs.git?branch=whisp-away#...`
-  This is harmless and comes from upstream (`madjinn/whisp-away`). The whisp-away flake's cargo vendoring fetches the `whisper-rs` git dependency without a `narHash`, triggering the warning. It does not affect the build. The fix needs to happen upstream.
-
 ## Git Workflow
 
 - **Remote**: `origin` → `git@github.com:JBoeCodes/holonix.git`
