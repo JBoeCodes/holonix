@@ -38,6 +38,9 @@ let
     clipboard-paste-protection = true
     clipboard-paste-bracketed-safe = true
 
+    # Close without confirmation
+    confirm-close-surface = false
+
     # Shell Integration
     shell-integration = detect
 
