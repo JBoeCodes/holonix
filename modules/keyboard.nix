@@ -24,7 +24,7 @@
         xkb-options = [ "altwin:swap_alt_win" ];
       };
       settings."org/gnome/mutter" = {
-        overlay-key = "Alt_L";
+        overlay-key = "Super_L";
       };
       settings."org/gnome/shell/keybindings" = {
         show-screenshot-ui = [ "<Super><Shift>s" ];
