@@ -4,16 +4,15 @@
   programs.firefox = {
     enable = true;
     preferences = {
-      "media.ffmpeg.vaapi.enabled" = true;
-      "gfx.webrender.all" = true;
+      "media.hardware-video-decoding.force-enabled" = true;
+      "gfx.x11-egl.force-enabled" = true;
       "widget.dmabuf.force-enabled" = true;
     };
   };
 
   environment.sessionVariables = {
-    MOZ_ENABLE_WAYLAND = "1";
-    MOZ_DMA_BUF = "1";
     LIBVA_DRIVER_NAME = "nvidia";
     NVD_BACKEND = "direct";
+    MOZ_DISABLE_RDD_SANDBOX = "1";
   };
 }
