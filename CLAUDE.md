@@ -42,10 +42,6 @@ modules/
 - **Ctrl+Shift+Space**: 1Password Quick Access (custom keybinding)
 - GNOME overlay key disabled (to avoid Super key conflicts)
 
-## External Config (not in this repo)
-
-- `~/.config/environment.d/gemini.conf` — Gemini API key (kept out of git)
-
 ## Conventions
 
 - Each concern gets its own module in `modules/` and is imported in `flake.nix`
