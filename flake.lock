@@ -33,6 +33,22 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1772963539,
+        "narHash": "sha256-9jVDGZnvCckTGdYT53d/EfznygLskyLQXYwJLKMPsZs=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "9dcb002ca1690658be4a04645215baea8b95f31d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1759036355,
         "narHash": "sha256-0m27AKv6ka+q270dw48KflE0LwQYrO7Fm4/2//KCVWg=",
         "owner": "nixos",
@@ -50,13 +66,13 @@
     "root": {
       "inputs": {
         "nixpkgs": "nixpkgs",
-        "whisp-away": "whisp-away"
+        "whisp-overlay": "whisp-overlay"
       }
     },
     "whisp-away": {
       "inputs": {
         "crane": "crane",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
         "lastModified": 1768913025,
@@ -69,6 +85,25 @@
       "original": {
         "owner": "madjinn",
         "repo": "whisp-away",
+        "type": "github"
+      }
+    },
+    "whisp-overlay": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2",
+        "whisp-away": "whisp-away"
+      },
+      "locked": {
+        "lastModified": 1773084402,
+        "narHash": "sha256-F+WN6Pd3TV4apJEsGX7Q+qo/BP4XGJhC1R9hcZFO5lw=",
+        "owner": "JBoeCodes",
+        "repo": "whisp-overlay",
+        "rev": "c52957b8180651fb2e65e218d37416988cecd8f8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "JBoeCodes",
+        "repo": "whisp-overlay",
         "type": "github"
       }
     }
