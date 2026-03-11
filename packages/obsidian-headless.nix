@@ -6,7 +6,7 @@ buildNpmPackage rec {
 
   src = fetchurl {
     url = "https://registry.npmjs.org/obsidian-headless/-/obsidian-headless-${version}.tgz";
-    hash = "sha256:0jrhc3h4nf52s2p3i0i9dw3zx86zb4zl44sgdnadg7f9sp11wr5z";
+    hash = "sha256-cBDDxUsprBspTBYDym6CQ4aEP4Rwdh4tSZEdCYRXhNQ=";
   };
 
   sourceRoot = ".";
