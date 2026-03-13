@@ -24,7 +24,6 @@
     onlyoffice-desktopeditors
     microsoft-edge
     obsidian
-    obsidian-headless
     qbittorrent
     railway
     obs-studio

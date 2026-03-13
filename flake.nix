@@ -11,14 +11,7 @@
       jboedesk = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          {
-            nixpkgs.overlays = [
-              (final: prev: {
-                obsidian-headless = final.callPackage ./packages/obsidian-headless.nix { };
-              })
-            ];
-          }
-          ./configuration.nix
+./configuration.nix
           ./modules/1password.nix
           ./modules/audio.nix
           ./modules/boot.nix
