@@ -9,10 +9,10 @@ buildNpmPackage rec {
     hash = "sha256-cBDDxUsprBspTBYDym6CQ4aEP4Rwdh4tSZEdCYRXhNQ=";
   };
 
-  sourceRoot = ".";
+  sourceRoot = "package";
 
   postPatch = ''
-    cp ${./obsidian-headless-lock.json} package-lock.json
+    cp ${./obsidian-headless-lock.json} ./package-lock.json
   '';
 
   nodejs = nodejs_22;
