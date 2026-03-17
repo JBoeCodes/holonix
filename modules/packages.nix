@@ -10,6 +10,7 @@
     wget
     kitty
     curl
+    discord
     unzip
     btop
     fastfetch
@@ -39,6 +40,7 @@
     cmatrix
     pipes-rs
     cbonsai
+    sox
   ];
 
 }
