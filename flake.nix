@@ -18,6 +18,7 @@
           ./modules/desktop.nix
           ./modules/firefox.nix
           ./modules/ghostty.nix
+          ./modules/hyprland.nix
           whisp-overlay.nixosModules.default
           ./modules/keyboard.nix
           ./modules/locale.nix
