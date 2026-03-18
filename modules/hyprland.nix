@@ -350,8 +350,8 @@ let
   '';
 
   hyprpaperConfig = ''
-    preload = ~/Pictures/wallpaper.png
-    wallpaper = , ~/Pictures/wallpaper.png
+    preload = ~/wallpapers/wallpaper.png
+    wallpaper = , ~/wallpapers/wallpaper.png
     splash = false
   '';
 
