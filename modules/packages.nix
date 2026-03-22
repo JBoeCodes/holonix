@@ -26,6 +26,7 @@
     microsoft-edge
     obsidian
     qbittorrent
+    telegram-desktop
     railway
     obs-studio
     ani-cli
