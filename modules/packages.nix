@@ -27,6 +27,7 @@
     obsidian
     qbittorrent
     telegram-desktop
+    gimp
     localsend
     railway
     obs-studio
