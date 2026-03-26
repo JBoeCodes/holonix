@@ -27,6 +27,7 @@
     obsidian
     qbittorrent
     telegram-desktop
+    localsend
     railway
     obs-studio
     ani-cli
