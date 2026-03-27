@@ -319,6 +319,7 @@ let
       format-disconnected = "󰤭  Offline";
       tooltip-format-wifi = "{signalStrength}% — {ipaddr}";
       tooltip-format-ethernet = "{ipaddr}";
+      on-click = "networkmanager_dmenu";
     };
     tray = {
       spacing = 8;
@@ -556,6 +557,15 @@ let
 
   makoConfigFile = pkgs.writeText "mako-config" makoConfig;
 
+  nmDmenuConfig = ''
+    [dmenu]
+    dmenu_command = wofi --dmenu -p Network
+
+    [editor]
+    terminal = ghostty
+    gui_if_available = False
+  '';
+
   wofiConfig = ''
     width=600
     height=400
@@ -635,6 +645,7 @@ let
     }
   '';
 
+  nmDmenuConfigFile = pkgs.writeText "networkmanager-dmenu.ini" nmDmenuConfig;
   waybarConfigFile = pkgs.writeText "waybar-config" waybarConfig;
   waybarStyleFile = pkgs.writeText "waybar-style.css" waybarStyle;
   hyprlandConfigFile = pkgs.writeText "hyprland.conf" hyprlandConfig;
@@ -668,6 +679,7 @@ in
     hyprsunset
     satty
     networkmanagerapplet
+    networkmanager_dmenu
     waypaper
   ];
 
@@ -677,8 +689,9 @@ in
     waybarDir="/home/jboe/.config/waybar"
     makoDir="/home/jboe/.config/mako"
     wofiDir="/home/jboe/.config/wofi"
+    nmDmenuDir="/home/jboe/.config/networkmanager-dmenu"
 
-    mkdir -p "$hyprDir" "$waybarDir" "$makoDir" "$wofiDir"
+    mkdir -p "$hyprDir" "$waybarDir" "$makoDir" "$wofiDir" "$nmDmenuDir"
 
     ln -sf ${hyprlandConfigFile} "$hyprDir/hyprland.conf"
     ln -sf ${hyprlockConfigFile} "$hyprDir/hyprlock.conf"
@@ -693,9 +706,12 @@ in
 
     ln -sf ${makoConfigFile} "$makoDir/config"
 
+    ln -sf ${nmDmenuConfigFile} "$nmDmenuDir/config.ini"
+
     chown -h jboe:users "$hyprDir/hyprland.conf" "$hyprDir/hyprlock.conf" "$hyprDir/hypridle.conf" "$hyprDir/hyprpaper.conf"
     chown -h jboe:users "$waybarDir/config" "$waybarDir/style.css"
     chown -h jboe:users "$wofiDir/config" "$wofiDir/style.css"
     chown -h jboe:users "$makoDir/config"
+    chown -h jboe:users "$nmDmenuDir/config.ini"
   '';
 }
