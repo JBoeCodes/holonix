@@ -196,11 +196,26 @@ let
     ##############################
     ### WINDOWS AND WORKSPACES ###
     ##############################
-    windowrule = suppressevent maximize, match:class .*
-    windowrule = float on, match:class ^(1Password)$
-    windowrule = center, match:class ^(1Password)$
-    windowrule = float on, match:title ^(Quick Access — 1Password)$
-    windowrule = stayfocused on, match:title ^(Quick Access — 1Password)$
+    windowrule {
+        suppress_event = maximize
+        match:class = .*
+    }
+    windowrule {
+        float = on
+        match:class = ^(1Password)$
+    }
+    windowrule {
+        center
+        match:class = ^(1Password)$
+    }
+    windowrule {
+        float = on
+        match:title = ^(Quick Access — 1Password)$
+    }
+    windowrule {
+        stay_focused = on
+        match:title = ^(Quick Access — 1Password)$
+    }
   '';
 
   waybarConfig = builtins.toJSON [{
