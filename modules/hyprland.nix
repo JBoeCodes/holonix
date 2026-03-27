@@ -216,12 +216,24 @@ let
     ##################
     ### LAYER RULES ###
     ##################
-    layerrule = blur, waybar
-    layerrule = ignorezero, waybar
-    layerrule = blur, wofi
-    layerrule = ignorezero, wofi
-    layerrule = blur, notifications
-    layerrule = ignorezero, notifications
+    layerrule {
+        name = waybar-blur
+        blur = on
+        ignore_alpha = 0.0
+        match:namespace = waybar
+    }
+    layerrule {
+        name = wofi-blur
+        blur = on
+        ignore_alpha = 0.0
+        match:namespace = wofi
+    }
+    layerrule {
+        name = notifications-blur
+        blur = on
+        ignore_alpha = 0.0
+        match:namespace = notifications
+    }
 
     ##############################
     ### WINDOWS AND WORKSPACES ###
