@@ -99,6 +99,7 @@ let
     #############
     input {
         kb_layout = us
+        kb_options = altwin:swap_alt_win
         follow_mouse = 1
         sensitivity = 0
     }
