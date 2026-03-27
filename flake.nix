@@ -17,6 +17,7 @@
           ./modules/boot.nix
           ./modules/desktop.nix
           ./modules/firefox.nix
+          ./modules/fonts.nix
           ./modules/ghostty.nix
           ./modules/hyprland.nix
           whisp-overlay.nixosModules.default
