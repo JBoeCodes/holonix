@@ -375,12 +375,89 @@ let
     splash = false
   '';
 
+  wofiConfig = ''
+    width=600
+    height=400
+    prompt=Search...
+    fuzzy=true
+    insensitive=true
+    allow_markup=true
+    always_parse_args=true
+    show_all=false
+    print_command=true
+    layer=overlay
+  '';
+
+  wofiStyle = ''
+    * {
+      font-family: "JetBrainsMono Nerd Font", monospace;
+      font-size: 14px;
+    }
+
+    window {
+      background-color: rgba(30, 30, 46, 0.92);
+      border: 2px solid rgba(137, 180, 250, 0.5);
+      border-radius: 12px;
+    }
+
+    #input {
+      background-color: rgba(49, 50, 68, 0.8);
+      color: #cdd6f4;
+      border: 1px solid rgba(137, 180, 250, 0.3);
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin: 8px;
+      outline: none;
+    }
+
+    #input:focus {
+      border-color: rgba(137, 180, 250, 0.8);
+    }
+
+    #outer-box {
+      padding: 4px;
+    }
+
+    #inner-box {
+      margin: 0 8px 8px 8px;
+    }
+
+    #scroll {
+      background-color: transparent;
+    }
+
+    #entry {
+      border-radius: 8px;
+      padding: 6px 8px;
+    }
+
+    #entry:selected {
+      background-color: rgba(137, 180, 250, 0.15);
+      border: 1px solid rgba(137, 180, 250, 0.4);
+    }
+
+    #text {
+      color: #cdd6f4;
+      padding: 0 4px;
+    }
+
+    #entry:selected #text {
+      color: #89b4fa;
+    }
+
+    #img {
+      margin-right: 8px;
+    }
+  '';
+
   waybarConfigFile = pkgs.writeText "waybar-config" waybarConfig;
   waybarStyleFile = pkgs.writeText "waybar-style.css" waybarStyle;
   hyprlandConfigFile = pkgs.writeText "hyprland.conf" hyprlandConfig;
   hyprlockConfigFile = pkgs.writeText "hyprlock.conf" hyprlockConfig;
   hypridleConfigFile = pkgs.writeText "hypridle.conf" hypridleConfig;
   hyprpaperConfigFile = pkgs.writeText "hyprpaper.conf" hyprpaperConfig;
+  wofiConfigFile = pkgs.writeText "wofi-config" wofiConfig;
+  wofiStyleFile = pkgs.writeText "wofi-style.css" wofiStyle;
 in
 {
   programs.hyprland = {
@@ -409,8 +486,9 @@ in
     hyprDir="/home/jboe/.config/hypr"
     waybarDir="/home/jboe/.config/waybar"
     makoDir="/home/jboe/.config/mako"
+    wofiDir="/home/jboe/.config/wofi"
 
-    mkdir -p "$hyprDir" "$waybarDir" "$makoDir"
+    mkdir -p "$hyprDir" "$waybarDir" "$makoDir" "$wofiDir"
 
     ln -sf ${hyprlandConfigFile} "$hyprDir/hyprland.conf"
     ln -sf ${hyprlockConfigFile} "$hyprDir/hyprlock.conf"
@@ -420,7 +498,11 @@ in
     ln -sf ${waybarConfigFile} "$waybarDir/config"
     ln -sf ${waybarStyleFile} "$waybarDir/style.css"
 
+    ln -sf ${wofiConfigFile} "$wofiDir/config"
+    ln -sf ${wofiStyleFile} "$wofiDir/style.css"
+
     chown -h jboe:users "$hyprDir/hyprland.conf" "$hyprDir/hyprlock.conf" "$hyprDir/hypridle.conf" "$hyprDir/hyprpaper.conf"
     chown -h jboe:users "$waybarDir/config" "$waybarDir/style.css"
+    chown -h jboe:users "$wofiDir/config" "$wofiDir/style.css"
   '';
 }
