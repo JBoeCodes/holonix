@@ -197,22 +197,27 @@ let
     ### WINDOWS AND WORKSPACES ###
     ##############################
     windowrule {
+        name = suppress-maximize
         suppress_event = maximize
         match:class = .*
     }
     windowrule {
+        name = 1password-float
         float = on
         match:class = ^(1Password)$
     }
     windowrule {
+        name = 1password-center
         center
         match:class = ^(1Password)$
     }
     windowrule {
+        name = 1password-qa-float
         float = on
         match:title = ^(Quick Access — 1Password)$
     }
     windowrule {
+        name = 1password-qa-stayfocused
         stay_focused = on
         match:title = ^(Quick Access — 1Password)$
     }
