@@ -17,6 +17,8 @@ let
     exec-once = wl-paste --type image --watch cliphist store
     exec-once = hyprpolkitagent
     exec-once = hypridle
+    exec-once = hyprsunset -t 4500
+    exec-once = nm-applet --indicator
 
     # Portal conflict workaround: kill GNOME portal, restart Hyprland portal
     exec-once = sleep 1 && systemctl --user stop xdg-desktop-portal-gnome.service && systemctl --user restart xdg-desktop-portal-hyprland.service && systemctl --user restart xdg-desktop-portal.service
@@ -64,9 +66,10 @@ let
             enabled = true
             size = 6
             passes = 3
-            new_optimizations = true
-            ignore_opacity = true
         }
+
+        dim_inactive = true
+        dim_strength = 0.05
     }
 
     animations {
@@ -88,6 +91,8 @@ let
     misc {
         force_default_wallpaper = 0
         disable_hyprland_logo = true
+        smart_gaps = true
+        vfr = true
     }
 
     cursor {
@@ -128,6 +133,16 @@ let
 
     # Screenshot (matching your GNOME Super+Shift+S)
     bind = $mod SHIFT, S, exec, grimblast --notify copy area
+
+    # Annotated screenshot
+    bind = $mod SHIFT, A, exec, grimblast save area - | satty --filename -
+
+    # Color picker
+    bind = $mod SHIFT, C, exec, hyprpicker -a
+
+    # Scratchpad
+    bind = $mod, grave, togglespecialworkspace, scratchpad
+    bind = $mod SHIFT, grave, movetoworkspace, special:scratchpad
 
     # 1Password Quick Access (matching your GNOME Ctrl+Shift+Space)
     bind = CTRL SHIFT, Space, exec, 1password --quick-access
@@ -335,6 +350,28 @@ let
         blur_size = 8
     }
 
+    label {
+        monitor =
+        text = cmd[update:1000] echo "<b>$(date +'%H:%M')</b>"
+        color = rgba(cdd6f4ff)
+        font_size = 80
+        font_family = JetBrainsMono Nerd Font Bold
+        halign = center
+        valign = center
+        position = 0, 100
+    }
+
+    label {
+        monitor =
+        text = cmd[update:60000] echo "$(date +'%A, %B %d')"
+        color = rgba(a6adc8ff)
+        font_size = 20
+        font_family = JetBrainsMono Nerd Font
+        halign = center
+        valign = center
+        position = 0, 20
+    }
+
     input-field {
         monitor =
         size = 300, 50
@@ -375,6 +412,37 @@ let
     wallpaper = , ~/wallpapers/wallpaper.png
     splash = false
   '';
+
+  makoConfig = ''
+    sort=-time
+    layer=overlay
+    anchor=top-right
+    margin=10
+    padding=12
+    icons=1
+    max-icon-size=48
+    default-timeout=5000
+    font=JetBrainsMono Nerd Font 12
+    background-color=#1e1e2e
+    text-color=#cdd6f4
+    border-color=#89b4fa
+    border-radius=10
+    border-size=2
+    width=320
+
+    [urgency=low]
+    border-color=#585b70
+    default-timeout=3000
+
+    [urgency=normal]
+    border-color=#89b4fa
+
+    [urgency=high]
+    border-color=#f38ba8
+    default-timeout=0
+  '';
+
+  makoConfigFile = pkgs.writeText "mako-config" makoConfig;
 
   wofiConfig = ''
     width=600
@@ -480,6 +548,10 @@ in
     wl-clipboard
     cliphist
     pavucontrol
+    hyprpicker
+    hyprsunset
+    satty
+    networkmanagerapplet
   ];
 
   # Deploy configs via activation script (same pattern as ghostty.nix)
@@ -502,8 +574,11 @@ in
     ln -sf ${wofiConfigFile} "$wofiDir/config"
     ln -sf ${wofiStyleFile} "$wofiDir/style.css"
 
+    ln -sf ${makoConfigFile} "$makoDir/config"
+
     chown -h jboe:users "$hyprDir/hyprland.conf" "$hyprDir/hyprlock.conf" "$hyprDir/hypridle.conf" "$hyprDir/hyprpaper.conf"
     chown -h jboe:users "$waybarDir/config" "$waybarDir/style.css"
     chown -h jboe:users "$wofiDir/config" "$wofiDir/style.css"
+    chown -h jboe:users "$makoDir/config"
   '';
 }
