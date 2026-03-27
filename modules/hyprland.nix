@@ -65,8 +65,9 @@ let
 
         blur {
             enabled = true
-            size = 6
-            passes = 3
+            size = 8
+            passes = 4
+            new_optimizations = true
         }
 
         dim_inactive = true
@@ -212,6 +213,16 @@ let
     bind = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
     bind = , XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
+    ##################
+    ### LAYER RULES ###
+    ##################
+    layerrule = blur, waybar
+    layerrule = ignorezero, waybar
+    layerrule = blur, wofi
+    layerrule = ignorezero, wofi
+    layerrule = blur, notifications
+    layerrule = ignorezero, notifications
+
     ##############################
     ### WINDOWS AND WORKSPACES ###
     ##############################
@@ -245,46 +256,61 @@ let
   waybarConfig = builtins.toJSON [{
     layer = "top";
     position = "top";
-    height = 34;
-    spacing = 4;
+    height = 38;
+    "margin-top" = 8;
+    "margin-left" = 8;
+    "margin-right" = 8;
+    spacing = 0;
     modules-left = [ "hyprland/workspaces" "hyprland/window" ];
     modules-center = [ "clock" ];
-    modules-right = [ "tray" "pulseaudio" "network" "cpu" "memory" "temperature" ];
+    modules-right = [ "temperature" "cpu" "memory" "network" "pulseaudio" "tray" ];
 
     "hyprland/workspaces" = {
       format = "{name}";
       on-click = "activate";
+      sort-by-number = true;
     };
     "hyprland/window" = {
-      max-length = 50;
+      max-length = 40;
+      separate-outputs = true;
     };
     clock = {
-      format = "{:%a %b %d  %I:%M %p}";
+      format = "󰥔  {:%a %b %d  %I:%M %p}";
       tooltip-format = "<tt>{calendar}</tt>";
     };
     cpu = {
-      format = "CPU {usage}%";
+      format = "󰻠  {usage}%";
       interval = 2;
+      tooltip = false;
     };
     memory = {
-      format = "RAM {percentage}%";
+      format = "󰍛  {percentage}%";
       interval = 2;
+      tooltip-format = "{used:0.1f}G / {total:0.1f}G";
     };
     temperature = {
-      format = "{temperatureC}°C";
+      format = "  {temperatureC}°C";
+      critical-threshold = 80;
+      format-critical = "  {temperatureC}°C";
+      tooltip = false;
     };
     pulseaudio = {
-      format = "Vol {volume}%";
-      format-muted = "Muted";
+      format = "󰕾  {volume}%";
+      format-muted = "󰖁  Muted";
       on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+      scroll-step = 5;
+      tooltip = false;
     };
     network = {
-      format-wifi = "{essid}";
-      format-ethernet = "Wired";
-      format-disconnected = "Offline";
+      format-wifi = "󰤨  {essid}";
+      format-ethernet = "󰈀  Wired";
+      format-disconnected = "󰤭  Offline";
+      tooltip-format-wifi = "{signalStrength}% — {ipaddr}";
+      tooltip-format-ethernet = "{ipaddr}";
     };
     tray = {
       spacing = 8;
+      icon-size = 16;
     };
   }];
 
@@ -292,44 +318,98 @@ let
     * {
       font-family: "JetBrainsMono Nerd Font", monospace;
       font-size: 13px;
+      border: none;
+      border-radius: 0;
+      min-height: 0;
+      padding: 0;
+      margin: 0;
     }
 
     window#waybar {
-      background-color: rgba(30, 30, 46, 0.85);
+      background: transparent;
       color: #cdd6f4;
-      border-bottom: 2px solid rgba(137, 180, 250, 0.4);
+    }
+
+    /* Floating frosted-glass pill containers */
+    .modules-left,
+    .modules-center,
+    .modules-right {
+      background: rgba(17, 17, 27, 0.72);
+      border: 1px solid rgba(180, 190, 254, 0.18);
+      border-radius: 14px;
+      margin: 0 4px;
+      padding: 0 4px;
+    }
+
+    /* Workspaces */
+    #workspaces {
+      margin: 0 2px;
     }
 
     #workspaces button {
-      padding: 0 8px;
-      color: #585b70;
-      border-bottom: 2px solid transparent;
+      padding: 2px 12px;
+      color: #6c7086;
+      border-radius: 10px;
+      margin: 4px 2px;
+      background: transparent;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
     }
 
     #workspaces button.active {
       color: #89b4fa;
-      border-bottom: 2px solid #89b4fa;
+      background: rgba(137, 180, 250, 0.15);
+      border: 1px solid rgba(137, 180, 250, 0.4);
     }
 
     #workspaces button:hover {
-      background: rgba(137, 180, 250, 0.15);
+      color: #b4befe;
+      background: rgba(180, 190, 254, 0.1);
+      border: 1px solid rgba(180, 190, 254, 0.2);
     }
 
-    #clock, #cpu, #memory, #temperature, #pulseaudio, #network, #tray {
-      padding: 0 10px;
+    #workspaces button.urgent {
+      color: #f38ba8;
+      background: rgba(243, 139, 168, 0.1);
+      border: 1px solid rgba(243, 139, 168, 0.4);
+    }
+
+    #window {
+      color: #a6adc8;
+      padding: 0 12px;
+      font-style: italic;
+      font-size: 12px;
     }
 
     #clock {
       color: #cba6f7;
       font-weight: bold;
+      padding: 0 16px;
+      letter-spacing: 0.5px;
     }
 
-    #cpu { color: #89b4fa; }
-    #memory { color: #a6e3a1; }
-    #temperature { color: #fab387; }
+    #cpu {
+      color: #89b4fa;
+      padding: 0 10px;
+    }
+
+    #memory {
+      color: #a6e3a1;
+      padding: 0 10px;
+    }
+
+    #temperature {
+      color: #fab387;
+      padding: 0 10px;
+    }
+
+    #temperature.critical {
+      color: #f38ba8;
+    }
 
     #pulseaudio {
       color: #f9e2af;
+      padding: 0 10px;
     }
 
     #pulseaudio.muted {
@@ -338,10 +418,23 @@ let
 
     #network {
       color: #94e2d5;
+      padding: 0 10px;
     }
 
     #network.disconnected {
       color: #f38ba8;
+    }
+
+    #tray {
+      padding: 0 8px;
+    }
+
+    #tray > .passive {
+      -gtk-icon-effect: dim;
+    }
+
+    #tray > .needs-attention {
+      -gtk-icon-effect: highlight;
     }
   '';
 
@@ -420,28 +513,32 @@ let
     sort=-time
     layer=overlay
     anchor=top-right
-    margin=10
-    padding=12
+    margin=12
+    padding=14,16
     icons=1
     max-icon-size=48
     default-timeout=5000
     font=JetBrainsMono Nerd Font 12
-    background-color=#1e1e2e
+    background-color=#11111bcc
     text-color=#cdd6f4
-    border-color=#89b4fa
-    border-radius=10
-    border-size=2
-    width=320
+    border-color=#b4befec0
+    border-radius=14
+    border-size=1
+    width=340
+    format=<b>%s</b>\n%b
 
     [urgency=low]
-    border-color=#585b70
+    border-color=#6c708680
+    background-color=#11111ba0
     default-timeout=3000
 
     [urgency=normal]
-    border-color=#89b4fa
+    border-color=#89b4fac0
+    background-color=#11111bcc
 
     [urgency=high]
-    border-color=#f38ba8
+    border-color=#f38ba8cc
+    background-color=#11111be0
     default-timeout=0
   '';
 
@@ -467,23 +564,25 @@ let
     }
 
     window {
-      background-color: rgba(30, 30, 46, 0.92);
-      border: 2px solid rgba(137, 180, 250, 0.5);
-      border-radius: 12px;
+      background-color: rgba(17, 17, 27, 0.78);
+      border: 1px solid rgba(180, 190, 254, 0.2);
+      border-radius: 16px;
     }
 
     #input {
-      background-color: rgba(49, 50, 68, 0.8);
+      background-color: rgba(30, 30, 46, 0.6);
       color: #cdd6f4;
-      border: 1px solid rgba(137, 180, 250, 0.3);
-      border-radius: 8px;
-      padding: 8px 12px;
-      margin: 8px;
+      border: 1px solid rgba(137, 180, 250, 0.25);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin: 10px;
       outline: none;
+      caret-color: #89b4fa;
     }
 
     #input:focus {
-      border-color: rgba(137, 180, 250, 0.8);
+      border-color: rgba(137, 180, 250, 0.6);
+      background-color: rgba(30, 30, 46, 0.75);
     }
 
     #outer-box {
@@ -491,7 +590,7 @@ let
     }
 
     #inner-box {
-      margin: 0 8px 8px 8px;
+      margin: 0 10px 10px 10px;
     }
 
     #scroll {
@@ -499,18 +598,20 @@ let
     }
 
     #entry {
-      border-radius: 8px;
-      padding: 6px 8px;
+      border-radius: 10px;
+      padding: 8px 10px;
+      margin: 2px 0;
+      border: 1px solid transparent;
     }
 
     #entry:selected {
-      background-color: rgba(137, 180, 250, 0.15);
-      border: 1px solid rgba(137, 180, 250, 0.4);
+      background-color: rgba(137, 180, 250, 0.12);
+      border: 1px solid rgba(137, 180, 250, 0.35);
     }
 
     #text {
       color: #cdd6f4;
-      padding: 0 4px;
+      padding: 0 6px;
     }
 
     #entry:selected #text {
@@ -518,7 +619,7 @@ let
     }
 
     #img {
-      margin-right: 8px;
+      margin-right: 10px;
     }
   '';
 
