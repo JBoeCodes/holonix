@@ -208,7 +208,7 @@ let
     }
     windowrule {
         name = 1password-center
-        center
+        center = on
         match:class = ^(1Password)$
     }
     windowrule {
