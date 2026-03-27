@@ -19,6 +19,7 @@ let
     exec-once = hypridle
     exec-once = hyprsunset -t 4500
     exec-once = nm-applet --indicator
+    exec-once = waypaper --restore
 
     # Portal conflict workaround: kill GNOME portal, restart Hyprland portal
     exec-once = sleep 1 && systemctl --user stop xdg-desktop-portal-gnome.service && systemctl --user restart xdg-desktop-portal-hyprland.service && systemctl --user restart xdg-desktop-portal.service
@@ -138,6 +139,9 @@ let
 
     # Color picker
     bind = $mod SHIFT, C, exec, hyprpicker -a
+
+    # Wallpaper picker
+    bind = $mod SHIFT, W, exec, waypaper
 
     # Scratchpad
     bind = $mod, grave, togglespecialworkspace, scratchpad
@@ -551,6 +555,7 @@ in
     hyprsunset
     satty
     networkmanagerapplet
+    waypaper
   ];
 
   # Deploy configs via activation script (same pattern as ghostty.nix)
