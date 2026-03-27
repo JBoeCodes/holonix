@@ -63,6 +63,34 @@ modules/
 - **Branch**: `main`
 - After every config change, add, commit, and push to `origin main`
 
+## Hyprland Config Notes
+
+Hyprland moves fast and has breaking syntax changes between versions. Before editing `modules/hyprland.nix`:
+
+1. **Check the running version first**: `hyprctl version`
+2. **Check for existing errors**: `hyprctl configerrors`
+3. **Do not rely on training data for Hyprland syntax** — it is likely outdated. Use `WebSearch` to verify current syntax against the wiki (wiki.hyprland.org) before writing.
+
+### Current syntax (0.53+, as of 0.54.2)
+
+Window rules use named block syntax:
+
+```
+windowrule {
+    name = unique-name       # required, must be first
+    float = on               # boolean flags need = on
+    center = on
+    stay_focused = on
+    suppress_event = maximize
+    match:class = ^(regex)$  # selector
+    match:title = ^(regex)$  # selector
+}
+```
+
+- `name` is **required** as the first field in every block
+- All boolean rules use `= on` (bare keywords are invalid)
+- `windowrulev2` and the old inline `windowrule = rule, class:pattern` syntax are both deprecated and broken
+
 ## Rebuild
 
 **Do NOT run `sudo nixos-rebuild` or any `nixos-*` commands.** The user will rebuild manually. Your job ends at commit and push.
