@@ -8,7 +8,8 @@
     options asus-ec-sensors force=1
   '';
 
-  hardware.fancontrol.enable = true;
+  # fancontrol service will be enabled after running `sudo pwmconfig`
+  # to generate the config, then set hardware.fancontrol.config here.
 
   environment.systemPackages = with pkgs; [
     lm_sensors
