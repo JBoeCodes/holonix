@@ -2,7 +2,7 @@
 
 {
   systemd.services.rclone-bisync = {
-    description = "Rclone bisync between Google Drive and /mnt/local-projects";
+    description = "Rclone bisync between Google Drive and /mnt/projects";
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
     serviceConfig = {
@@ -12,10 +12,11 @@
       ExecStart = toString [
         "/etc/profiles/per-user/jboe/bin/rclone"
         "bisync"
-        "/mnt/local-projects/"
+        "/mnt/projects/"
         "projects:"
         "--exclude" "lost+found/"
-        "--resilience"
+        "--recover"
+        "--max-lock" "5m"
       ];
     };
   };

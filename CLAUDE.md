@@ -47,7 +47,7 @@ modules/
 - Each concern gets its own module in `modules/` and is imported in `flake.nix`
 - Modules use the standard NixOS module pattern: `{ pkgs, ... }: { ... }`
 - User packages go in `modules/packages.nix` — only create a separate module if the package needs its own config options
-- Drives: `/mnt/other`, `/mnt/local-projects`, `/mnt/steam` (defined in hardware-configuration.nix)
+- Drives: `/mnt/other`, `/mnt/projects`, `/mnt/steam` (defined in hardware-configuration.nix)
 - `configuration.nix` should stay minimal (only base nix/nixpkgs settings and hardware import)
 - `nixpkgs.config.allowUnfree = true` is enabled
 
