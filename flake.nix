@@ -30,6 +30,7 @@
           ./modules/packages.nix
           ./modules/steam.nix
           ./modules/user.nix
+          ./modules/rclone-bisync.nix
           ./modules/zsh.nix
         ];
       };
