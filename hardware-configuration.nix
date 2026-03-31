@@ -30,7 +30,7 @@
       options = [ "nofail" "x-gvfs-show" ];
     };
 
-  fileSystems."/mnt/projects" =
+  fileSystems."/mnt/local-projects" =
     { device = "/dev/disk/by-uuid/4a8ee943-ba80-4510-8fae-23805241b383";
       fsType = "ext4";
       options = [ "nofail" "x-gvfs-show" ];
