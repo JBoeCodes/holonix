@@ -32,6 +32,7 @@
           ./modules/user.nix
           ./modules/rclone-bisync.nix
           ./modules/zsh.nix
+          ./modules/hardening.nix
         ];
       };
     };

@@ -91,6 +91,41 @@ windowrule {
 - All boolean rules use `= on` (bare keywords are invalid)
 - `windowrulev2` and the old inline `windowrule = rule, class:pattern` syntax are both deprecated and broken
 
+## TODO — Hyprland Ultimate Desktop + Hardening
+
+Full plan: `~/.claude/plans/splendid-toasting-cocoa.md`
+
+### Security Hardening
+- [x] Create `modules/hardening.nix` (kernel sysctls + Firejail for Discord/Telegram/VLC/qBittorrent + sudo + firewall logging)
+- [x] Import `modules/hardening.nix` in `flake.nix`
+
+### Visual Overhaul
+- [x] Enhanced blur (`ignore_opacity=true`, `noise`, `popups`), transparency (0.92/0.85), rounding (12), shadows
+- [x] Animated gradient borders (`borderangle` loop, mauve→blue→green)
+- [x] Upgraded animations (wind/winIn/winOut beziers, slidevert workspaces)
+- [x] Ghostty transparency (`background-opacity = 0.85`)
+- [x] Catppuccin GTK theme + cursors + Papirus icons
+
+### Component Swaps
+- [x] Replace Wofi → Rofi-Wayland (Catppuccin .rasi theme, update all binds)
+- [x] Replace Hyprpaper → swww (animated transitions, keep waypaper as GUI)
+- [x] Replace Mako → SwayNC (notification center with history, Catppuccin CSS)
+
+### Workflow
+- [x] Gaming: VRR, tearing, Steam window rules (no transparency/blur), mangohud
+- [x] Dev scratchpads: dropdown terminal (`$mod+grave`), lazygit (`$mod+G`), btop (`$mod+B`)
+- [x] PiP window rules (float, pin, top-right, keepaspectratio)
+- [x] Browser idle inhibit for fullscreen video
+- [x] Extra screenshot/recording binds + wf-recorder
+- [x] Enhanced Waybar (SwayNC module, hover effects, color-coded states)
+- [ ] Enhanced Hyprlock (profile image, uptime, decorative accents)
+
+### New Packages
+- [x] Add: rofi-wayland, swww, swaynotificationcenter, wf-recorder, mangohud, catppuccin-gtk, catppuccin-cursors, catppuccin-papirus-folders, yazi
+- [x] Remove: wofi, hyprpaper, mako
+
+Note: physical security hardening (Secure Boot, LUKS, encrypted swap, TPM) is unnecessary — single-user desktop, no physical access threat
+
 ## Rebuild
 
 **Do NOT run `sudo nixos-rebuild` or any `nixos-*` commands.** The user will rebuild manually. Your job ends at commit and push.

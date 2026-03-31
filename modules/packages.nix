@@ -34,6 +34,7 @@
     ani-cli
     fzf
     ripgrep
+    rclone
     eza
     bat
     zoxide
@@ -44,6 +45,10 @@
     pipes-rs
     cbonsai
     sox
+    yazi
+    catppuccin-gtk
+    catppuccin-cursors
+    catppuccin-papirus-folders
   ];
 
 }

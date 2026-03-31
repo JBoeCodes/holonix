@@ -12,7 +12,7 @@ let
     theme = light:Catppuccin Latte,dark:Catppuccin Mocha
 
     # Window and Appearance
-    background-opacity = 0.9
+    background-opacity = 0.85
     background-blur-radius = 20
     window-padding-x = 10
     window-padding-y = 8
