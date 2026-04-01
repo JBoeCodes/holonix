@@ -31,6 +31,7 @@
           ./modules/rclone-bisync.nix
           ./modules/zsh.nix
           ./modules/hardening.nix
+          ./modules/hide-desktop-entries.nix
         ];
       };
     };
