@@ -1114,7 +1114,7 @@ in
   # Hyprland ecosystem packages
   users.users.jboe.packages = with pkgs; [
     waybar
-    rofi-wayland
+    rofi
     swaynotificationcenter
     libnotify
     grimblast
