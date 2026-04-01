@@ -1075,7 +1075,7 @@ let
       text-color: @fg;
       padding: 8px 12px;
       border-radius: 10px;
-      border: 1px solid transparent;
+      border: 1px solid rgba(0, 0, 0, 0.0);
     }
 
     element selected {
