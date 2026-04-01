@@ -172,6 +172,10 @@ let
     # Wallpaper picker
     bind = $mod SHIFT, W, exec, swww img "$(find ~/wallpapers -type f | shuf -n 1)" --transition-type grow --transition-duration 1.5 --transition-fps 60
 
+    # Waybar layout/style switching
+    bind = $mod ALT, W, exec, $HOME/.config/hypr/scripts/WaybarLayout.sh
+    bind = $mod ALT, S, exec, $HOME/.config/hypr/scripts/WaybarStyles.sh
+
     # Scratchpads
     bind = $mod, grave, togglespecialworkspace, dropdown
     bind = $mod SHIFT, grave, movetoworkspace, special:dropdown
@@ -455,227 +459,11 @@ let
     }
   '';
 
-  waybarConfig = builtins.toJSON [{
-    layer = "top";
-    position = "top";
-    height = 38;
-    "margin-top" = 8;
-    "margin-left" = 8;
-    "margin-right" = 8;
-    spacing = 0;
-    modules-left = [ "hyprland/workspaces" "hyprland/window" ];
-    modules-center = [ "clock" ];
-    modules-right = [ "temperature" "cpu" "memory" "network" "pulseaudio" "tray" "custom/notification" ];
-
-    "hyprland/workspaces" = {
-      format = "{name}";
-      on-click = "activate";
-      sort-by-number = true;
-    };
-    "hyprland/window" = {
-      max-length = 40;
-      separate-outputs = true;
-    };
-    clock = {
-      format = "󰥔  {:%a %b %d  %I:%M %p}";
-      tooltip-format = "<tt>{calendar}</tt>";
-    };
-    cpu = {
-      format = "󰻠  {usage}%";
-      interval = 2;
-      tooltip = false;
-    };
-    memory = {
-      format = "󰍛  {percentage}%";
-      interval = 2;
-      tooltip-format = "{used:0.1f}G / {total:0.1f}G";
-    };
-    temperature = {
-      format = "  {temperatureC}°C";
-      critical-threshold = 80;
-      format-critical = "  {temperatureC}°C";
-      tooltip = false;
-    };
-    pulseaudio = {
-      format = "󰕾  {volume}%";
-      format-muted = "󰖁  Muted";
-      on-click = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-      scroll-step = 5;
-      tooltip = false;
-    };
-    network = {
-      format-wifi = "󰤨  {essid}";
-      format-ethernet = "󰈀  Wired";
-      format-disconnected = "󰤭  Offline";
-      tooltip-format-wifi = "{signalStrength}% — {ipaddr}";
-      tooltip-format-ethernet = "{ipaddr}";
-      on-click = "networkmanager_dmenu";
-    };
-    tray = {
-      spacing = 8;
-      icon-size = 16;
-    };
-    "custom/notification" = {
-      tooltip = false;
-      format = "{icon}";
-      format-icons = {
-        notification = "󰂚";
-        none = "󰂜";
-        dnd-notification = "󰂛";
-        dnd-none = "󰪑";
-        inhibited-notification = "󰂚";
-        inhibited-none = "󰂜";
-        dnd-inhibited-notification = "󰂛";
-        dnd-inhibited-none = "󰪑";
-      };
-      return-type = "json";
-      exec-if = "which swaync-client";
-      exec = "swaync-client -swb";
-      on-click = "swaync-client -t -sw";
-      on-click-right = "swaync-client -d -sw";
-      escape = true;
-    };
-  }];
-
-  waybarStyle = ''
-    * {
-      font-family: "JetBrainsMono Nerd Font", monospace;
-      font-size: 13px;
-      border: none;
-      border-radius: 0;
-      min-height: 0;
-      padding: 0;
-      margin: 0;
-    }
-
-    window#waybar {
-      background: transparent;
-      color: #cdd6f4;
-    }
-
-    /* Floating frosted-glass pill containers */
-    .modules-left,
-    .modules-center,
-    .modules-right {
-      background: rgba(17, 17, 27, 0.72);
-      border: 1px solid rgba(180, 190, 254, 0.18);
-      border-radius: 14px;
-      margin: 0 4px;
-      padding: 0 4px;
-    }
-
-    /* Workspaces */
-    #workspaces {
-      margin: 0 2px;
-    }
-
-    #workspaces button {
-      padding: 2px 12px;
-      color: #6c7086;
-      border-radius: 10px;
-      margin: 4px 2px;
-      background: transparent;
-      border: 1px solid transparent;
-      transition: all 0.15s ease;
-    }
-
-    #workspaces button.active {
-      color: #89b4fa;
-      background: rgba(137, 180, 250, 0.15);
-      border: 1px solid rgba(137, 180, 250, 0.4);
-    }
-
-    #workspaces button:hover {
-      color: #b4befe;
-      background: rgba(180, 190, 254, 0.1);
-      border: 1px solid rgba(180, 190, 254, 0.2);
-    }
-
-    #workspaces button.urgent {
-      color: #f38ba8;
-      background: rgba(243, 139, 168, 0.1);
-      border: 1px solid rgba(243, 139, 168, 0.4);
-    }
-
-    #window {
-      color: #a6adc8;
-      padding: 0 12px;
-      font-style: italic;
-      font-size: 12px;
-    }
-
-    #clock {
-      color: #cba6f7;
-      font-weight: bold;
-      padding: 0 16px;
-      letter-spacing: 0.5px;
-    }
-
-    #cpu {
-      color: #89b4fa;
-      padding: 0 10px;
-    }
-
-    #memory {
-      color: #a6e3a1;
-      padding: 0 10px;
-    }
-
-    #temperature {
-      color: #fab387;
-      padding: 0 10px;
-    }
-
-    #temperature.critical {
-      color: #f38ba8;
-    }
-
-    #pulseaudio {
-      color: #f9e2af;
-      padding: 0 10px;
-    }
-
-    #pulseaudio.muted {
-      color: #585b70;
-    }
-
-    #network {
-      color: #94e2d5;
-      padding: 0 10px;
-    }
-
-    #network.disconnected {
-      color: #f38ba8;
-    }
-
-    #tray {
-      padding: 0 8px;
-    }
-
-    #tray > .passive {
-      -gtk-icon-effect: dim;
-    }
-
-    #tray > .needs-attention {
-      -gtk-icon-effect: highlight;
-    }
-
-    #custom-notification {
-      color: #89b4fa;
-      padding: 0 10px;
-    }
-
-    /* Hover effects for all modules */
-    #cpu:hover,
-    #memory:hover,
-    #temperature:hover,
-    #pulseaudio:hover,
-    #network:hover,
-    #custom-notification:hover {
-      background: rgba(137, 180, 250, 0.08);
-      border-radius: 8px;
-    }
-  '';
+  # Waybar config/styles are deployed from ../waybar/ directory (JaKooLit Hyprland-Dots)
+  # Switching is done at runtime via rofi scripts
+  waybarSrc = builtins.path { path = ../waybar; name = "waybar-config"; };
+  scriptsSrc = builtins.path { path = ../scripts; name = "hypr-scripts"; };
+  rofiExtraSrc = builtins.path { path = ../rofi; name = "rofi-extra"; };
 
   hyprlockConfig = ''
     background {
@@ -1099,8 +887,6 @@ let
   '';
 
   nmDmenuConfigFile = pkgs.writeText "networkmanager-dmenu.ini" nmDmenuConfig;
-  waybarConfigFile = pkgs.writeText "waybar-config" waybarConfig;
-  waybarStyleFile = pkgs.writeText "waybar-style.css" waybarStyle;
   hyprlandConfigFile = pkgs.writeText "hyprland.conf" hyprlandConfig;
   hyprlockConfigFile = pkgs.writeText "hyprlock.conf" hyprlockConfig;
   hypridleConfigFile = pkgs.writeText "hypridle.conf" hypridleConfig;
@@ -1135,35 +921,65 @@ in
     wf-recorder
     mangohud
     slurp
+    playerctl
+    blueman
+    cava
   ];
 
   # Deploy configs via activation script (same pattern as ghostty.nix)
   system.activationScripts.hyprlandConfig = ''
     hyprDir="/home/jboe/.config/hypr"
+    scriptsDir="$hyprDir/scripts"
     waybarDir="/home/jboe/.config/waybar"
     rofiDir="/home/jboe/.config/rofi"
     swayncDir="/home/jboe/.config/swaync"
     nmDmenuDir="/home/jboe/.config/networkmanager-dmenu"
 
-    mkdir -p "$hyprDir" "$waybarDir" "$rofiDir" "$swayncDir" "$nmDmenuDir"
+    mkdir -p "$hyprDir" "$scriptsDir" "$waybarDir" "$rofiDir" "$swayncDir" "$nmDmenuDir"
 
+    # Hyprland core configs
     ln -sf ${hyprlandConfigFile} "$hyprDir/hyprland.conf"
     ln -sf ${hyprlockConfigFile} "$hyprDir/hyprlock.conf"
     ln -sf ${hypridleConfigFile} "$hyprDir/hypridle.conf"
 
-    ln -sf ${waybarConfigFile} "$waybarDir/config"
-    ln -sf ${waybarStyleFile} "$waybarDir/style.css"
+    # Deploy helper scripts
+    for script in ${scriptsSrc}/*; do
+      cp -f "$script" "$scriptsDir/$(basename "$script")"
+      chmod +x "$scriptsDir/$(basename "$script")"
+    done
 
+    # Deploy waybar module files (always overwrite from nix store)
+    for f in Modules ModulesCustom ModulesGroups ModulesWorkspaces ModulesVertical UserModules; do
+      cp -f "${waybarSrc}/$f" "$waybarDir/$f"
+    done
+
+    # Deploy waybar configs and styles directories
+    rm -rf "$waybarDir/configs" "$waybarDir/style" "$waybarDir/wallust"
+    cp -r "${waybarSrc}/configs" "$waybarDir/configs"
+    cp -r "${waybarSrc}/style" "$waybarDir/style"
+    cp -r "${waybarSrc}/wallust" "$waybarDir/wallust"
+
+    # Set default waybar layout/style symlinks (preserve user's choice if already set)
+    if [ ! -L "$waybarDir/config" ] || [ ! -e "$waybarDir/config" ]; then
+      ln -sf "$waybarDir/configs/[TOP] Default" "$waybarDir/config"
+    fi
+    if [ ! -L "$waybarDir/style.css" ] || [ ! -e "$waybarDir/style.css" ]; then
+      ln -sf "$waybarDir/style/[Catppuccin] Mocha.css" "$waybarDir/style.css"
+    fi
+
+    # Rofi configs
     ln -sf ${rofiConfigFile} "$rofiDir/config.rasi"
+    cp -f "${rofiExtraSrc}/config-waybar-layout.rasi" "$rofiDir/config-waybar-layout.rasi"
+    cp -f "${rofiExtraSrc}/config-waybar-style.rasi" "$rofiDir/config-waybar-style.rasi"
 
+    # Swaync + networkmanager-dmenu
     ln -sf ${swayncConfigFile} "$swayncDir/config.json"
     ln -sf ${swayncStyleFile} "$swayncDir/style.css"
-
     ln -sf ${nmDmenuConfigFile} "$nmDmenuDir/config.ini"
 
-    chown -h jboe:users "$hyprDir/hyprland.conf" "$hyprDir/hyprlock.conf" "$hyprDir/hypridle.conf"
-    chown -h jboe:users "$waybarDir/config" "$waybarDir/style.css"
-    chown -h jboe:users "$rofiDir/config.rasi"
+    # Fix ownership
+    chown -R jboe:users "$hyprDir" "$waybarDir"
+    chown -h jboe:users "$rofiDir/config.rasi" "$rofiDir/config-waybar-layout.rasi" "$rofiDir/config-waybar-style.rasi"
     chown -h jboe:users "$swayncDir/config.json" "$swayncDir/style.css"
     chown -h jboe:users "$nmDmenuDir/config.ini"
   '';
