@@ -118,7 +118,7 @@ Full plan: `~/.claude/plans/splendid-toasting-cocoa.md`
 - [x] Browser idle inhibit for fullscreen video
 - [x] Extra screenshot/recording binds + wf-recorder
 - [x] Enhanced Waybar (SwayNC module, hover effects, color-coded states)
-- [ ] Enhanced Hyprlock (profile image, uptime, decorative accents)
+- [x] Enhanced Hyprlock (profile image, uptime, decorative accents)
 
 ### New Packages
 - [x] Add: rofi-wayland, swww, swaynotificationcenter, wf-recorder, mangohud, catppuccin-gtk, catppuccin-cursors, catppuccin-papirus-folders, yazi

@@ -681,32 +681,109 @@ let
     background {
         monitor =
         path = screenshot
-        blur_passes = 3
-        blur_size = 8
+        blur_passes = 4
+        blur_size = 10
+        noise = 0.02
+        brightness = 0.6
     }
 
+    # Decorative accent bar behind the clock
+    shape {
+        monitor =
+        size = 400, 180
+        rounding = 20
+        color = rgba(17, 17, 27, 0.55)
+        border_size = 1
+        border_color = rgba(180, 190, 254, 0.15)
+        halign = center
+        valign = center
+        position = 0, 80
+        shadow_passes = 2
+        shadow_size = 8
+        shadow_color = rgba(0, 0, 0, 0.4)
+    }
+
+    # Profile image
+    image {
+        monitor =
+        path = ~/wallpapers/profile.png
+        size = 120
+        rounding = -1
+        border_size = 3
+        border_color = rgb(cba6f7) rgb(89b4fa) 45deg
+        halign = center
+        valign = center
+        position = 0, 240
+        shadow_passes = 2
+        shadow_size = 6
+        shadow_color = rgba(0, 0, 0, 0.5)
+    }
+
+    # Greeting
+    label {
+        monitor =
+        text = Hey, $USER
+        color = rgba(205, 214, 244, 0.9)
+        font_size = 18
+        font_family = JetBrainsMono Nerd Font
+        halign = center
+        valign = center
+        position = 0, 160
+    }
+
+    # Time
     label {
         monitor =
         text = cmd[update:1000] echo "<b>$(date +'%H:%M')</b>"
         color = rgba(cdd6f4ff)
-        font_size = 80
+        font_size = 72
         font_family = JetBrainsMono Nerd Font Bold
         halign = center
         valign = center
         position = 0, 100
+        shadow_passes = 2
+        shadow_size = 4
+        shadow_color = rgba(0, 0, 0, 0.5)
     }
 
+    # Date
     label {
         monitor =
         text = cmd[update:60000] echo "$(date +'%A, %B %d')"
-        color = rgba(a6adc8ff)
-        font_size = 20
+        color = rgba(166, 173, 200, 0.9)
+        font_size = 18
         font_family = JetBrainsMono Nerd Font
         halign = center
         valign = center
-        position = 0, 20
+        position = 0, 30
     }
 
+    # Uptime
+    label {
+        monitor =
+        text = cmd[update:60000] echo "󰅐  $(uptime -p | sed 's/up //')"
+        color = rgba(108, 112, 134, 0.8)
+        font_size = 12
+        font_family = JetBrainsMono Nerd Font
+        halign = center
+        valign = center
+        position = 0, -10
+    }
+
+    # Decorative accent bar behind input
+    shape {
+        monitor =
+        size = 340, 70
+        rounding = 18
+        color = rgba(17, 17, 27, 0.45)
+        border_size = 0
+        halign = center
+        valign = center
+        position = 0, -80
+        zindex = -1
+    }
+
+    # Password input
     input-field {
         monitor =
         size = 300, 50
@@ -714,12 +791,16 @@ let
         dots_size = 0.25
         dots_spacing = 0.15
         outer_color = rgb(89b4fa)
-        inner_color = rgb(1e1e2e)
+        inner_color = rgba(30, 30, 46, 0.8)
         font_color = rgb(cdd6f4)
         fade_on_empty = true
-        placeholder_text = <i>Password...</i>
+        placeholder_text = <i>  Password...</i>
         halign = center
         valign = center
+        position = 0, -80
+        shadow_passes = 2
+        shadow_size = 4
+        shadow_color = rgba(0, 0, 0, 0.3)
     }
   '';
 
