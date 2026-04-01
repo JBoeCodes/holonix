@@ -180,7 +180,7 @@ let
     bind = $mod, grave, togglespecialworkspace, dropdown
     bind = $mod SHIFT, grave, movetoworkspace, special:dropdown
     bind = $mod, G, togglespecialworkspace, lazygit
-    bind = $mod, B, exec, firefox
+    bind = $mod, B, exec, vivaldi
 
     # Notification center
     bind = $mod, N, exec, swaync-client -t -sw
@@ -352,7 +352,7 @@ let
     windowrule {
         name = browser-idleinhibit
         idle_inhibit = fullscreen
-        match:class = ^(firefox|microsoft-edge)$
+        match:class = ^(firefox|microsoft-edge|vivaldi)$
     }
 
     # Picture-in-Picture
