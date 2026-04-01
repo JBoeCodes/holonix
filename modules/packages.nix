@@ -49,6 +49,7 @@
     catppuccin-gtk
     catppuccin-cursors
     catppuccin-papirus-folders
+    vivaldi
   ];
 
 }
