@@ -176,7 +176,7 @@ let
     bind = $mod, grave, togglespecialworkspace, dropdown
     bind = $mod SHIFT, grave, movetoworkspace, special:dropdown
     bind = $mod, G, togglespecialworkspace, lazygit
-    bind = $mod, B, togglespecialworkspace, btop
+    bind = $mod, B, exec, firefox
 
     # Notification center
     bind = $mod, N, exec, swaync-client -t -sw
