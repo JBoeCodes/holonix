@@ -3,10 +3,9 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    whisp-overlay.url = "github:JBoeCodes/whisp-overlay";
   };
 
-  outputs = { self, nixpkgs, whisp-overlay, ... }@inputs: {
+  outputs = { self, nixpkgs, ... }@inputs: {
     nixosConfigurations = {
       jboedesk = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -20,7 +19,6 @@
           ./modules/fonts.nix
           ./modules/ghostty.nix
           ./modules/hyprland.nix
-          whisp-overlay.nixosModules.default
           ./modules/keyboard.nix
           ./modules/locale.nix
           ./modules/networking.nix
