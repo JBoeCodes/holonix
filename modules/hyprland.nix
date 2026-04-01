@@ -170,7 +170,7 @@ let
     bind = $mod SHIFT, C, exec, hyprpicker -a
 
     # Wallpaper picker
-    bind = $mod SHIFT, W, exec, waypaper
+    bind = $mod SHIFT, W, exec, swww img "$(find ~/wallpapers -type f | shuf -n 1)" --transition-type grow --transition-duration 1.5 --transition-fps 60
 
     # Scratchpads
     bind = $mod, grave, togglespecialworkspace, dropdown
