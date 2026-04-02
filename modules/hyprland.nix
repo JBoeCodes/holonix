@@ -204,8 +204,9 @@ terminal = ghostty
 gui_if_available = False
 NMEOF
 
-    # ── Ensure wallpapers directory exists ──
-    mkdir -p /home/jboe/Pictures/wallpapers
+    # ── Symlink wallpapers directory (scripts expect ~/Pictures/wallpapers) ──
+    mkdir -p /home/jboe/Pictures
+    ln -sfn /home/jboe/wallpapers /home/jboe/Pictures/wallpapers
 
     # ── Create monitors.conf and workspaces.conf if missing (sourced by hyprland.conf) ──
     [ -f "$configDir/hypr/monitors.conf" ] || echo "# monitor = , preferred, auto, 1, vrr, 2" > "$configDir/hypr/monitors.conf"
