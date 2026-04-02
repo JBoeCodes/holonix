@@ -26,5 +26,13 @@
     '';
   };
 
+  # Prevent zsh-newuser-install prompt by ensuring ~/.zshrc exists
+  system.activationScripts.zshrc = ''
+    if [ ! -f /home/jboe/.zshrc ]; then
+      echo "# Managed by NixOS - see modules/zsh.nix" > /home/jboe/.zshrc
+      chown jboe:users /home/jboe/.zshrc
+    fi
+  '';
+
   users.users.jboe.shell = pkgs.zsh;
 }
