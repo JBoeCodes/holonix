@@ -154,6 +154,8 @@ in
     # ── Rofi ──
     rm -rf "$configDir/rofi/themes" "$configDir/rofi/wallust"
     cp -f ${dotfilesSrc}/rofi/config.rasi "$configDir/rofi/config.rasi"
+    cp -f ${dotfilesSrc}/rofi/0-shared-fonts.rasi "$configDir/rofi/0-shared-fonts.rasi"
+    cp -f ${dotfilesSrc}/rofi/00-terminal.rasi "$configDir/rofi/00-terminal.rasi"
     cp -r ${dotfilesSrc}/rofi/themes "$configDir/rofi/themes"
     cp -r ${dotfilesSrc}/rofi/wallust "$configDir/rofi/wallust"
 
