@@ -15,7 +15,7 @@ modules/
   audio.nix                # PipeWire audio (with PulseAudio/ALSA compat)
   boot.nix                 # systemd-boot, EFI, kernel packages
   desktop.nix              # GNOME desktop, GDM, printing
-  ghostty.nix              # Ghostty terminal (config via activation script)
+  kitty.nix                # Kitty terminal (KoolDots themed, NixOS overrides via activation script)
   keyboard.nix             # Keyboard/shortcuts (XKB, dconf keybindings, custom shortcuts)
   locale.nix               # Timezone (America/New_York) and locale (en_US.UTF-8)
   networking.nix           # Hostname (jboedesk), NetworkManager
@@ -31,7 +31,7 @@ modules/
 - **Host**: `jboedesk` (x86_64-linux, Intel CPU, NVIDIA GPU)
 - **DE**: GNOME on Wayland (via GDM)
 - **Shell**: Zsh
-- **Terminal**: Ghostty (Catppuccin theme, JetBrains Mono Nerd Font)
+- **Terminal**: Kitty (wallust dynamic theming via KoolDots, JetBrains Mono Nerd Font)
 - **User**: `jboe` (groups: networkmanager, wheel)
 
 ## Custom Keybindings (keyboard.nix)
@@ -103,7 +103,7 @@ Full plan: `~/.claude/plans/splendid-toasting-cocoa.md`
 - [x] Enhanced blur (`ignore_opacity=true`, `noise`, `popups`), transparency (0.92/0.85), rounding (12), shadows
 - [x] Animated gradient borders (`borderangle` loop, mauve→blue→green)
 - [x] Upgraded animations (wind/winIn/winOut beziers, slidevert workspaces)
-- [x] Ghostty transparency (`background-opacity = 0.85`)
+- [x] Kitty transparency (`background-opacity = 0.85`)
 - [x] Catppuccin GTK theme + cursors + Papirus icons
 
 ### Component Swaps

@@ -17,7 +17,7 @@
           ./modules/desktop.nix
           ./modules/firefox.nix
           ./modules/fonts.nix
-          ./modules/ghostty.nix
+          ./modules/kitty.nix
           ./modules/hyprland.nix
           ./modules/keyboard.nix
           ./modules/locale.nix

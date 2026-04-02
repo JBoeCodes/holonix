@@ -200,7 +200,7 @@ in
 dmenu_command = rofi -dmenu -p Network
 
 [editor]
-terminal = ghostty
+terminal = kitty
 gui_if_available = False
 NMEOF
 
