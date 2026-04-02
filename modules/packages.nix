@@ -50,6 +50,7 @@
     catppuccin-cursors
     catppuccin-papirus-folders
     vivaldi
+    pamixer
   ];
 
 }
