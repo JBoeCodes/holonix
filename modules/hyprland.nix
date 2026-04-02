@@ -145,10 +145,10 @@ in
 
     # Set default waybar layout/style (preserve user's choice if already set)
     if [ ! -L "$configDir/waybar/config" ] || [ ! -e "$configDir/waybar/config" ]; then
-      ln -sf "$configDir/waybar/configs/[TOP] Default" "$configDir/waybar/config"
+      ln -sf "$configDir/waybar/configs/TOP-Default" "$configDir/waybar/config"
     fi
     if [ ! -L "$configDir/waybar/style.css" ] || [ ! -e "$configDir/waybar/style.css" ]; then
-      ln -sf "$configDir/waybar/style/[Extra] Neon Circuit.css" "$configDir/waybar/style.css"
+      ln -sf "$configDir/waybar/style/Extra-Neon-Circuit.css" "$configDir/waybar/style.css"
     fi
 
     # ── Rofi ──
