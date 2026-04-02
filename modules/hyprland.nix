@@ -153,9 +153,8 @@ in
 
     # ── Rofi ──
     rm -rf "$configDir/rofi/themes" "$configDir/rofi/wallust"
-    cp -f ${dotfilesSrc}/rofi/config.rasi "$configDir/rofi/config.rasi"
-    cp -f ${dotfilesSrc}/rofi/0-shared-fonts.rasi "$configDir/rofi/0-shared-fonts.rasi"
-    cp -f ${dotfilesSrc}/rofi/00-terminal.rasi "$configDir/rofi/00-terminal.rasi"
+    cp -f ${dotfilesSrc}/rofi/*.rasi "$configDir/rofi/"
+    cp -f ${dotfilesSrc}/rofi/*.list "$configDir/rofi/" 2>/dev/null || true
     cp -r ${dotfilesSrc}/rofi/themes "$configDir/rofi/themes"
     cp -r ${dotfilesSrc}/rofi/wallust "$configDir/rofi/wallust"
 
@@ -204,6 +203,9 @@ dmenu_command = rofi -dmenu -p Network
 terminal = ghostty
 gui_if_available = False
 NMEOF
+
+    # ── Ensure wallpapers directory exists ──
+    mkdir -p /home/jboe/Pictures/wallpapers
 
     # ── Create monitors.conf and workspaces.conf if missing (sourced by hyprland.conf) ──
     [ -f "$configDir/hypr/monitors.conf" ] || echo "# monitor = , preferred, auto, 1, vrr, 2" > "$configDir/hypr/monitors.conf"
