@@ -20,6 +20,7 @@
       df = "duf";
       oc = "opencode";
       lg = "lazygit";
+      cd = "z";
     };
     interactiveShellInit = ''
       eval "$(zoxide init zsh)"
