@@ -118,7 +118,7 @@ in
     for script in ${dotfilesSrc}/hypr/scripts/*; do
       base=$(basename "$script")
       # Skip distro-specific TUI binaries
-      case "$base" in dots-tui-ubuntu*) continue;; esac
+      case "$base" in dots-tui*) continue;; esac
       cp -f "$script" "$configDir/hypr/scripts/$base"
       chmod +x "$configDir/hypr/scripts/$base"
     done
@@ -193,6 +193,7 @@ in
     cp -rf ${dotfilesSrc}/swappy/* "$configDir/swappy/"
 
     # ── NetworkManager dmenu ──
+    rm -f "$configDir/networkmanager-dmenu/config.ini"
     cat > "$configDir/networkmanager-dmenu/config.ini" << 'NMEOF'
 [dmenu]
 dmenu_command = rofi -dmenu -p Network
