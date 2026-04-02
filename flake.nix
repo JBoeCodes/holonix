@@ -33,6 +33,7 @@
           ./modules/hardening.nix
           ./modules/hide-desktop-entries.nix
           ./modules/default-browser.nix
+          ./modules/flatpak.nix
         ];
       };
     };
