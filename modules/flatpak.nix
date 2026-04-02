@@ -1,8 +1,15 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
-  services.flatpak.enable = true;
+  services.flatpak = {
+    enable = true;
 
-  # Ensure portal support for Flatpak apps
+    packages = [
+      "org.vinegarhq.Sober"
+    ];
+
+    update.onActivation = true;
+  };
+
   xdg.portal.enable = true;
 }

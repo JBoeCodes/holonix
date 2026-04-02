@@ -3,14 +3,16 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
   };
 
-  outputs = { self, nixpkgs, ... }@inputs: {
+  outputs = { self, nixpkgs, nix-flatpak, ... }@inputs: {
     nixosConfigurations = {
       jboedesk = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-./configuration.nix
+          nix-flatpak.nixosModules.nix-flatpak
+          ./configuration.nix
           ./modules/1password.nix
           ./modules/audio.nix
           ./modules/boot.nix
