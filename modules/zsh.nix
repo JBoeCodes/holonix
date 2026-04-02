@@ -16,7 +16,6 @@
       lt = "eza --icons --tree";
       cat = "bat";
       grep = "rg";
-      find = "fd";
       df = "duf";
       oc = "opencode";
       lg = "lazygit";
