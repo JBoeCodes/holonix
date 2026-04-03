@@ -1,5 +1,8 @@
 { ... }:
 {
+  # Disable Stylix's hyprlock theming — we define our own layout
+  stylix.targets.hyprlock.enable = false;
+
   programs.hyprlock = {
     enable = true;
 
