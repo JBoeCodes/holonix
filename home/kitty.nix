@@ -6,8 +6,7 @@
     # Font managed by Stylix (JetBrainsMono Nerd Font, size 14)
 
     settings = {
-      # Window
-      background_opacity = "0.9";
+      # Window (background_opacity managed by Stylix)
       confirm_os_window_close = 0;
       window_padding_width = 8;
 
