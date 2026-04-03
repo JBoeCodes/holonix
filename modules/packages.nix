@@ -8,7 +8,6 @@
     git
     opencode
     wget
-    kitty
     curl
     discord
     unzip
@@ -46,9 +45,6 @@
     cbonsai
     sox
     yazi
-    catppuccin-gtk
-    catppuccin-cursors
-    catppuccin-papirus-folders
     vivaldi
     pamixer
   ];

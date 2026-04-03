@@ -10,6 +10,4 @@
 
     update.onActivation = true;
   };
-
-  xdg.portal.enable = true;
 }

@@ -6,48 +6,6 @@
     options = "";
   };
 
-  # GNOME on Wayland manages XKB options via dconf
-  programs.dconf = {
-    enable = true;
-    profiles.user.databases = [{
-      locks = [
-        "/org/gnome/mutter/overlay-key"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/name"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/binding"
-      ];
-      settings."org/gnome/desktop/input-sources" = {
-        xkb-options = [ "" ];
-      };
-      settings."org/gnome/mutter" = {
-        overlay-key = "Super_L";
-      };
-      settings."org/gnome/shell/keybindings" = {
-        show-screenshot-ui = [ "<Super><Shift>s" ];
-      };
-      settings."org/gnome/desktop/wm/keybindings" = {
-        close = [ "<Super>w" ];
-      };
-      settings."org/gnome/settings-daemon/plugins/media-keys" = {
-        custom-keybindings = [
-          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
-        ];
-      };
-      settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-        name = "1Password Quick Access";
-        command = "1password --quick-access";
-        binding = "<Control><Shift>space";
-      };
-      settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
-        name = "Dictation";
-        command = "dictate";
-        binding = "<Super>d";
-      };
-    }];
-  };
+  # dconf is still needed for GTK apps
+  programs.dconf.enable = true;
 }
