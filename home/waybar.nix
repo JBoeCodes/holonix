@@ -1,6 +1,6 @@
 { pkgs, config, ... }:
 {
-  # Disable Stylix's waybar theming — we use our own omarchy-inspired style
+  # Disable Stylix's waybar theming — we use our own liquid glass style
   stylix.targets.waybar.enable = false;
 
   programs.waybar = {
@@ -12,10 +12,10 @@
 
         modules-left = [
           "hyprland/workspaces"
+          "custom/cava"
           "hyprland/window"
         ];
         modules-center = [
-          "custom/cava"
           "clock"
         ];
         modules-right = [
@@ -25,7 +25,6 @@
           "custom/gpu"
           "cpu"
           "pulseaudio"
-          "idle_inhibitor"
         ];
 
         "hyprland/workspaces" = {
@@ -143,167 +142,188 @@
           exec = "~/.config/waybar/scripts/cava.sh";
         };
 
-        idle_inhibitor = {
-          format = "{icon}";
-          format-icons = {
-            activated = "󰒳";
-            deactivated = "󰒲";
-          };
-          tooltip-format = "{status}";
-          tooltip-format-activated = "Idle inhibitor: Active";
-          tooltip-format-deactivated = "Idle inhibitor: Inactive";
-        };
       };
     };
 
-    # Omarchy-inspired style with Rosé Pine colors
+    # Liquid glass style with hybrid group layout
     style = ''
-      @define-color bg #191724;
-      @define-color fg #e0def4;
-      @define-color accent #ebbcba;
-      @define-color dark-bg #11111b;
-      @define-color hover-bg #26233a;
-      @define-color muted #6e6a86;
-      @define-color love #eb6f92;
-      @define-color gold #f6c177;
-      @define-color pine #31748f;
-      @define-color foam #9ccfd8;
-      @define-color iris #c4a7e7;
-
       * {
         font-family: 'JetBrainsMono Nerd Font';
         font-size: 13px;
         font-weight: bold;
         border: none;
-        border-radius: 20px;
+        border-radius: 0;
         min-height: 0;
       }
 
       tooltip {
-        background: @dark-bg;
-        border-radius: 15px;
-        border: 1px solid @accent;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(24px);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
       }
 
       tooltip label {
-        color: @fg;
+        color: rgba(255, 255, 255, 0.9);
         padding: 5px;
       }
 
       window#waybar {
         background-color: transparent;
         transition-property: background-color;
-        transition-duration: .5s;
-        margin: 10px;
+        transition-duration: 0.5s;
+        margin: 6px 10px;
       }
 
       window#waybar.hidden {
         opacity: 0.2;
       }
 
+      /* --- Glass group containers --- */
       .modules-left,
-      .modules-center,
       .modules-right {
-        background: transparent;
-        margin: 5px;
+        background: rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        margin: 4px 6px;
+        padding: 0 4px;
       }
 
+      .modules-center {
+        background: transparent;
+        margin: 4px;
+      }
+
+      /* --- Workspaces --- */
       #workspaces {
-        background-color: @dark-bg;
-        margin: 2px 4px;
-        padding: 0 5px;
-        border-radius: 20px;
-        opacity: 0.9;
+        background-color: transparent;
+        margin: 0;
+        padding: 0 2px;
+        border-radius: 0;
       }
 
       #workspaces button {
-        color: @fg;
+        color: rgba(255, 255, 255, 0.35);
         background-color: transparent;
         margin: 4px 2px;
-        padding: 0 5px;
-        border-radius: 20px;
+        padding: 0 6px;
+        border-radius: 8px;
         transition: all 0.3s ease;
       }
 
       #workspaces button:hover {
-        background-color: @hover-bg;
-        color: @fg;
+        background-color: rgba(255, 255, 255, 0.08);
+        color: rgba(255, 255, 255, 0.8);
       }
 
       #workspaces button.active {
-        background-color: @accent;
-        color: @dark-bg;
-        min-width: 30px;
+        background-color: rgba(245, 194, 231, 0.25);
+        color: #f5c2e7;
+        min-width: 28px;
+        box-shadow: 0 0 8px rgba(245, 194, 231, 0.15);
       }
 
       #workspaces button.urgent {
-        color: @love;
-        background-color: @gold;
+        background-color: rgba(243, 139, 168, 0.3);
+        color: #f38ba8;
       }
 
       #workspaces button.empty {
-        color: @muted;
+        color: rgba(255, 255, 255, 0.2);
       }
 
-      #tray,
+      /* --- Shared module styles inside glass groups --- */
       #window,
-      #cava,
+      #custom-cava,
+      #tray,
       #cpu,
       #network,
       #pulseaudio,
       #custom-notification,
       #custom-gpu,
-      #custom-cava,
-      #clock,
-      #tray-expander,
-      #idle_inhibitor {
-        background-color: @dark-bg;
-        color: @fg;
-        margin: 2px;
-        padding: 2px 15px;
-        border-radius: 20px;
-        opacity: 0.9;
-      }
-
-      #window {
-        margin: 2px 4px;
-      }
-
-      #clock {
-        font-weight: 800;
-      }
-
-      #custom-cava {
-        color: @accent;
-        padding: 0 12px;
-      }
-
       #tray-expander {
-        padding: 0 5px;
+        background-color: transparent;
+        color: rgba(255, 255, 255, 0.85);
+        margin: 2px 0;
+        padding: 2px 12px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
       }
 
-      #custom-expand-icon {
-        color: @fg;
-        margin-left: 8px;
+      /* --- Floating clock (center, no glass container) --- */
+      #clock {
+        background: transparent;
+        color: rgba(255, 255, 255, 0.95);
+        font-weight: 800;
+        padding: 2px 16px;
+        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
       }
 
-      #cpu:hover,
-      #network:hover,
-      #pulseaudio:hover,
-      #clock:hover,
-      #custom-gpu:hover,
-      #custom-notification:hover,
-      #idle_inhibitor:hover {
-        background-color: @hover-bg;
-        color: @accent;
+      /* --- Color-coded modules --- */
+      #custom-cava {
+        color: #f5c2e7;
+        padding: 0 10px;
+        text-shadow: 0 0 6px rgba(245, 194, 231, 0.2);
+      }
+
+      #pulseaudio {
+        color: #a6e3a1;
+        text-shadow: 0 0 6px rgba(166, 227, 161, 0.2);
+      }
+
+      #network {
+        color: #89b4fa;
+        text-shadow: 0 0 6px rgba(137, 180, 250, 0.2);
+      }
+
+      #cpu {
+        color: #fab387;
+        text-shadow: 0 0 6px rgba(250, 179, 135, 0.2);
+      }
+
+      #custom-gpu {
+        color: #fab387;
+        text-shadow: 0 0 6px rgba(250, 179, 135, 0.2);
       }
 
       #custom-notification {
-        color: @iris;
+        color: #cba6f7;
+        text-shadow: 0 0 6px rgba(203, 166, 247, 0.2);
       }
 
-      #idle_inhibitor {
-        color: @foam;
+      #window {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      /* --- Tray expander --- */
+      #tray-expander {
+        padding: 0 4px;
+      }
+
+      #custom-expand-icon {
+        color: rgba(255, 255, 255, 0.6);
+        margin-left: 6px;
+      }
+
+      #tray {
+        padding: 0 4px;
+      }
+
+      /* --- Hover effects --- */
+      #cpu:hover,
+      #network:hover,
+      #pulseaudio:hover,
+      #custom-gpu:hover,
+      #custom-notification:hover {
+        background-color: rgba(255, 255, 255, 0.08);
+      }
+
+      #clock:hover {
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+        color: white;
       }
     '';
   };
