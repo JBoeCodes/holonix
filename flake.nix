@@ -39,12 +39,12 @@
           ./modules/packages.nix
           ./modules/steam.nix
           ./modules/user.nix
-          ./modules/rclone-bisync.nix
           ./modules/zsh.nix
           ./modules/hardening.nix
           ./modules/hide-desktop-entries.nix
           ./modules/default-browser.nix
           ./modules/flatpak.nix
+          ./modules/ollama.nix
         ];
       };
     };
