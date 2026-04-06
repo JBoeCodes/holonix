@@ -63,6 +63,7 @@
           format = "{:%A %H:%M}";
           format-alt = "{:%d %B W%V %Y}";
           tooltip = false;
+          on-click-right = "swaync-client -t -sw";
         };
 
         cpu = {
@@ -130,7 +131,6 @@
         "custom/cava" = {
           format = "{}";
           exec = "~/.config/waybar/scripts/cava.sh";
-          on-click = "swaync-client -t -sw";
         };
 
       };
