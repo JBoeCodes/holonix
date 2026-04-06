@@ -45,7 +45,7 @@
     blueman
 
     # File manager
-    xfce.thunar
+    thunar
 
     # Wallpaper GUI
     waypaper
