@@ -11,14 +11,14 @@
       };
 
       listener = [
-        # Lock screen after 10 minutes
+        # Lock screen after 20 minutes
         {
-          timeout = 600;
+          timeout = 1200;
           on-timeout = "loginctl lock-session";
         }
-        # Screen off after 11 minutes
+        # Screen off after 21 minutes
         {
-          timeout = 660;
+          timeout = 1260;
           on-timeout = "hyprctl dispatch dpms off";
           on-resume = "hyprctl dispatch dpms on";
         }
