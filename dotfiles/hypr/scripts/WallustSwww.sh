@@ -199,4 +199,8 @@ kitty_cfg="$HOME/.config/wallust/wallust-kitty.toml"
   if command -v hyprctl >/dev/null 2>&1; then
     hyprctl reload >/dev/null 2>&1 || true
   fi
+  # Reload Waybar so wallust colors take effect
+  if pidof waybar >/dev/null 2>&1; then
+    for pid in $(pidof waybar); do kill -SIGUSR2 "$pid" 2>/dev/null || true; done
+  fi
 ) >/dev/null 2>&1 &

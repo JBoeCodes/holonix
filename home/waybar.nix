@@ -145,8 +145,10 @@
       };
     };
 
-    # Liquid glass style with hybrid group layout
+    # Liquid glass style with wallust dynamic colors
     style = ''
+      @import url("wallust/colors-waybar.css");
+
       * {
         font-family: 'JetBrainsMono Nerd Font';
         font-size: 13px;
@@ -157,14 +159,14 @@
       }
 
       tooltip {
-        background: rgba(0, 0, 0, 0.75);
+        background: alpha(@background, 0.85);
         border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        border: 1px solid alpha(@foreground, 0.15);
+        box-shadow: 0 4px 16px alpha(@background, 0.4);
       }
 
       tooltip label {
-        color: rgba(255, 255, 255, 0.9);
+        color: @color7;
         padding: 5px;
       }
 
@@ -182,11 +184,11 @@
       /* --- Glass group containers --- */
       .modules-left,
       .modules-right {
-        background: rgba(255, 255, 255, 0.12);
+        background: alpha(@background, 0.55);
         border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        border: 1px solid alpha(@foreground, 0.15);
+        box-shadow: 0 4px 16px alpha(@background, 0.3),
+                    inset 0 1px 0 alpha(@color7, 0.08);
         margin: 4px 6px;
         padding: 0 4px;
       }
@@ -205,7 +207,7 @@
       }
 
       #workspaces button {
-        color: rgba(255, 255, 255, 0.35);
+        color: alpha(@color7, 0.4);
         background-color: transparent;
         margin: 4px 2px;
         padding: 0 6px;
@@ -214,24 +216,24 @@
       }
 
       #workspaces button:hover {
-        background-color: rgba(255, 255, 255, 0.08);
-        color: rgba(255, 255, 255, 0.8);
+        background-color: alpha(@foreground, 0.1);
+        color: @color7;
       }
 
       #workspaces button.active {
-        background-color: rgba(245, 194, 231, 0.25);
-        color: #f5c2e7;
+        background-color: alpha(@foreground, 0.2);
+        color: @foreground;
         min-width: 28px;
-        box-shadow: 0 0 8px rgba(245, 194, 231, 0.15);
+        box-shadow: 0 0 8px alpha(@foreground, 0.15);
       }
 
       #workspaces button.urgent {
-        background-color: rgba(243, 139, 168, 0.3);
-        color: #f38ba8;
+        background-color: alpha(@color1, 0.3);
+        color: @color9;
       }
 
       #workspaces button.empty {
-        color: rgba(255, 255, 255, 0.2);
+        color: alpha(@color7, 0.2);
       }
 
       /* --- Shared module styles inside glass groups --- */
@@ -245,7 +247,7 @@
       #custom-gpu,
       #tray-expander {
         background-color: transparent;
-        color: rgba(255, 255, 255, 0.85);
+        color: @color7;
         margin: 2px 0;
         padding: 2px 12px;
         border-radius: 8px;
@@ -254,47 +256,49 @@
 
       /* --- Floating clock (center, no glass container) --- */
       #clock {
-        background: transparent;
-        color: rgba(255, 255, 255, 0.95);
+        background: alpha(@background, 0.55);
+        border-radius: 12px;
+        border: 1px solid alpha(@foreground, 0.15);
+        color: @color7;
         font-weight: 800;
         padding: 2px 16px;
-        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+        text-shadow: 0 1px 6px alpha(@background, 0.5);
       }
 
-      /* --- Color-coded modules --- */
+      /* --- Color-coded modules (wallust-derived) --- */
       #custom-cava {
-        color: #f5c2e7;
+        color: @color13;
         padding: 0 10px;
-        text-shadow: 0 0 6px rgba(245, 194, 231, 0.2);
+        text-shadow: 0 0 6px alpha(@color13, 0.25);
       }
 
       #pulseaudio {
-        color: #a6e3a1;
-        text-shadow: 0 0 6px rgba(166, 227, 161, 0.2);
+        color: @color14;
+        text-shadow: 0 0 6px alpha(@color14, 0.25);
       }
 
       #network {
-        color: #89b4fa;
-        text-shadow: 0 0 6px rgba(137, 180, 250, 0.2);
+        color: @color12;
+        text-shadow: 0 0 6px alpha(@color12, 0.25);
       }
 
       #cpu {
-        color: #fab387;
-        text-shadow: 0 0 6px rgba(250, 179, 135, 0.2);
+        color: @color6;
+        text-shadow: 0 0 6px alpha(@color6, 0.25);
       }
 
       #custom-gpu {
-        color: #fab387;
-        text-shadow: 0 0 6px rgba(250, 179, 135, 0.2);
+        color: @color6;
+        text-shadow: 0 0 6px alpha(@color6, 0.25);
       }
 
       #custom-notification {
-        color: #cba6f7;
-        text-shadow: 0 0 6px rgba(203, 166, 247, 0.2);
+        color: @color11;
+        text-shadow: 0 0 6px alpha(@color11, 0.25);
       }
 
       #window {
-        color: rgba(255, 255, 255, 0.7);
+        color: alpha(@color7, 0.7);
       }
 
       /* --- Tray expander --- */
@@ -303,7 +307,7 @@
       }
 
       #custom-expand-icon {
-        color: rgba(255, 255, 255, 0.6);
+        color: alpha(@color7, 0.6);
         margin-left: 6px;
       }
 
@@ -317,18 +321,43 @@
       #pulseaudio:hover,
       #custom-gpu:hover,
       #custom-notification:hover {
-        background-color: rgba(255, 255, 255, 0.08);
+        background-color: alpha(@foreground, 0.08);
       }
 
       #clock:hover {
-        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
-        color: white;
+        text-shadow: 0 1px 8px alpha(@background, 0.6);
+        color: @color15;
       }
     '';
   };
 
-  # Deploy waybar helper scripts
+  # Deploy waybar helper scripts and fallback wallust colors
   xdg.configFile = {
+    # Fallback colors so waybar renders before first wallust run
+    "waybar/wallust/colors-waybar.css" = {
+      text = ''
+        @define-color foreground #cdd6f4;
+        @define-color background #1e1e2e;
+        @define-color background-alt rgba(30,30,46,0.25);
+        @define-color cursor #f5e0dc;
+        @define-color color0 #45475a;
+        @define-color color1 #f38ba8;
+        @define-color color2 #a6e3a1;
+        @define-color color3 #f9e2af;
+        @define-color color4 #89b4fa;
+        @define-color color5 #f5c2e7;
+        @define-color color6 #94e2d5;
+        @define-color color7 #bac2de;
+        @define-color color8 #585b70;
+        @define-color color9 #f38ba8;
+        @define-color color10 #a6e3a1;
+        @define-color color11 #f9e2af;
+        @define-color color12 #89b4fa;
+        @define-color color13 #f5c2e7;
+        @define-color color14 #94e2d5;
+        @define-color color15 #a6adc8;
+      '';
+    };
     "waybar/scripts/waybar-gpu.sh" = {
       executable = true;
       text = ''
