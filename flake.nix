@@ -3,6 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # Pinned nixpkgs for claude-code (2.1.88 was yanked from npm in unstable)
+    nixpkgs-claude.url = "github:nixos/nixpkgs/8110df5ad7abf5d4c0f6fb0f8f978390e77f9685";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -11,11 +13,15 @@
     stylix.url = "github:danth/stylix";
   };
 
-  outputs = { self, nixpkgs, nix-flatpak, home-manager, stylix, ... }@inputs: {
+  outputs = { self, nixpkgs, nixpkgs-claude, nix-flatpak, home-manager, stylix, ... }@inputs:
+  let
+    pkgs-claude = import nixpkgs-claude { system = "x86_64-linux"; config.allowUnfree = true; };
+  in
+  {
     nixosConfigurations = {
       jboedesk = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs pkgs-claude; };
         modules = [
           stylix.nixosModules.stylix
           home-manager.nixosModules.home-manager

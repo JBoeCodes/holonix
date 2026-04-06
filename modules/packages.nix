@@ -1,8 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-claude, ... }:
 
 {
   users.users.jboe.packages = with pkgs; [
-    claude-code
+    pkgs-claude.claude-code
     codex
     gemini-cli
     git
