@@ -61,9 +61,9 @@
 
         clock = {
           format = "{:%A %H:%M}";
-          format-alt = "{:%d %B W%V %Y}";
-          tooltip = false;
-          on-click-right = "swaync-client -t -sw";
+          tooltip = true;
+          tooltip-format = "{:%d %B W%V %Y}";
+          on-click = "swaync-client -t -sw";
         };
 
         cpu = {
