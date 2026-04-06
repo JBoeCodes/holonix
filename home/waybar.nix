@@ -16,7 +16,6 @@
           "hyprland/window"
         ];
         modules-center = [
-          "custom/notification"
           "clock"
         ];
         modules-right = [
@@ -121,15 +120,6 @@
           spacing = 12;
         };
 
-        "custom/notification" = {
-          tooltip = false;
-          format = "{}";
-          "return-type" = "json";
-          exec = "swaync-client -swb";
-          on-click = "swaync-client -t -sw";
-          escape = true;
-        };
-
         "custom/gpu" = {
           exec = "~/.config/waybar/scripts/waybar-gpu.sh";
           interval = 5;
@@ -140,6 +130,7 @@
         "custom/cava" = {
           format = "{}";
           exec = "~/.config/waybar/scripts/cava.sh";
+          on-click = "swaync-client -t -sw";
         };
 
       };
@@ -243,7 +234,6 @@
       #cpu,
       #network,
       #pulseaudio,
-      #custom-notification,
       #custom-gpu,
       #tray-expander {
         background-color: transparent;
@@ -292,11 +282,6 @@
         text-shadow: 0 0 6px alpha(@color6, 0.25);
       }
 
-      #custom-notification {
-        color: @color11;
-        text-shadow: 0 0 6px alpha(@color11, 0.25);
-      }
-
       #window {
         color: alpha(@color7, 0.7);
       }
@@ -319,8 +304,7 @@
       #cpu:hover,
       #network:hover,
       #pulseaudio:hover,
-      #custom-gpu:hover,
-      #custom-notification:hover {
+      #custom-gpu:hover {
         background-color: alpha(@foreground, 0.08);
       }
 
