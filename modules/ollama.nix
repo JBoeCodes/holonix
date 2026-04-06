@@ -10,7 +10,9 @@ let
       hash = "sha256-qYl6rKEp3uWM4amHgj1CVPlo/uuJGsyFDn8g/7BCYlE=";
     };
 
-    nativeBuildInputs = [ pkgs.zstd ];
+    nativeBuildInputs = [ pkgs.zstd pkgs.autoPatchelfHook ];
+
+    buildInputs = [ pkgs.stdenv.cc.cc.lib ];
 
     sourceRoot = ".";
 
@@ -24,6 +26,9 @@ let
       cp -r bin $out/
       cp -r lib $out/
     '';
+
+    # Don't patch the bundled CUDA libs — they're loaded by dlopen
+    autoPatchelfIgnoreMissingDeps = [ "libcuda.so.1" ];
 
     meta = with pkgs.lib; {
       description = "Ollama - run LLMs locally (prebuilt binary)";
