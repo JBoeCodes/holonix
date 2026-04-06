@@ -16,11 +16,11 @@
           "hyprland/window"
         ];
         modules-center = [
+          "custom/notification"
           "clock"
         ];
         modules-right = [
           "group/tray-expander"
-          "custom/notification"
           "network"
           "custom/gpu"
           "cpu"
