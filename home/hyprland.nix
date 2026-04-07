@@ -30,7 +30,7 @@
 
       # Autostart
       "exec-once" = [
-        "swww-daemon"
+        "$scriptsDir/WallpaperDaemon.sh"
         "nm-applet --indicator"
         "swaync"
         "waybar"
@@ -198,7 +198,7 @@
         "$mod CTRL, F, maximize, fullscreen, 1"
         "$mod, SPACE, toggle float, togglefloating,"
         "$mod SHIFT, Return, dropdown terminal, exec, $scriptsDir/Dropterminal.sh $term"
-        ''$mod, W, next wallpaper, exec, bash -c 'files=($(find ~/wallpapers -type f | sort)); idx=0; [ -f /tmp/.wallpaper-idx ] && idx=$(cat /tmp/.wallpaper-idx); [ "$idx" -ge "''${#files[@]}" ] && idx=0; swww img "''${files[$idx]}" --transition-type grow --transition-duration 1.5 --transition-fps 60; echo $(( idx + 1 )) > /tmp/.wallpaper-idx' ''
+        "$mod, W, random wallpaper, exec, $scriptsDir/../UserScripts/WallpaperRandom.sh"
         "$mod SHIFT, N, notification panel, exec, swaync-client -t -sw"
 
         # System
