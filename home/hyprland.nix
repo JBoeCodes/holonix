@@ -3,6 +3,9 @@
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
+      # Monitor
+      monitor = "HDMI-A-1, 3840x2160@119.88, 0x0, 1";
+
       # Variables
       "$mod" = "SUPER";
       "$term" = "kitty";
