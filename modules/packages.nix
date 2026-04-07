@@ -1,5 +1,27 @@
 { pkgs, pkgs-claude, ... }:
 
+let
+  # Obsidian's CLI requires process.execPath to end in "obsidian", but NixOS
+  # wraps Electron apps so the binary name is "electron". This creates a
+  # patched electron where the final binary is named "obsidian".
+  electronForObsidian = let
+    unwrapped = pkgs.electron.unwrapped;
+    renamedDir = pkgs.runCommand "electron-obsidian-unwrapped" {} ''
+      mkdir -p $out/libexec/electron
+      for f in ${unwrapped}/libexec/electron/*; do
+        ln -s "$f" "$out/libexec/electron/"
+      done
+      rm $out/libexec/electron/electron
+      ln ${unwrapped}/libexec/electron/electron $out/libexec/electron/obsidian \
+        || cp ${unwrapped}/libexec/electron/electron $out/libexec/electron/obsidian
+    '';
+  in pkgs.runCommand "electron-for-obsidian" {} ''
+    mkdir -p $out/bin
+    substitute ${pkgs.electron}/bin/electron $out/bin/electron \
+      --replace-fail '${unwrapped}/libexec/electron/electron' '${renamedDir}/libexec/electron/obsidian'
+    chmod +x $out/bin/electron
+  '';
+in
 {
   users.users.jboe.packages = with pkgs; [
     pkgs-claude.claude-code
@@ -23,7 +45,7 @@
     zoom-us
     onlyoffice-desktopeditors
     microsoft-edge
-    obsidian
+    (obsidian.override { electron = electronForObsidian; })
     qbittorrent
     telegram-desktop
     gimp
@@ -47,6 +69,7 @@
     yazi
     vivaldi
     pamixer
+    parsec-bin
   ];
 
 }
