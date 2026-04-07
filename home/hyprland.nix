@@ -199,6 +199,7 @@
         "$mod, SPACE, toggle float, togglefloating,"
         "$mod SHIFT, Return, dropdown terminal, exec, $scriptsDir/Dropterminal.sh $term"
         "$mod, W, select wallpaper, exec, waypaper"
+        ''$mod SHIFT, W, next wallpaper, exec, bash -c 'files=($(find ~/wallpapers -type f | sort)); idx=0; [ -f /tmp/.wallpaper-idx ] && idx=$(cat /tmp/.wallpaper-idx); [ "$idx" -ge "''${#files[@]}" ] && idx=0; swww img "''${files[$idx]}" --transition-type grow --transition-duration 1.5 --transition-fps 60; echo $(( idx + 1 )) > /tmp/.wallpaper-idx' ''
         "$mod SHIFT, N, notification panel, exec, swaync-client -t -sw"
 
         # System
