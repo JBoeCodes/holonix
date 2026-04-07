@@ -180,6 +180,7 @@
         "$mod, B, open browser, exec, xdg-open https://"
         "$mod, Return, open terminal, exec, $term"
         "$mod, E, file manager, exec, $files"
+        "$mod, O, open outlook, exec, xdg-open https://outlook.office.com"
 
         # Features
         "$mod, T, theme switcher, exec, $scriptsDir/ThemeChanger.sh"
