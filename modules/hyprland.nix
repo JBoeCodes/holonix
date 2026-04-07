@@ -21,7 +21,7 @@
   users.users.jboe.packages = with pkgs; [
     # Core Hyprland ecosystem
     libnotify
-    swww
+    awww
     hyprpolkitagent
     hyprpicker
     hyprsunset
