@@ -4,7 +4,6 @@ let
   hiddenEntries = [
     "xterm"
     "uuctl"
-    "waypaper"
     "gtk3-demo"
     "gtk3-icon-browser"
     "gtk3-widget-factory"

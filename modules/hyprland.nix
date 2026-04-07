@@ -47,9 +47,6 @@
     # File manager
     thunar
 
-    # Wallpaper GUI
-    waypaper
-
     # Gaming overlay
     mangohud
 
