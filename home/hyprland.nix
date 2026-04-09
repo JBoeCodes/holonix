@@ -108,7 +108,7 @@
       # Input
       input = {
         kb_layout = "us";
-        kb_options = "altwin:swap_alt_win";
+        kb_options = "";
         repeat_rate = 50;
         repeat_delay = 300;
         sensitivity = 0;
