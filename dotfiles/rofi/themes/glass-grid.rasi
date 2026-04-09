@@ -33,17 +33,17 @@ configuration {
 /*****----- Main Window -----*****/
 window {
     transparency:                "real";
-    location:                    center;
-    anchor:                      center;
+    location:                    north;
+    anchor:                      north;
     fullscreen:                  false;
-    width:                       45%;
+    width:                       36%;
     x-offset:                    0px;
-    y-offset:                    0px;
+    y-offset:                    48px;
     enabled:                     true;
     margin:                      0px;
     padding:                     0px;
     border:                      1px solid;
-    border-radius:               12px;
+    border-radius:               0px 0px 14px 14px;
     border-color:                @border-subtle;
     background-color:            @bg;
     cursor:                      "default";
@@ -103,7 +103,7 @@ entry {
 listview {
     enabled:                     true;
     columns:                     5;
-    lines:                       4;
+    lines:                       5;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
@@ -127,7 +127,7 @@ element {
     enabled:                     true;
     spacing:                     6px;
     margin:                      0px;
-    padding:                     12px 8px;
+    padding:                     24px 8px;
     border:                      1px solid;
     border-radius:               10px;
     border-color:                @border-faint;

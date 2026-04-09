@@ -387,7 +387,7 @@
       # ── Layer rules ───────────────────────────────────────────────────
       layerrule = match:namespace rofi, blur on
       layerrule = match:namespace notifications, blur on
-      layerrule = animation slide, match:namespace rofi
+      layerrule = animation popin, match:namespace rofi
       layerrule = animation slide, match:namespace notifications
 
       # ── Named block rules ─────────────────────────────────────────────
