@@ -1,6 +1,6 @@
 /* Glass Grid — Unified app launcher
  * Matches Waybar liquid glass morphism aesthetic
- * Dynamic colors via Wallust, Catppuccin Mocha fallbacks */
+ * Rose Pine palette (matching Stylix base16 scheme) */
 
 /*****----- Configuration -----*****/
 configuration {
@@ -13,16 +13,21 @@ configuration {
     me-accept-entry:            "MousePrimary";
 }
 
-/* ---- Load wallust colors ---- */
-@theme "~/.config/rofi/wallust/colors-rofi.rasi"
-
-/*****----- Global Properties -----*****/
+/*****----- Rose Pine Colors -----*****/
 * {
-    background-alt:              alpha(@color0, 0.6);
-    selected:                    alpha(@foreground, 0.15);
-    border-color:                alpha(@foreground, 0.15);
+    bg:                          rgba ( 25, 23, 36, 55 % );
+    bg-surface:                  rgba ( 31, 29, 46, 60 % );
+    fg:                          rgba ( 224, 222, 244, 100 % );
+    fg-muted:                    rgba ( 224, 222, 244, 70 % );
+    fg-dim:                      rgba ( 224, 222, 244, 40 % );
+    border-subtle:               rgba ( 224, 222, 244, 15 % );
+    border-faint:                rgba ( 224, 222, 244, 8 % );
+    tile-bg:                     rgba ( 224, 222, 244, 5 % );
+    selected-bg:                 rgba ( 224, 222, 244, 15 % );
+    selected-border:             rgba ( 224, 222, 244, 20 % );
+
     background-color:            transparent;
-    foreground-color:            @foreground;
+    text-color:                  @fg;
 }
 
 /*****----- Main Window -----*****/
@@ -39,8 +44,8 @@ window {
     padding:                     0px;
     border:                      1px solid;
     border-radius:               12px;
-    border-color:                alpha(@foreground, 0.15);
-    background-color:            alpha(@background, 0.55);
+    border-color:                @border-subtle;
+    background-color:            @bg;
     cursor:                      "default";
 }
 
@@ -51,7 +56,6 @@ mainbox {
     margin:                      0px;
     padding:                     24px;
     border:                      0px;
-    border-radius:               0px;
     background-color:            transparent;
     children:                    [ "inputbar", "listview" ];
 }
@@ -64,9 +68,9 @@ inputbar {
     padding:                     10px 14px;
     border:                      1px solid;
     border-radius:               8px;
-    border-color:                alpha(@foreground, 0.08);
-    background-color:            alpha(@color0, 0.6);
-    text-color:                  @foreground;
+    border-color:                @border-faint;
+    background-color:            @bg-surface;
+    text-color:                  @fg;
     children:                    [ "textbox-prompt-colon", "entry" ];
 }
 
@@ -82,17 +86,17 @@ textbox-prompt-colon {
     expand:                      false;
     str:                         "  ";
     background-color:            transparent;
-    text-color:                  alpha(@foreground, 0.4);
+    text-color:                  @fg-dim;
 }
 
 entry {
     enabled:                     true;
     padding:                     4px 0px;
     background-color:            transparent;
-    text-color:                  @foreground;
+    text-color:                  @fg;
     cursor:                      text;
     placeholder:                 "Search...";
-    placeholder-color:           alpha(@foreground, 0.4);
+    placeholder-color:           @fg-dim;
 }
 
 /*****----- Listview (Icon Grid) -----*****/
@@ -114,7 +118,7 @@ listview {
     padding:                     8px 0px 0px 0px;
     border:                      0px;
     background-color:            transparent;
-    text-color:                  @foreground;
+    text-color:                  @fg;
     cursor:                      "default";
 }
 
@@ -126,29 +130,29 @@ element {
     padding:                     12px 8px;
     border:                      1px solid;
     border-radius:               10px;
-    border-color:                alpha(@foreground, 0.08);
-    background-color:            alpha(@foreground, 0.05);
-    text-color:                  alpha(@foreground, 0.7);
+    border-color:                @border-faint;
+    background-color:            @tile-bg;
+    text-color:                  @fg-muted;
     cursor:                      pointer;
     orientation:                 vertical;
 }
 
 element normal.normal {
-    background-color:            alpha(@foreground, 0.05);
-    text-color:                  alpha(@foreground, 0.7);
-    border-color:                alpha(@foreground, 0.08);
+    background-color:            @tile-bg;
+    text-color:                  @fg-muted;
+    border-color:                @border-faint;
 }
 
 element selected.normal {
-    background-color:            alpha(@foreground, 0.15);
-    text-color:                  @foreground;
-    border-color:                alpha(@foreground, 0.2);
+    background-color:            @selected-bg;
+    text-color:                  @fg;
+    border-color:                @selected-border;
 }
 
 element alternate.normal {
-    background-color:            alpha(@foreground, 0.05);
-    text-color:                  alpha(@foreground, 0.7);
-    border-color:                alpha(@foreground, 0.08);
+    background-color:            @tile-bg;
+    text-color:                  @fg-muted;
+    border-color:                @border-faint;
 }
 
 element-icon {
@@ -176,15 +180,15 @@ message {
     padding:                     0px;
     border:                      0px;
     background-color:            transparent;
-    text-color:                  @foreground;
+    text-color:                  @fg;
 }
 
 textbox {
     padding:                     12px;
     border:                      0px;
     border-radius:               8px;
-    background-color:            alpha(@color0, 0.6);
-    text-color:                  @foreground;
+    background-color:            @bg-surface;
+    text-color:                  @fg;
     vertical-align:              0.5;
     horizontal-align:            0.5;
 }
@@ -193,7 +197,7 @@ error-message {
     padding:                     12px;
     border:                      1px solid;
     border-radius:               8px;
-    border-color:                alpha(@foreground, 0.15);
-    background-color:            alpha(@background, 0.55);
-    text-color:                  @foreground;
+    border-color:                @border-subtle;
+    background-color:            @bg;
+    text-color:                  @fg;
 }
