@@ -36,7 +36,6 @@ modules/
 
 ## Custom Keybindings (keyboard.nix)
 
-- **Alt/Win swap**: `altwin:swap_alt_win` (XKB + dconf)
 - **Super+Shift+S**: Screenshot UI
 - **Super+W**: Close window
 - **Ctrl+Shift+Space**: 1Password Quick Access (custom keybinding)
