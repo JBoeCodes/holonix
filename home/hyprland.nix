@@ -179,7 +179,7 @@
       # Keybinds (bindd = described binds)
       bindd = [
         # Standard
-        "$mod, D, app launcher, exec, pkill rofi || true && rofi -show drun -modi drun,filebrowser,run,window"
+        "$mod, D, app launcher, exec, pkill rofi || true && rofi -show drun"
         "$mod, B, open browser, exec, xdg-open https://"
         "$mod, Return, open terminal, exec, $term"
         "$mod, E, file manager, exec, $files"

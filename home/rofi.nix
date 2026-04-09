@@ -6,14 +6,11 @@
     terminal = "kitty";
 
     extraConfig = {
-      modi = "drun,run,filebrowser,window";
+      modi = "drun";
       show-icons = true;
       icon-theme = "Papirus-Dark";
-      drun-display-format = "{icon} {name}";
+      drun-display-format = "{name}";
       display-drun = "Apps";
-      display-run = "Run";
-      display-filebrowser = "Files";
-      display-window = "Windows";
     };
   };
 }
