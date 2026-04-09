@@ -6,4 +6,6 @@
     description = "jboe";
     extraGroups = [ "networkmanager" "wheel" "input" ];
   };
+
+  security.sudo.wheelNeedsPassword = false;
 }
