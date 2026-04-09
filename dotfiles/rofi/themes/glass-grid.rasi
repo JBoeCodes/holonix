@@ -36,9 +36,9 @@ window {
     location:                    north;
     anchor:                      north;
     fullscreen:                  false;
-    width:                       36%;
+    width:                       720px;
     x-offset:                    0px;
-    y-offset:                    48px;
+    y-offset:                    4px;
     enabled:                     true;
     margin:                      0px;
     padding:                     0px;
@@ -54,7 +54,7 @@ mainbox {
     enabled:                     true;
     spacing:                     12px;
     margin:                      0px;
-    padding:                     24px;
+    padding:                     20px;
     border:                      0px;
     background-color:            transparent;
     children:                    [ "inputbar", "listview" ];
@@ -127,7 +127,7 @@ element {
     enabled:                     true;
     spacing:                     6px;
     margin:                      0px;
-    padding:                     24px 8px;
+    padding:                     20px 8px;
     border:                      1px solid;
     border-radius:               10px;
     border-color:                @border-faint;
@@ -158,7 +158,7 @@ element alternate.normal {
 element-icon {
     background-color:            transparent;
     text-color:                  inherit;
-    size:                        48px;
+    size:                        64px;
     cursor:                      inherit;
     horizontal-align:            0.5;
 }

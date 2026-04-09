@@ -90,6 +90,7 @@
           "overshot, 0.05, 0.9, 0.1, 1.05"
           "smoothOut, 0.5, 0, 0.99, 0.99"
           "smoothIn, 0.5, -0.5, 0.68, 1.5"
+          "glassIn, 0.12, 0.8, 0.2, 1.0"
         ];
         animation = [
           "windows, 1, 6, wind, slide"
@@ -99,6 +100,8 @@
           "border, 1, 1, liner"
           "borderangle, 1, 180, liner, loop"
           "fade, 1, 3, smoothOut"
+          "layersIn, 1, 5, glassIn, popin 40%"
+          "layersOut, 1, 3, smoothOut, fade"
           "workspaces, 1, 5, overshot"
           "workspacesIn, 1, 5, winIn, slide"
           "workspacesOut, 1, 5, winOut, slide"
