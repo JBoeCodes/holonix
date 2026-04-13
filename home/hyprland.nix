@@ -350,8 +350,7 @@
       # ── Window rule tags ──────────────────────────────────────────────
       windowrule = match:class ^([Ff]irefox|org.mozilla.firefox)$, tag +browser
       windowrule = match:class ^([Mm]icrosoft-edge(-stable|-beta|-dev|-unstable))$, tag +browser
-      windowrule = match:class ^(zen-alpha|zen)$, tag +browser
-      windowrule = match:class ^(vivaldi)$, tag +browser
+      windowrule = match:class ^(zen-alpha|zen|zen-beta|zen-twilight)$, tag +browser
       windowrule = match:class ^(ghostty|wezterm|Alacritty|kitty)$, tag +terminal
       windowrule = match:class ^([Dd]iscord|[Vv]esktop)$, tag +im
       windowrule = match:class ^(org.telegram.desktop)$, tag +im
@@ -420,8 +419,8 @@
       }
 
       windowrule {
-          name = vivaldi-idle
-          match:class = ^(vivaldi)$
+          name = zen-idle
+          match:class = ^(zen-alpha|zen|zen-beta|zen-twilight)$
           idle_inhibit = fullscreen
       }
 

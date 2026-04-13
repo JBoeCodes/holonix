@@ -4,12 +4,12 @@
   xdg.mime = {
     enable = true;
     defaultApplications = {
-      "text/html" = "vivaldi.desktop";
-      "x-scheme-handler/http" = "vivaldi.desktop";
-      "x-scheme-handler/https" = "vivaldi.desktop";
-      "x-scheme-handler/about" = "vivaldi.desktop";
-      "x-scheme-handler/unknown" = "vivaldi.desktop";
-      "application/xhtml+xml" = "vivaldi.desktop";
+      "text/html" = "zen.desktop";
+      "x-scheme-handler/http" = "zen.desktop";
+      "x-scheme-handler/https" = "zen.desktop";
+      "x-scheme-handler/about" = "zen.desktop";
+      "x-scheme-handler/unknown" = "zen.desktop";
+      "application/xhtml+xml" = "zen.desktop";
     };
   };
 }

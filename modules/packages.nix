@@ -1,4 +1,4 @@
-{ pkgs, pkgs-claude, ... }:
+{ pkgs, pkgs-claude, inputs, ... }:
 
 let
   # Obsidian's CLI requires process.execPath to end in "obsidian", but NixOS
@@ -67,9 +67,14 @@ in
     cbonsai
     sox
     yazi
-    vivaldi
+    inputs.zen-browser.packages.${pkgs.system}.default
     pamixer
-    parsec-bin
+    (pkgs.runCommand "parsec-nvidia-wrapped" { nativeBuildInputs = [ pkgs.makeWrapper ]; } ''
+      mkdir -p $out/bin $out/share
+      cp -r ${parsec-bin}/share/* $out/share/ 2>/dev/null || true
+      makeWrapper ${parsec-bin}/bin/parsecd $out/bin/parsecd \
+        --prefix LD_LIBRARY_PATH : "/run/opengl-driver/lib"
+    '')
   ];
 
 }

@@ -11,9 +11,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     stylix.url = "github:danth/stylix";
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-claude, nix-flatpak, home-manager, stylix, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-claude, nix-flatpak, home-manager, stylix, zen-browser, ... }@inputs:
   let
     pkgs-claude = import nixpkgs-claude { system = "x86_64-linux"; config.allowUnfree = true; };
   in
