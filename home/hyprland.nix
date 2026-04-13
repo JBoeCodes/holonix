@@ -183,7 +183,7 @@
       bindd = [
         # Standard
         "$mod, D, app launcher, exec, pkill rofi || true && rofi -show drun"
-        "$mod, B, open browser, exec, xdg-open https://"
+        "$mod, B, open browser, exec, zen-beta"
         "$mod, Return, open terminal, exec, $term"
         "$mod, E, file manager, exec, $files"
         "$mod, O, open outlook, exec, xdg-open https://outlook.office.com"
