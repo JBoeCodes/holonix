@@ -34,7 +34,7 @@
           ./modules/1password.nix
           ./modules/audio.nix
           ./modules/boot.nix
-          ./modules/sddm.nix
+          ./modules/greetd.nix
           ./modules/stylix.nix
           ./modules/home.nix
           ./modules/firefox.nix
