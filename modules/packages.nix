@@ -62,6 +62,7 @@ in
     fd
     duf
     lazygit
+    uv
     cmatrix
     pipes-rs
     cbonsai
