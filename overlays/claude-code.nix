@@ -9,16 +9,28 @@
 #   4. Run: nix build nixpkgs#prefetch-npm-deps --no-link --print-out-paths
 #      then: <path>/bin/prefetch-npm-deps overlays/claude-code-package-lock.json
 #      → update `npmDepsHash`
-final: prev: {
-  claude-code = prev.claude-code.overrideAttrs (old: rec {
-    version = "2.1.111";
-    src = final.fetchzip {
-      url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${version}.tgz";
-      hash = "sha256-K3qhZXVJ2DIKv7YL9f/CHkuUYnK0lkIR1wjEa+xeSCk=";
+final: prev:
+let
+  version = "2.1.111";
+  src = final.fetchzip {
+    url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${version}.tgz";
+    hash = "sha256-K3qhZXVJ2DIKv7YL9f/CHkuUYnK0lkIR1wjEa+xeSCk=";
+  };
+  packageLock = ./claude-code-package-lock.json;
+  npmDepsHash = "sha256-6f68qUMnDk6tn+qypVi8bPtNrxbtcf15tHrgtlhEaK4=";
+in {
+  claude-code = prev.claude-code.overrideAttrs (old: {
+    inherit version src npmDepsHash;
+    # overrideAttrs doesn't propagate to the internal fetchNpmDeps call,
+    # so we must rebuild npmDeps explicitly with our lock file and source.
+    npmDeps = final.fetchNpmDeps {
+      name = "claude-code-${version}-npm-deps";
+      inherit src;
+      postPatch = "cp ${packageLock} package-lock.json";
+      hash = npmDepsHash;
     };
-    npmDepsHash = "sha256-6f68qUMnDk6tn+qypVi8bPtNrxbtcf15tHrgtlhEaK4=";
     postPatch = ''
-      cp ${./claude-code-package-lock.json} package-lock.json
+      cp ${packageLock} package-lock.json
       substituteInPlace cli.js \
         --replace-fail '#!/bin/sh' '#!/usr/bin/env sh'
     '';
