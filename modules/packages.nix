@@ -1,4 +1,4 @@
-{ pkgs, pkgs-claude, inputs, ... }:
+{ pkgs, inputs, ... }:
 
 let
   # Obsidian's CLI requires process.execPath to end in "obsidian", but NixOS
@@ -24,7 +24,7 @@ let
 in
 {
   users.users.jboe.packages = with pkgs; [
-    pkgs-claude.claude-code
+    claude-code
     codex
     gemini-cli
     git
