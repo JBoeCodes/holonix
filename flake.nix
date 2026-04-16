@@ -22,6 +22,7 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
+          { nixpkgs.overlays = [ (import ./overlays/claude-code.nix) ]; }
           stylix.nixosModules.stylix
           home-manager.nixosModules.home-manager
           nix-flatpak.nixosModules.nix-flatpak
