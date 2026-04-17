@@ -207,7 +207,7 @@
         "$mod SHIFT, F, fullscreen, fullscreen"
         "$mod CTRL, F, maximize, fullscreen, 1"
         "$mod SHIFT, SPACE, toggle float, togglefloating,"
-        "$mod, V, toggle opaque, tagwindow, toggle opaque"
+        ''$mod, V, toggle opaque, exec, hyprctl activewindow -j | jq -e '.tags | index("opaque")' >/dev/null && hyprctl dispatch tagwindow -- -opaque || hyprctl dispatch tagwindow +opaque''
         "$mod SHIFT, Return, dropdown terminal, exec, $scriptsDir/Dropterminal.sh $term"
         ''$mod, W, random wallpaper, exec, awww img "$(find -L ~/Pictures/wallpapers -type f | shuf -n 1)" --transition-type grow --transition-duration 0.5 --transition-fps 60''
         "$mod SHIFT, N, notification panel, exec, swaync-client -t -sw"
