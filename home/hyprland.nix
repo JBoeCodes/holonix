@@ -207,6 +207,7 @@
         "$mod SHIFT, F, fullscreen, fullscreen"
         "$mod CTRL, F, maximize, fullscreen, 1"
         "$mod SHIFT, SPACE, toggle float, togglefloating,"
+        "$mod, V, toggle opaque, tagwindow, toggle opaque"
         "$mod SHIFT, Return, dropdown terminal, exec, $scriptsDir/Dropterminal.sh $term"
         ''$mod, W, random wallpaper, exec, awww img "$(find -L ~/Pictures/wallpapers -type f | shuf -n 1)" --transition-type grow --transition-duration 0.5 --transition-fps 60''
         "$mod SHIFT, N, notification panel, exec, swaync-client -t -sw"
@@ -387,7 +388,8 @@
       windowrule = match:fullscreen true, idle_inhibit fullscreen
 
       # ── Opaque video pages in browsers ────────────────────────────────
-      windowrule = match:tag browser, match:title .*(YouTube|Jellyfin|[Bb]oeflix).*, opacity 1.0 1.0
+      windowrule = match:tag browser, match:title .*(YouTube|Jellyfin).*, opacity 1.0 1.0
+      windowrule = match:tag opaque, opacity 1.0 1.0
 
       # ── Games ─────────────────────────────────────────────────────────
       windowrule = match:tag games, no_blur on, fullscreen 0
