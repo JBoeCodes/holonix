@@ -387,7 +387,7 @@
       windowrule = match:fullscreen true, idle_inhibit fullscreen
 
       # ── Opaque video pages in browsers ────────────────────────────────
-      windowrule = match:tag browser, match:title .*(YouTube|Jellyfin).*, opacity 1.0 1.0
+      windowrule = match:tag browser, match:title .*(YouTube|Jellyfin|[Bb]oeflix).*, opacity 1.0 1.0
 
       # ── Games ─────────────────────────────────────────────────────────
       windowrule = match:tag games, no_blur on, fullscreen 0
