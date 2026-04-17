@@ -385,6 +385,7 @@
 
       # ── Fullscreen idle inhibit ───────────────────────────────────────
       windowrule = match:fullscreen true, idle_inhibit fullscreen
+      windowrule = match:fullscreen true, opacity 1.0 1.0
 
       # ── Games ─────────────────────────────────────────────────────────
       windowrule = match:tag games, no_blur on, fullscreen 0
@@ -402,7 +403,7 @@
           match:title = ^[Pp]icture-in-[Pp]icture$
           float = on
           move = 72% 7%
-          opacity = 0.95 0.75
+          opacity = 1.0 1.0
           pin = on
           keep_aspect_ratio = on
           size = (monitor_w*0.3) (monitor_h*0.3)
