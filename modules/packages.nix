@@ -36,6 +36,7 @@ in
     btop
     fastfetch
     gh
+    google-cloud-sdk
     heroic
     prismlauncher
     eden
