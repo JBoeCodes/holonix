@@ -190,7 +190,7 @@
         "$mod, B, open browser, exec, zen-beta"
         "$mod, Return, open terminal, exec, $term"
         "$mod, E, file manager, exec, $files"
-        "$mod, O, open outlook, exec, xdg-open https://outlook.office.com"
+        "$mod, O, open obsidian, exec, obsidian"
 
         # Features
         "$mod, T, theme switcher, exec, $scriptsDir/ThemeChanger.sh"
