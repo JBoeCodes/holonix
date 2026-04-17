@@ -1,5 +1,9 @@
 { pkgs, ... }:
 {
+  # awww-daemon owns the wallpaper layer; stop stylix from also launching hyprpaper
+  # on top of it (covers awww and makes Super+W appear to do nothing).
+  stylix.targets.hyprpaper.enable = false;
+
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
