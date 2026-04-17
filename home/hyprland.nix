@@ -186,7 +186,7 @@
       # Keybinds (bindd = described binds)
       bindd = [
         # Standard
-        "$mod, D, app launcher, exec, pkill rofi || true && rofi -show drun"
+        "$mod, SPACE, app launcher, exec, pkill rofi || true && rofi -show drun"
         "$mod, B, open browser, exec, zen-beta"
         "$mod, Return, open terminal, exec, $term"
         "$mod, E, file manager, exec, $files"
@@ -206,7 +206,7 @@
         "$mod, N, toggle night light, exec, $scriptsDir/Hyprsunset.sh toggle"
         "$mod SHIFT, F, fullscreen, fullscreen"
         "$mod CTRL, F, maximize, fullscreen, 1"
-        "$mod, SPACE, toggle float, togglefloating,"
+        "$mod SHIFT, SPACE, toggle float, togglefloating,"
         "$mod SHIFT, Return, dropdown terminal, exec, $scriptsDir/Dropterminal.sh $term"
         ''$mod, W, random wallpaper, exec, awww img "$(find -L ~/Pictures/wallpapers -type f | shuf -n 1)" --transition-type grow --transition-duration 0.5 --transition-fps 60''
         "$mod SHIFT, N, notification panel, exec, swaync-client -t -sw"
