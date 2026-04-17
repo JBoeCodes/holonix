@@ -38,6 +38,7 @@ in
     gh
     heroic
     prismlauncher
+    eden
     slack
     vlc
     waveterm
