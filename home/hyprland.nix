@@ -204,7 +204,7 @@
         "$mod CTRL, F, maximize, fullscreen, 1"
         "$mod, SPACE, toggle float, togglefloating,"
         "$mod SHIFT, Return, dropdown terminal, exec, $scriptsDir/Dropterminal.sh $term"
-        ''$mod, W, random wallpaper, exec, awww img "$(find ~/Pictures/wallpapers -type f | shuf -n 1)" --transition-type grow --transition-duration 0.5 --transition-fps 60''
+        ''$mod, W, random wallpaper, exec, awww img "$(find -L ~/Pictures/wallpapers -type f | shuf -n 1)" --transition-type grow --transition-duration 0.5 --transition-fps 60''
         "$mod SHIFT, N, notification panel, exec, swaync-client -t -sw"
 
         # System
