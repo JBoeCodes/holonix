@@ -22,7 +22,10 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
-          { nixpkgs.overlays = [ (import ./overlays/claude-code.nix) ]; }
+          { nixpkgs.overlays = [
+              (import ./overlays/claude-code.nix)
+              (import ./overlays/prettymux)
+            ]; }
           stylix.nixosModules.stylix
           home-manager.nixosModules.home-manager
           nix-flatpak.nixosModules.nix-flatpak
@@ -51,8 +54,21 @@
           ./modules/hide-desktop-entries.nix
           ./modules/default-browser.nix
           ./modules/flatpak.nix
+          ./modules/prettymux.nix
         ];
       };
+    };
+
+    packages.x86_64-linux = let
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+        overlays = [
+          (import ./overlays/claude-code.nix)
+          (import ./overlays/prettymux)
+        ];
+      };
+    in {
+      inherit (pkgs) prettymux ghostty-embedded;
     };
   };
 }

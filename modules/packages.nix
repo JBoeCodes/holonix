@@ -27,6 +27,7 @@ in
     claude-code
     codex
     gemini-cli
+    goose-cli
     git
     opencode
     wget
