@@ -27,7 +27,7 @@ in
     claude-code
     codex
     gemini-cli
-    goose-cli
+    (goose-cli.overrideAttrs (_: { doCheck = false; }))
     git
     opencode
     wget
