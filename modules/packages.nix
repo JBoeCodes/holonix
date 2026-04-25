@@ -49,6 +49,7 @@ in
     zoom-us
     onlyoffice-desktopeditors
     microsoft-edge
+    brave
     (obsidian.override { electron_39 = electronForObsidian; })
     qbittorrent
     telegram-desktop
