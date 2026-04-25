@@ -5,7 +5,8 @@ let
   # wraps Electron apps so the binary name is "electron". This creates a
   # patched electron where the final binary is named "obsidian".
   electronForObsidian = let
-    unwrapped = pkgs.electron.unwrapped;
+    baseElectron = pkgs.electron_39;
+    unwrapped = baseElectron.unwrapped;
     renamedDir = pkgs.runCommand "electron-obsidian-unwrapped" {} ''
       mkdir -p $out/libexec/electron
       for f in ${unwrapped}/libexec/electron/*; do
@@ -17,7 +18,7 @@ let
     '';
   in pkgs.runCommand "electron-for-obsidian" {} ''
     mkdir -p $out/bin
-    substitute ${pkgs.electron}/bin/electron $out/bin/electron \
+    substitute ${baseElectron}/bin/electron $out/bin/electron \
       --replace-fail '${unwrapped}/libexec/electron/electron' '${renamedDir}/libexec/electron/obsidian'
     chmod +x $out/bin/electron
   '';
@@ -48,7 +49,7 @@ in
     zoom-us
     onlyoffice-desktopeditors
     microsoft-edge
-    (obsidian.override { electron = electronForObsidian; })
+    (obsidian.override { electron_39 = electronForObsidian; })
     qbittorrent
     telegram-desktop
     gimp
