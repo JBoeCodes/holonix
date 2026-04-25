@@ -22,6 +22,8 @@ let
       --replace-fail '${unwrapped}/libexec/electron/electron' '${renamedDir}/libexec/electron/obsidian'
     chmod +x $out/bin/electron
   '';
+
+  brave-origin-nightly = pkgs.callPackage ./brave-origin-nightly.nix {};
 in
 {
   users.users.jboe.packages = with pkgs; [
@@ -49,7 +51,7 @@ in
     zoom-us
     onlyoffice-desktopeditors
     microsoft-edge
-    brave
+    brave-origin-nightly
     (obsidian.override { electron_39 = electronForObsidian; })
     qbittorrent
     telegram-desktop
