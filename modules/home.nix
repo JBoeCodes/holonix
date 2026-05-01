@@ -22,6 +22,7 @@
         ../home/kitty.nix
         ../home/gtk.nix
         ../home/scripts.nix
+        ../home/udiskie.nix
       ];
     };
   };

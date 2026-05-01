@@ -55,6 +55,7 @@
           ./modules/default-browser.nix
           ./modules/flatpak.nix
           ./modules/prettymux.nix
+          ./modules/removable-media.nix
         ];
       };
     };
